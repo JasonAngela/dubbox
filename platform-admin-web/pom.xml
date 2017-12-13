@@ -13,6 +13,15 @@
 
     <properties>
         <start-class>cn.zhangxd.platform.admin.web.WebAdminApplication</start-class>
+
+        <resteasy.version>3.1.4.Final</resteasy.version>
+        <validation.version>1.1.0.Final</validation.version>
+        <maven.version>2.3.2</maven.version>
+        <source.version>1.8</source.version>
+        <encoding.value>UTF-8</encoding.value>
+        <war.version>2.6</war.version>
+        <fasterxml.version>2.8.9</fasterxml.version>
+        <jackson.version>3.0.7.Final</jackson.version>
     </properties>
 
     <profiles>
@@ -28,7 +37,7 @@
                 <dubbo.application.owner>zhangxudong</dubbo.application.owner>
                 <dubbo.registry.protocol>zookeeper</dubbo.registry.protocol>
                 <dubbo.registry.address>127.0.0.1:2181</dubbo.registry.address>
-                <dubbo.registry.client>curator</dubbo.registry.client>
+                <dubbo.registry.client>zkclient</dubbo.registry.client>
                 <dubbo.registry.file>tmp/web_admin.cache</dubbo.registry.file>
                 <dubbo.application.logger>slf4j</dubbo.application.logger>
                 <dubbo.logback.level>info</dubbo.logback.level>
@@ -52,7 +61,7 @@
                 <dubbo.application.owner>zhangxudong</dubbo.application.owner>
                 <dubbo.registry.protocol>zookeeper</dubbo.registry.protocol>
                 <dubbo.registry.address>127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</dubbo.registry.address>
-                <dubbo.registry.client>curator</dubbo.registry.client>
+                <dubbo.registry.client>zkclient</dubbo.registry.client>
                 <dubbo.registry.file>/data/zookeeper/web_admin.cache</dubbo.registry.file>
                 <dubbo.application.logger>slf4j</dubbo.application.logger>
                 <dubbo.logback.level>error</dubbo.logback.level>
@@ -73,7 +82,7 @@
                 <dubbo.application.owner>zhangxudong</dubbo.application.owner>
                 <dubbo.registry.protocol>zookeeper</dubbo.registry.protocol>
                 <dubbo.registry.address>127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183</dubbo.registry.address>
-                <dubbo.registry.client>curator</dubbo.registry.client>
+                <dubbo.registry.client>zkclient</dubbo.registry.client>
                 <dubbo.registry.file>/data/zookeeper/web_admin.cache</dubbo.registry.file>
                 <dubbo.application.logger>slf4j</dubbo.application.logger>
                 <dubbo.logback.level>error</dubbo.logback.level>
@@ -88,6 +97,46 @@
             <artifactId>platform-common-web</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson-provider</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${fasterxml.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${fasterxml.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+            <version>${resteasy.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>${resteasy.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

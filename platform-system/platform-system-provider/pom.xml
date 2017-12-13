@@ -16,9 +16,6 @@
 
         <resteasy.version>3.1.4.Final</resteasy.version>
         <validation.version>1.1.0.Final</validation.version>
-
-        <tomcat-embed-core.version>8.5.13</tomcat-embed-core.version>
-        <tomcat-embed-logging-juli.version>8.5.2</tomcat-embed-logging-juli.version>
         <maven.version>2.3.2</maven.version>
         <source.version>1.8</source.version>
         <encoding.value>UTF-8</encoding.value>
@@ -168,19 +165,6 @@
             <artifactId>validation-api</artifactId>
             <version>${validation.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>${tomcat-embed-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-logging-juli</artifactId>
-            <version>${tomcat-embed-logging-juli.version}</version>
-        </dependency>
-
-
 
         <dependency>
             <groupId>us.codecraft</groupId>

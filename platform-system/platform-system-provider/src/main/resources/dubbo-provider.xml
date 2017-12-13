@@ -26,10 +26,10 @@
     <dubbo:protocol name="rest" server="tomcat" port="9090"/>
 
 
-    <dubbo:service interface="cn.zhangxd.platform.system.api.service.ISystemService"
-                   ref="systemService" protocol="rest" timeout="5000"/>
+    <dubbo:service interface="cn.zhangxd.platform.system.api.service.ISystemServiceOut"
+                   ref="systemServiceOut" protocol="rest" timeout="5000"/>
 
-    <bean id="systemService" class="cn.zhangxd.platform.system.provider.serviceimpl.SystemService" />
+    <bean id="systemServiceOut" class="cn.zhangxd.platform.system.provider.serviceimpl.SystemServiceOut" />
 
 
 </beans>

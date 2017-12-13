@@ -29,7 +29,6 @@ import java.util.Map;
  */
 @Service
 @Transactional(readOnly = true)
-@Path("system")
 public class SystemService implements ISystemService {
 
     /**
@@ -82,10 +81,7 @@ public class SystemService implements ISystemService {
 
 
     @Override
-    @GET
-    @Path("{id:.}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public SysUser getUserById(@PathParam("id") String userId) {
+    public SysUser getUserById(String userId) {
         SysUser user = sysUserMapper.get(userId);
         if (user != null) {
             user.setRoles(sysRoleMapper.findListByUserId(userId));
