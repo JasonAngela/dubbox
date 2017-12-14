@@ -7,6 +7,7 @@ import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,6 @@ import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
@@ -57,7 +57,8 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     protected void configure(HttpSecurity security) throws Exception {
         security
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/auth/token").permitAll();//不拦截auth/token
+            .antMatchers(HttpMethod.POST, "/auth/token").permitAll()
+            .antMatchers("**/login/cas").permitAll();
         security.logout().permitAll();//不拦截注销
         security.exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint);
 
@@ -71,7 +72,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
 
         // 暂时去掉Header校验token模式  CAS 处理不行的话  就换回来！
 
-        /*super.configure(security);*/
+       /* super.configure(security);*/
     }
 
 
@@ -92,7 +93,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         casAuthenticationFilter.setFilterProcessesUrl(this.casServiceConfig.getLogin());
         casAuthenticationFilter.setContinueChainBeforeSuccessfulAuthentication(false);
         casAuthenticationFilter.setAuthenticationSuccessHandler(
-                new SimpleUrlAuthenticationSuccessHandler("/")
+                new MyUrlAuthenticationSuccessHandler("/")
         );
         return casAuthenticationFilter;
     }
@@ -148,7 +149,14 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     }
 
 
-
+    @Bean
+    public FilterRegistrationBean httpParamsFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new HttpParamsFilter());
+        filterRegistrationBean.setOrder(-999);
+        filterRegistrationBean.addUrlPatterns("/");
+        return filterRegistrationBean;
+    }
 
 
 }
