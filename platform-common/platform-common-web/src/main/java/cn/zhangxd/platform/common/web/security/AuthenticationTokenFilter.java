@@ -44,6 +44,8 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
             return;
         }
 
+        //这里对Header的传来的数据进行校验 不规范 打算换成CAS校验模式
+
         final String authToken = StringHelper.substring(authHeader, 7);
         String username = StringHelper.isNotBlank(authToken) ? jwtTokenUtil.getUsernameFromToken(authToken) : null;
 
