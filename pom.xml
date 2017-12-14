@@ -68,7 +68,6 @@
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <webmagic.version>0.6.1</webmagic.version>
 
-
     </properties>
 
     <dependencyManagement>
@@ -227,6 +226,7 @@
                 <artifactId>webmagic-extension</artifactId>
                 <version>${webmagic.version}</version>
             </dependency>
+
 
 
 

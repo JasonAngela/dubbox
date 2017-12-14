@@ -28,6 +28,16 @@ security:
   jwt:
     secret: k09BQnaF
     expiration: 604800 #7Days
+  cas:
+      server:
+        host: http://127.0.0.1:9082/cas
+        login: ${security.cas.server.host}/login
+        logout: ${security.cas.server.host}/logout
+      service:
+        host: http://127.0.0.1:9088
+        login: /login/cas
+        logout: /logout
+
 
 upload:
   #Disk upload

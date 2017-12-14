@@ -13,15 +13,8 @@
 
     <properties>
         <start-class>cn.zhangxd.platform.admin.web.WebAdminApplication</start-class>
+        <lombok.version>1.16.14</lombok.version>
 
-        <resteasy.version>3.1.4.Final</resteasy.version>
-        <validation.version>1.1.0.Final</validation.version>
-        <maven.version>2.3.2</maven.version>
-        <source.version>1.8</source.version>
-        <encoding.value>UTF-8</encoding.value>
-        <war.version>2.6</war.version>
-        <fasterxml.version>2.8.9</fasterxml.version>
-        <jackson.version>3.0.7.Final</jackson.version>
     </properties>
 
     <profiles>
@@ -98,7 +91,12 @@
             <version>${project.version}</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
 
     </dependencies>
