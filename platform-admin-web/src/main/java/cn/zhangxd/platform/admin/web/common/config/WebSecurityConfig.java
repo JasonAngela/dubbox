@@ -69,7 +69,9 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
                 .addFilterBefore(logoutFilter, LogoutFilter.class)
                 .addFilterBefore(singleSignOutFilter, CasAuthenticationFilter.class);//增加拦截器
 
-        super.configure(security);
+        // 暂时去掉Header校验token模式  CAS 处理不行的话  就换回来！
+
+        /*super.configure(security);*/
     }
 
 
