@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
+import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,11 +27,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
-    /**
-     * 用户信息服务
-     */
-    @Autowired
-    private UserDetailsService userDetailsService;
+
+
 
     /**
      * Password encoder password encoder.
@@ -37,18 +36,7 @@ public class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @return the password encoder
      */
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(8);
-    }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .userDetailsService(this.userDetailsService)
-            .passwordEncoder(this.passwordEncoder())
-        ;
-    }
 
     @Bean
     @Override
@@ -70,7 +58,6 @@ public class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity security) throws Exception {
         security
             .csrf().disable()
-            .exceptionHandling().authenticationEntryPoint(new MyAuthenticationEntryPoint()).and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .authorizeRequests()
             .anyRequest().authenticated();
@@ -79,4 +66,7 @@ public class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
         security
             .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
+
+
+
 }

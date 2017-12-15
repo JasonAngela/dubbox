@@ -1,29 +1,27 @@
 package cn.zhangxd.platform.admin.web.common.config;
 
+import cn.zhangxd.platform.admin.web.security.UserDetailsServiceImpl;
 import cn.zhangxd.platform.common.web.config.AbstractWebSecurityConfig;
+
 import org.jasig.cas.client.session.SingleSignOutFilter;
-import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
+
 import org.springframework.security.cas.ServiceProperties;
-import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+
 
 /**
  * spring-security配置
@@ -31,8 +29,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
  * @author zhangxd
  */
 @Configuration
-@EnableConfigurationProperties({CasServerConfig.class,CasServiceConfig.class})
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class WebSecurityConfig extends AbstractWebSecurityConfig {
 
     @Autowired
@@ -41,122 +37,103 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     @Autowired
     private CasServiceConfig casServiceConfig;
 
+    /**
+     * 用户信息服务
+     */
     @Autowired
-    private CasAuthenticationEntryPoint casAuthenticationEntryPoint;
+    private UserDetailsService userDetailsService;
 
-    @Autowired
-    private CasAuthenticationProvider casAuthenticationProvider;
-
-    @Autowired
-    private CasAuthenticationFilter casAuthenticationFilter;
-
-    @Autowired
-    private LogoutFilter logoutFilter;
 
     @Override
     protected void configure(HttpSecurity security) throws Exception {
         security
-            .authorizeRequests()
-            .antMatchers(HttpMethod.POST, "/auth/token").permitAll()
-            .antMatchers("**/login/cas").permitAll();
-        security.logout().permitAll();//不拦截注销
-        security.exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint);
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/auth/token").permitAll()
+                .antMatchers("/cas/login").permitAll();
 
+        security.exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint())
+                .and()
+                .addFilter(casAuthenticationFilter())
+                .addFilterBefore(casLogoutFilter(), LogoutFilter.class)
+                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class);
 
-        SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
-        singleSignOutFilter.setCasServerUrlPrefix(this.casServerConfig.getHost());
-
-        security.addFilter(casAuthenticationFilter)
-                .addFilterBefore(logoutFilter, LogoutFilter.class)
-                .addFilterBefore(singleSignOutFilter, CasAuthenticationFilter.class);//增加拦截器
-
-        // 暂时去掉Header校验token模式  CAS 处理不行的话  就换回来！
-
-       /* super.configure(security);*/
+        security.logout().permitAll();  // 不拦截注销
+        super.configure(security);
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(8);
+    }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        super.configure(auth);
+        auth
+                .userDetailsService(this.userDetailsService)
+                .passwordEncoder(this.passwordEncoder())
+        ;
+    }
+
+    /**认证的入口*/
+    @Bean
+    public CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
+        CasAuthenticationEntryPoint casAuthenticationEntryPoint = new CasAuthenticationEntryPoint();
+        casAuthenticationEntryPoint.setLoginUrl(casServerConfig.getLogin());
+        casAuthenticationEntryPoint.setServiceProperties(serviceProperties());
+        return casAuthenticationEntryPoint;
+    }
+
+    /**指定service相关信息*/
     @Bean
     public ServiceProperties serviceProperties() {
         ServiceProperties serviceProperties = new ServiceProperties();
-        serviceProperties.setService(this.casServiceConfig.getHost() + this.casServiceConfig.getLogin());
-        serviceProperties.setSendRenew(this.casServiceConfig.getSendRenew());
+        serviceProperties.setService(casServiceConfig.getHost() + casServiceConfig.getLogin());
+        serviceProperties.setAuthenticateAllArtifacts(true);
         return serviceProperties;
     }
 
-
+    /**CAS认证过滤器*/
     @Bean
-    public CasAuthenticationFilter casAuthenticationFilter(AuthenticationManager authenticationManager, ServiceProperties serviceProperties) {
+    public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
         CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
-        casAuthenticationFilter.setAuthenticationManager(authenticationManager);
-        casAuthenticationFilter.setServiceProperties(serviceProperties);
-        casAuthenticationFilter.setFilterProcessesUrl(this.casServiceConfig.getLogin());
-        casAuthenticationFilter.setContinueChainBeforeSuccessfulAuthentication(false);
-        casAuthenticationFilter.setAuthenticationSuccessHandler(
-                new MyUrlAuthenticationSuccessHandler("/")
-        );
+        casAuthenticationFilter.setAuthenticationManager(authenticationManager());
+        casAuthenticationFilter.setFilterProcessesUrl(casServiceConfig.getLogin());
         return casAuthenticationFilter;
     }
 
+
     @Bean
-    public CasAuthenticationEntryPoint casAuthenticationEntryPoint(ServiceProperties serviceProperties) {
-        CasAuthenticationEntryPoint entryPoint = new CasAuthenticationEntryPoint();
-        entryPoint.setLoginUrl(this.casServerConfig.getLogin());
-        entryPoint.setServiceProperties(serviceProperties);
-        return entryPoint;
+    public CasAuthenticationProvider casAuthenticationProvider() {
+        CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
+        //casAuthenticationProvider.setAuthenticationUserDetailsService(this.userDetailsService());
+        casAuthenticationProvider.setUserDetailsService(this.userDetailsService); //这里只是接口类型，实现的接口不一样，都可以的。
+        casAuthenticationProvider.setServiceProperties(serviceProperties());
+        casAuthenticationProvider.setTicketValidator(cas20ServiceTicketValidator());
+        casAuthenticationProvider.setKey("casAuthenticationProviderKey");
+        return casAuthenticationProvider;
     }
 
     @Bean
     public Cas20ServiceTicketValidator cas20ServiceTicketValidator() {
-        return new Cas20ServiceTicketValidator(this.casServerConfig.getHost());
+        return new Cas20ServiceTicketValidator(casServerConfig.getHost());
     }
 
+    /**单点登出过滤器*/
     @Bean
-    public CasAuthenticationProvider casAuthenticationProvider(
-            AuthenticationUserDetailsService<CasAssertionAuthenticationToken> userDetailsService,
-            ServiceProperties serviceProperties, Cas20ServiceTicketValidator ticketValidator) {
-        CasAuthenticationProvider provider = new CasAuthenticationProvider();
-        provider.setKey("casProvider");
-        provider.setServiceProperties(serviceProperties);
-        provider.setTicketValidator(ticketValidator);
-        provider.setAuthenticationUserDetailsService(userDetailsService);
-
-        return provider;
+    public SingleSignOutFilter singleSignOutFilter() {
+        SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
+        singleSignOutFilter.setCasServerUrlPrefix(casServerConfig.getHost());
+        singleSignOutFilter.setIgnoreInitConfiguration(true);
+        return singleSignOutFilter;
     }
 
+    /**请求单点退出过滤器*/
     @Bean
-    public LogoutFilter logoutFilter() {
-        String logoutRedirectPath = this.casServerConfig.getLogout() + "?service=" +
-                this.casServiceConfig.getHost();
-        LogoutFilter logoutFilter = new LogoutFilter(logoutRedirectPath, new SecurityContextLogoutHandler());
-        logoutFilter.setFilterProcessesUrl(this.casServiceConfig.getLogout());
+    public LogoutFilter casLogoutFilter() {
+        LogoutFilter logoutFilter = new LogoutFilter(casServerConfig.getLogout(), new SecurityContextLogoutHandler());
+        logoutFilter.setFilterProcessesUrl(casServiceConfig.getLogout());
         return logoutFilter;
     }
-
-
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(casAuthenticationProvider);
-    }
-
-    @Bean
-    public ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> singleSignOutHttpSessionListener(){
-        ServletListenerRegistrationBean<SingleSignOutHttpSessionListener> servletListenerRegistrationBean =
-                new ServletListenerRegistrationBean<>();
-        servletListenerRegistrationBean.setListener(new SingleSignOutHttpSessionListener());
-        return servletListenerRegistrationBean;
-    }
-
-
-    @Bean
-    public FilterRegistrationBean httpParamsFilter() {
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter(new HttpParamsFilter());
-        filterRegistrationBean.setOrder(-999);
-        filterRegistrationBean.addUrlPatterns("/");
-        return filterRegistrationBean;
-    }
-
 
 }

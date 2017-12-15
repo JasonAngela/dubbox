@@ -1,3 +1,4 @@
+/*
 package cn.zhangxd.platform.admin.web.common.config;
 
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -49,3 +50,4 @@ public class MyUrlAuthenticationSuccessHandler  extends SimpleUrlAuthenticationS
         return targetUrl;
     }
 }
+*/

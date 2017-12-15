@@ -1,3 +1,4 @@
+/*
 package cn.zhangxd.platform.admin.web.common.config;
 
 import cn.zhangxd.platform.common.utils.WebHelper;
@@ -35,3 +36,4 @@ public class HttpParamsFilter implements Filter {
 
     }
 }
+*/

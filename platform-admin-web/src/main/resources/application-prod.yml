@@ -19,7 +19,7 @@ spring:
       max-request-size: 50Mb # Max request size. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size.
 
 server:
-  port: 8080
+  port: 8888
   tomcat:
     accesslog:
       debug: true #请求响应数据调试
@@ -30,13 +30,13 @@ security:
     expiration: 604800 #7Days
   cas:
      server:
-        host: http://127.0.0.1:9082/cas
+        host: https://server.cas.com:9999/cas
         login: ${security.cas.server.host}/login
         logout: ${security.cas.server.host}/logout
      service:
-        host: http://127.0.0.1:9088
-        login: /login/cas
-        logout: /logout
+           host: http://127.0.0.1:80/
+           login: /access/login
+           logout: /access/login
 
 upload:
   #Disk upload
