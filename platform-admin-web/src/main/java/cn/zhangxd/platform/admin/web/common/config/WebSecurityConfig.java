@@ -57,25 +57,28 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
                 .antMatchers("/auth/delete/token").permitAll();
 
         security.csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint());
+                .exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint())
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
         security.
                 addFilter(casAuthenticationFilter())
                 .addFilterBefore(casLogoutFilter(), LogoutFilter.class)
-                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class);
+                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
+                ;
 
         super.configure(security);
     }
 
 
 
-   /*@Bean
+ @Bean
     public AuthenticationTokenFilter authenticationTokenFilterBean() {
         return new AuthenticationTokenFilter();
-    }*/
+    }
 
-   /* @Bean
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
@@ -83,11 +86,10 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         super.configure(auth);
-        auth
-                .userDetailsService(this.userDetailsService)
-                .passwordEncoder(this.passwordEncoder())
-        ;
-    }*/
+        auth.userDetailsService(this.userDetailsService)
+             .passwordEncoder(this.passwordEncoder());
+        auth.authenticationProvider(casAuthenticationProvider());
+    }
 
    /**认证的入口*/
     @Bean
@@ -117,7 +119,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     }
 
 
-    /*@Bean
+    @Bean
     public CasAuthenticationProvider casAuthenticationProvider() {
         CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
         //casAuthenticationProvider.setAuthenticationUserDetailsService(this.userDetailsService());
@@ -126,7 +128,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         casAuthenticationProvider.setTicketValidator(cas20ServiceTicketValidator());
         casAuthenticationProvider.setKey("casAuthenticationProviderKey");
         return casAuthenticationProvider;
-    }*/
+    }
 
     @Bean
     public Cas20ServiceTicketValidator cas20ServiceTicketValidator() {

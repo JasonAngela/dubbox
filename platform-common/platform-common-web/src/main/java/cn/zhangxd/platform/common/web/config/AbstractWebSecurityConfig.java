@@ -24,17 +24,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
-    /**
+   /* *//**
      * 用户信息服务
-     */
+     *//*
     @Autowired
     private UserDetailsService userDetailsService;
 
-    /**
+    *//**
      * Password encoder password encoder.
      *
      * @return the password encoder
-     */
+     *//*
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
@@ -46,9 +46,9 @@ public class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(this.userDetailsService)
                 .passwordEncoder(this.passwordEncoder())
         ;
-    }
+    }*/
 
-    @Bean
+    /*@Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -66,12 +66,6 @@ public class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity security) throws Exception {
-        security
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
-                .anyRequest().authenticated();
-
         // Custom JWT based security filter
         security
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
