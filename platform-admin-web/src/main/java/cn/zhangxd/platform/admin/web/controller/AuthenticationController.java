@@ -80,7 +80,7 @@ public class AuthenticationController extends BaseController {
      * @param request the request
      * @return the bearer auth token
      */
-    @GetMapping(value = "/refresh")
+    @PostMapping(value = "/refresh")
     public Map<String, Object> refreshAndGetAuthenticationToken(HttpServletRequest request) {
 
         String tokenHeader = request.getHeader(AuthenticationTokenFilter.TOKEN_HEADER);
@@ -103,7 +103,7 @@ public class AuthenticationController extends BaseController {
      * @param request the request
      * @return the response entity
      */
-    @DeleteMapping(value = "/token")
+    @PostMapping(value = "/delete/token")
     public ResponseEntity deleteAuthenticationToken(HttpServletRequest request) {
 
         String tokenHeader = request.getHeader(AuthenticationTokenFilter.TOKEN_HEADER);

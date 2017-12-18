@@ -3,6 +3,7 @@ package cn.zhangxd.platform.admin.web.common.config;
 import cn.zhangxd.platform.admin.web.security.UserDetailsServiceImpl;
 import cn.zhangxd.platform.common.web.config.AbstractWebSecurityConfig;
 
+import cn.zhangxd.platform.common.web.security.AuthenticationTokenFilter;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,11 @@ import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
@@ -49,19 +52,30 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         security
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/token").permitAll()
-                .antMatchers("/cas/login").permitAll();
+                .antMatchers("/cas/login").permitAll()
+                .antMatchers("/cas/loginout").permitAll()
+                .antMatchers("/auth/delete/token").permitAll();
 
-        security.exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint())
-                .and()
-                .addFilter(casAuthenticationFilter())
+        security.csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint());
+
+
+        security.
+                addFilter(casAuthenticationFilter())
                 .addFilterBefore(casLogoutFilter(), LogoutFilter.class)
                 .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class);
 
-        security.logout().permitAll();  // 不拦截注销
         super.configure(security);
     }
 
-    @Bean
+
+
+   /*@Bean
+    public AuthenticationTokenFilter authenticationTokenFilterBean() {
+        return new AuthenticationTokenFilter();
+    }*/
+
+   /* @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
@@ -73,9 +87,9 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
                 .userDetailsService(this.userDetailsService)
                 .passwordEncoder(this.passwordEncoder())
         ;
-    }
+    }*/
 
-    /**认证的入口*/
+   /**认证的入口*/
     @Bean
     public CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
         CasAuthenticationEntryPoint casAuthenticationEntryPoint = new CasAuthenticationEntryPoint();
@@ -103,7 +117,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     }
 
 
-    @Bean
+    /*@Bean
     public CasAuthenticationProvider casAuthenticationProvider() {
         CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
         //casAuthenticationProvider.setAuthenticationUserDetailsService(this.userDetailsService());
@@ -112,7 +126,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         casAuthenticationProvider.setTicketValidator(cas20ServiceTicketValidator());
         casAuthenticationProvider.setKey("casAuthenticationProviderKey");
         return casAuthenticationProvider;
-    }
+    }*/
 
     @Bean
     public Cas20ServiceTicketValidator cas20ServiceTicketValidator() {

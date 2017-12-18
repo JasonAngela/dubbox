@@ -5,9 +5,6 @@ import cn.zhangxd.platform.common.web.security.MyAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
-
-import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
-import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,16 +24,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-
+    /**
+     * 用户信息服务
+     */
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     /**
      * Password encoder password encoder.
      *
      * @return the password encoder
      */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(8);
+    }
 
-
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(this.userDetailsService)
+                .passwordEncoder(this.passwordEncoder())
+        ;
+    }
 
     @Bean
     @Override
@@ -57,16 +67,13 @@ public class AbstractWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity security) throws Exception {
         security
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            .authorizeRequests()
-            .anyRequest().authenticated();
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests()
+                .anyRequest().authenticated();
 
         // Custom JWT based security filter
         security
-            .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
-
-
-
 }

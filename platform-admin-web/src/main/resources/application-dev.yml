@@ -35,8 +35,8 @@ security:
         logout: ${security.cas.server.host}/logout
       service:
         host: http://127.0.0.1:80/
-        login: /access/login
-        logout: /access/login
+        login: /page/#/access/login
+        logout: /page/#/access/login
 
 
 upload:
