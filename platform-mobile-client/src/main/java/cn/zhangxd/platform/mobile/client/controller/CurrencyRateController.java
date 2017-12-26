@@ -1,9 +1,9 @@
+/*
 package cn.zhangxd.platform.mobile.client.controller;
 
 import cn.zhangxd.platform.mobile.client.common.controller.BaseController;
 import cn.zhangxd.platform.mobile.client.constant.Message;
 import cn.zhangxd.platform.mobile.client.constant.ReturnCode;
-import cn.zhangxd.platform.system.api.service.ICurrencyRateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -16,28 +16,34 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * The type Currency rate controller.
  *
  * @author zhangxd
- */
+ *//*
+
 @RestController
 @RequestMapping("/{version}/currency")
 @Api(tags = "汇率")
 public class CurrencyRateController extends BaseController {
 
-    /**
+    */
+/**
      * 汇率服务
-     */
+     *//*
+
     @Autowired
     private ICurrencyRateService currencyRateService;
 
-    /**
+    */
+/**
      * Gets currency rate.
      *
      * @param version the version
      * @return the currency rate
-     */
+     *//*
+
     @GetMapping(value = "/rate/all", produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "获取USD对应汇率")
     public Map<String, Object> getCurrencyRate(
@@ -51,3 +57,4 @@ public class CurrencyRateController extends BaseController {
     }
 
 }
+*/

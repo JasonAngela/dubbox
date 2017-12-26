@@ -1,3 +1,4 @@
+/*
 package cn.zhangxd.platform.system.provider.thirdapi;
 
 import com.google.gson.Gson;
@@ -18,40 +19,54 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+*/
 /**
  * Yahoo汇率服务
  *
  * @author zhangxd
- */
+ *//*
+
 @Service
 public class YahooRateService {
 
-    /**
+    */
+/**
      * Logger
-     */
+     *//*
+
     private static final Logger LOGGER = LoggerFactory.getLogger(YahooRateService.class);
 
-    /**
+    */
+/**
      * redis repository
-     */
+     *//*
+
     @Autowired
     private RedisRepository redisRepository;
-    /**
+    */
+/**
      * Yahoo汇率接口地址
-     */
+     *//*
+
     private static final String YAHOO_RATE_URL = "http://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json";
-    /**
+    */
+/**
      * 缓存前缀
-     */
+     *//*
+
     private static final String REDIS_PREFIX = "yahoo_rate";
-    /**
+    */
+/**
      * 访问超时时间
-     */
+     *//*
+
     private static final int READ_TIMEOUT = 180;
 
-    /**
+    */
+/**
      * Request.
-     */
+     *//*
+
     @Scheduled(cron = "0 0 0/1 * * ? ")
     public void request() {
 
@@ -86,12 +101,15 @@ public class YahooRateService {
         }
     }
 
-    /**
+    */
+/**
      * Get map.
      *
      * @return the map
-     */
+     *//*
+
     public Map<String, String> get() {
         return redisRepository.getHashValue(REDIS_PREFIX);
     }
 }
+*/
