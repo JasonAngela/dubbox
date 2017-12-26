@@ -17,6 +17,16 @@ spring:
       location: /tmp # Intermediate location of uploaded files.
       max-file-size: 5Mb # Max file size. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size.
       max-request-size: 50Mb # Max request size. Values can use the suffixed "MB" or "KB" to indicate a Megabyte or Kilobyte size.
+  thymeleaf:
+        cache: true # Enable template caching.
+        check-template: true # Check that the template exists before rendering it.
+        check-template-location: true # Check that the templates location exists.
+        content-type: text/html # Content-Type value.
+        enabled: true # Enable MVC Thymeleaf view resolution.
+        encoding: UTF-8 # Template encoding.
+        mode: HTML5 # Template mode to be applied to templates. See also StandardTemplateModeHandlers.
+        prefix: classpath:/page/ # Prefix that gets prepended to view names when building a URL.
+        suffix: .html
 
 server:
   port: 8888
@@ -34,9 +44,9 @@ security:
         login: ${security.cas.server.host}/login
         logout: ${security.cas.server.host}/logout
       service:
-        host: http://127.0.0.1:80/
-        login: /page/#/access/login
-        logout: /page/#/access/login
+        host: http://127.0.0.1:8888/
+        login: /auth/token
+        logout: /auth/delete/token
 
 
 upload:

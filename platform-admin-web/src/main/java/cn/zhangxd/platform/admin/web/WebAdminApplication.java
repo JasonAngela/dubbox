@@ -29,7 +29,7 @@ public class WebAdminApplication {
      *
      * @return the string
      */
-    @RequestMapping
+    @RequestMapping("/hello")
     public String hello() {
         return "Hello World!";
     }

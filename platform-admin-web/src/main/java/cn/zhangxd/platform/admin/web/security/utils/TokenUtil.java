@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 /**
  * The type Token util.
  *
- * @author zhangxd
+ * @author JASON
  */
 @Component
 @ConfigurationProperties("security.jwt")

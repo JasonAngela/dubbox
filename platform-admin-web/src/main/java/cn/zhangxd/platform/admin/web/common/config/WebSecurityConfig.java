@@ -11,13 +11,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.cas.ServiceProperties;
+import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,27 +37,29 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 @Configuration
 public class WebSecurityConfig extends AbstractWebSecurityConfig {
 
-    @Autowired
+   /* @Autowired
     private CasServerConfig casServerConfig;
 
     @Autowired
     private CasServiceConfig casServiceConfig;
 
-    /**
+    *//**
      * 用户信息服务
-     */
+     *//*
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;*/
 
 
     @Override
     protected void configure(HttpSecurity security) throws Exception {
-        security
+       /* security
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/token").permitAll()
                 .antMatchers("/cas/login").permitAll()
                 .antMatchers("/cas/loginout").permitAll()
-                .antMatchers("/auth/delete/token").permitAll();
+                .antMatchers("/auth/delete/token").permitAll()
+                .antMatchers("/page/*").permitAll()
+        ;
 
         security.csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(casAuthenticationEntryPoint())
@@ -62,23 +67,22 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 
-        security.
-                addFilter(casAuthenticationFilter())
+        security
+                .addFilter(casAuthenticationFilter())
                 .addFilterBefore(casLogoutFilter(), LogoutFilter.class)
-                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
-                ;
+                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class);*/
 
+
+
+        security
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/auth/token").permitAll();
         super.configure(security);
+
     }
 
 
-
- @Bean
-    public AuthenticationTokenFilter authenticationTokenFilterBean() {
-        return new AuthenticationTokenFilter();
-    }
-
-    @Bean
+   /* @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
@@ -86,12 +90,12 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         super.configure(auth);
-        auth.userDetailsService(this.userDetailsService)
+        auth.userDetailsService(customUserDetailsService())
              .passwordEncoder(this.passwordEncoder());
         auth.authenticationProvider(casAuthenticationProvider());
     }
 
-   /**认证的入口*/
+   *//**认证的入口*//*
     @Bean
     public CasAuthenticationEntryPoint casAuthenticationEntryPoint() {
         CasAuthenticationEntryPoint casAuthenticationEntryPoint = new CasAuthenticationEntryPoint();
@@ -100,7 +104,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         return casAuthenticationEntryPoint;
     }
 
-    /**指定service相关信息*/
+    *//**指定service相关信息*//*
     @Bean
     public ServiceProperties serviceProperties() {
         ServiceProperties serviceProperties = new ServiceProperties();
@@ -109,21 +113,35 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         return serviceProperties;
     }
 
-    /**CAS认证过滤器*/
+   *//* @Bean
+    public AuthenticationTokenFilter authenticationTokenFilterBean() {
+        return new AuthenticationTokenFilter();
+    }*//*
+
+    *//**CAS认证过滤器*//*
     @Bean
     public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
         CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
-        casAuthenticationFilter.setAuthenticationManager(authenticationManager());
+        casAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
         casAuthenticationFilter.setFilterProcessesUrl(casServiceConfig.getLogin());
         return casAuthenticationFilter;
     }
 
+    public UserDetailsService customUserDetailsService(){
+        return new UserDetailsServiceImpl();
+    }
+
+
+   *//* @Bean
+    public AuthenticationUserDetailsService<CasAssertionAuthenticationToken> customUserDetailsService(){
+        return new UserDetailsServiceImpl();
+    }*//*
 
     @Bean
     public CasAuthenticationProvider casAuthenticationProvider() {
         CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
-        //casAuthenticationProvider.setAuthenticationUserDetailsService(this.userDetailsService());
-        casAuthenticationProvider.setUserDetailsService(this.userDetailsService); //这里只是接口类型，实现的接口不一样，都可以的。
+        //casAuthenticationProvider.setAuthenticationUserDetailsService(customUserDetailsService());
+        casAuthenticationProvider.setUserDetailsService(customUserDetailsService()); //这里只是接口类型，实现的接口不一样，都可以的。
         casAuthenticationProvider.setServiceProperties(serviceProperties());
         casAuthenticationProvider.setTicketValidator(cas20ServiceTicketValidator());
         casAuthenticationProvider.setKey("casAuthenticationProviderKey");
@@ -135,7 +153,7 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         return new Cas20ServiceTicketValidator(casServerConfig.getHost());
     }
 
-    /**单点登出过滤器*/
+    *//**单点登出过滤器*//*
     @Bean
     public SingleSignOutFilter singleSignOutFilter() {
         SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
@@ -144,12 +162,12 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         return singleSignOutFilter;
     }
 
-    /**请求单点退出过滤器*/
+    *//**请求单点退出过滤器*//*
     @Bean
     public LogoutFilter casLogoutFilter() {
         LogoutFilter logoutFilter = new LogoutFilter(casServerConfig.getLogout(), new SecurityContextLogoutHandler());
         logoutFilter.setFilterProcessesUrl(casServiceConfig.getLogout());
         return logoutFilter;
     }
-
+*/
 }
