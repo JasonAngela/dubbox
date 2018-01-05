@@ -21,7 +21,7 @@
 
 ---
 
-- 项目依赖Mysql、Zookeeper、Redis
+- 项目依赖Mysql、Zookeeper、Redis,PostgreSQL
 - platform-admin-web为管理平台接口
 - platform-mobile-client为移动客户端接口
 - platform-system为服务提供者

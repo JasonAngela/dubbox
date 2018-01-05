@@ -2,17 +2,17 @@ spring:
   # DataSource Config
   datasource:
     write:
-      url: jdbc:mysql://127.0.0.1:3306/platform?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-      username: root
+      url: jdbc:postgresql://127.0.0.1:5432/platform?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+      username: postgres
       password: 123456
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: org.postgresql.Driver
       max-active: 20
       initial-size: 1
       min-idle: 3
       max-wait: 60000
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 'x' FROM DUAL
+      validation-query: SELECT 'x'
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
@@ -23,17 +23,17 @@ spring:
       # 合并多个DruidDataSource的监控数据
       #spring.datasource.useGlobalDataSourceStat=true
     read:
-      url: jdbc:mysql://127.0.0.1:3306/platform?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-      username: root
+      url: jdbc:postgresql://127.0.0.1:5432/platform?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+      username: postgres
       password: 123456
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: org.postgresql.Driver
       max-active: 20
       initial-size: 1
       min-idle: 3
       max-wait: 60000
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 'x' FROM DUAL
+      validation-query: SELECT 'x'
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false

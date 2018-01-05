@@ -137,7 +137,7 @@
     <insert id="insertUserRole">
         INSERT INTO sys_user_role(user_id, role_id)
         <foreach collection="roles" item="role" separator=" union all ">
-            SELECT #{id}, #{role.id} FROM dual
+            SELECT #{id}, #{role.id}
         </foreach>
     </insert>
 

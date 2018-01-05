@@ -32,7 +32,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 /**
  * spring-security配置
  *
- * @author zhangxd
+ * @author huqilang
  */
 @Configuration
 public class WebSecurityConfig extends AbstractWebSecurityConfig {

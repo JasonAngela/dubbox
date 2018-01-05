@@ -17,7 +17,7 @@
         <include refid="selectColumns"/>
         LEFT JOIN sys_user_role ur ON ur.role_id = a.id
         WHERE a.del_flag = '0'
-        AND a.enabled = '1'
+        AND a.enabled = TRUE
         AND ur.user_id = #{userId}
         ORDER BY a.create_date
     </select>
@@ -95,7 +95,7 @@
     <insert id="insertRoleMenu">
         INSERT INTO sys_role_menu(role_id, menu_id)
         <foreach collection="menus" item="menu" separator=" union all ">
-            SELECT #{id}, #{menu.id} FROM dual
+            SELECT #{id}, #{menu.id}
         </foreach>
     </insert>
 
