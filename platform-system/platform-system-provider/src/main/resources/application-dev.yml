@@ -43,17 +43,17 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=3000
       # 合并多个DruidDataSource的监控数据
       #spring.datasource.useGlobalDataSourceStat=true
-  #redis:
-    #database: 2
-   # host: 127.0.0.1
+  redis:
+    database: 1
+    host: 127.0.0.1
     #password: # Login password of the redis server.
-   # port: 6379
-   # timeout: 0
-    #pool:
-     # max-active: 8 #最大连接数
-     # max-idle: 8 #最大空闲连接数
-     # max-wait: -1 #最大等待时间
-     # min-idle: 0 #初始化连接数
+    port: 6379
+    timeout: 0
+    pool:
+      max-active: 8 #最大连接数
+      max-idle: 8 #最大空闲连接数
+      max-wait: -1 #最大等待时间
+      min-idle: 0 #初始化连接数
 
   #rabbitmq:
    # host: localhost
