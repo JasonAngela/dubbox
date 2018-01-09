@@ -2,4 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bjd.platform.system.provider.mapper.SysDepartmentMapper">
 
+    <sql id="selectColumns">
+        SELECT DISTINCT
+        a.id,
+        a.parent_id,
+        a.parent_ids,
+        a.name,
+        a.type,
+        a.address,
+        a.enabled,
+        a.remarks,
+        a.create_date,
+        a.update_date,
+        a.del_flag,
+        a.master,
+        a.primary_person,
+        a.deputy_person
+        FROM sys_department a
+    </sql>
+
+
+
+
+
 </mapper>
