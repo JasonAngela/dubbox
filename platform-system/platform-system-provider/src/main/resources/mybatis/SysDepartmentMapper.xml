@@ -76,6 +76,14 @@
     </update>
 
 
+    <update id="deleteById">
+        UPDATE sys_department
+        SET
+        del_flag = '1'
+        WHERE id = #{id} OR parent_ids LIKE CONCAT('%', #{id}, ',%')
+    </update>
+
+
 
 
 </mapper>
