@@ -22,6 +22,59 @@
     </sql>
 
 
+    <insert id="insert">
+        INSERT INTO sys_department (
+        id,
+        parent_id,
+        parent_ids,
+        name,
+        type,
+        address,
+        enabled,
+        remarks,
+        create_date,
+        update_date,
+        del_flag,
+        master,
+        primary_person,
+        deputy_person
+        ) VALUES (
+        #{id},
+        #{parentId},
+        #{parentIds},
+        #{name},
+        #{type},
+        #{address},
+        #{enabled},
+        #{remarks},
+        #{createDate},
+        #{updateDate},
+        #{delFlag},
+        #{master},
+        #{primaryPerson},
+        #{deputyPerson}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_department
+        <set>
+            parent_id = #{parentId},
+            parent_ids = #{parentIds},
+            name = #{name},
+            type = #{type},
+            address = #{address},
+            enabled = #{enabled},
+            remarks = #{remarks},
+            update_date = #{updateDate},
+            del_flag = #{delFlag},
+            master = #{master},
+            primary_person = #{primaryPerson},
+            deputy_person = #{deputyPerson}
+        </set>
+        WHERE id = #{id}
+    </update>
+
 
 
 

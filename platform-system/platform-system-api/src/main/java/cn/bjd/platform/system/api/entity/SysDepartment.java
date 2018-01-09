@@ -3,6 +3,9 @@ package cn.bjd.platform.system.api.entity;
 import cn.bjd.platform.common.api.DataEntity;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SysDepartment extends DataEntity {
     private static final long serialVersionUID = 1L;
 
@@ -26,6 +29,25 @@ public class SysDepartment extends DataEntity {
     private String primaryPerson;
 
     private String deputyPerson;
+
+    private List<SysDepartment> children = new ArrayList<>();
+
+    public List<SysDepartment> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysDepartment> children) {
+        this.children = children;
+    }
+
+    /**
+     * 添加子节点
+     *
+     * @param node 菜单节点
+     */
+    public void addChild(SysDepartment node) {
+        this.children.add(node);
+    }
 
     public SysDepartment() {
         super();
