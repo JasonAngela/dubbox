@@ -63,6 +63,17 @@ public class SysUser extends DataEntity {
      */
     private List<SysMenu> menus = new ArrayList<>();
 
+
+    private List<SysDepartment> depts = new ArrayList<>();
+
+    public List<SysDepartment> getDepts() {
+        return depts;
+    }
+
+    public void setDepts(List<SysDepartment> depts) {
+        this.depts = depts;
+    }
+
     public SysUser() {
         super();
     }

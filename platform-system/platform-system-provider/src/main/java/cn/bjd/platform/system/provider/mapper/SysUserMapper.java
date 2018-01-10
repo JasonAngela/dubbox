@@ -38,12 +38,28 @@ public interface SysUserMapper extends CrudDao<SysUser> {
     int deleteUserRole(SysUser user);
 
     /**
+     * 删除用户相关部门
+     *
+     * @param user the user
+     * @return the int
+     */
+    int deleteUserDept(SysUser user);
+
+    /**
      * 插入用户角色关联数据
      *
      * @param user the user
      * @return the int
      */
     int insertUserRole(SysUser user);
+
+    /**
+     * 插入用户部门关联数据
+     *
+     * @param user the user
+     * @return the int
+     */
+    int insertUserDept(SysUser user);
 
     /**
      * 保存用户信息

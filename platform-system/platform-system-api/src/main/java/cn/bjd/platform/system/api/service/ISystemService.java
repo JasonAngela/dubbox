@@ -1,6 +1,7 @@
 package cn.bjd.platform.system.api.service;
 
 
+import cn.bjd.platform.system.api.entity.SysDepartment;
 import cn.bjd.platform.system.api.entity.SysMenu;
 import com.github.pagehelper.PageInfo;
 import cn.bjd.platform.common.api.Paging;
@@ -119,6 +120,39 @@ public interface ISystemService {
      */
     SysMenu saveMenu(SysMenu menu);
 
+    /**
+     * 查询所有的部门信息
+     * 暂时部门信息在后台管理中不做权限设置
+     * @return
+     */
+    List<SysDepartment> findAllDepts();
+
+    /**
+     * 保存部门信息
+     * @param dept
+     * @return
+     */
+    SysDepartment saveDept(SysDepartment dept);
+
+    /**
+     * 查询部门
+     * @param deptId
+     * @return
+     */
+    SysDepartment getByDeptId(String deptId);
+
+    /**
+     * 通过用户查询用户所在部门信息
+     * @param userId
+     * @return
+     */
+    List<SysDepartment> getDeptsByUserId(String userId);
+
+    /**
+     * 删除部门信息
+     * @param deptId
+     */
+    void deleteDeptById(String deptId);
 
     /**
      * 查询角色列表

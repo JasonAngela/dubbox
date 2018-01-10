@@ -132,12 +132,24 @@
         DELETE FROM sys_user_role
         WHERE user_id = #{id}
     </delete>
+    
+    <delete id="deleteUserDept">
+      DELETE FROM sys_department
+        WHERE user_id = #{id}
+    </delete>
 
     <!-- 插入用户和角色关联表数据 -->
     <insert id="insertUserRole">
         INSERT INTO sys_user_role(user_id, role_id)
         <foreach collection="roles" item="role" separator=" union all ">
             SELECT #{id}, #{role.id}
+        </foreach>
+    </insert>
+
+    <insert id="insertUserDept">
+        INSERT INTO sys_department(user_id, dept_id)
+        <foreach collection="depts" item="dept" separator=" union all ">
+            SELECT #{id}, #{dept.id}
         </foreach>
     </insert>
 

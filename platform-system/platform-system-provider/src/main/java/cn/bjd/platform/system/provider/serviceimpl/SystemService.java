@@ -1,5 +1,7 @@
 package cn.bjd.platform.system.provider.serviceimpl;
 
+import cn.bjd.platform.system.api.entity.SysDepartment;
+import cn.bjd.platform.system.provider.mapper.SysDepartmentMapper;
 import cn.bjd.platform.system.provider.mapper.SysMenuMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -14,6 +16,8 @@ import cn.bjd.platform.system.provider.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +48,12 @@ public class SystemService implements ISystemService {
      */
     @Autowired
     private SysMenuMapper sysMenuMapper;
+
+    /**
+     * 部门信息Mapper
+     */
+    @Autowired
+    private SysDepartmentMapper sysDepartmentMapper;
 
     //User
 
@@ -83,6 +93,7 @@ public class SystemService implements ISystemService {
         SysUser user = sysUserMapper.get(userId);
         if (user != null) {
             user.setRoles(sysRoleMapper.findListByUserId(userId));
+            user.setDepts(sysDepartmentMapper.findListByUserId(userId));
         }
         return sysUserMapper.get(userId);
     }
@@ -98,11 +109,17 @@ public class SystemService implements ISystemService {
             user.preUpdate();
             sysUserMapper.update(user);
             sysUserMapper.deleteUserRole(user);
+            sysUserMapper.deleteUserDept(user);
         }
 
         // 更新用户与角色关联
-        if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+        if (!CollectionUtils.isEmpty(user.getRoles())) {
             sysUserMapper.insertUserRole(user);
+        }
+
+        //更新用户与部门关联
+        if(!CollectionUtils.isEmpty(user.getDepts())){
+            sysUserMapper.insertUserDept(user);
         }
 
         return user;
@@ -271,6 +288,62 @@ public class SystemService implements ISystemService {
 
         return menu;
     }
+
+    //Department
+
+    /**
+     * 查询所有部门
+     * @return
+     */
+    @Override
+    public List<SysDepartment> findAllDepts() {
+        return sysDepartmentMapper.findAllList();
+    }
+
+
+    @Override
+    public SysDepartment saveDept(SysDepartment dept) {
+        SysDepartment parentDept = this.getByDeptId(dept.getParentId());
+        String parentIds = parentDept == null ? "" : parentDept.getParentIds();
+        String oldParentIds = dept.getParentIds();
+        // 设置新的父节点串
+        dept.setParentIds(parentIds + dept.getParentId() + ",");
+        if(StringUtils.isEmpty(dept.getId())) {
+            dept.preInsert();
+            sysDepartmentMapper.insert(dept);
+        }else{
+            dept.preUpdate();
+            sysDepartmentMapper.update(dept);
+        }
+
+        SysDepartment d = new SysDepartment();
+        d.setParentIds("%," + dept.getId() + ",%");
+        List<SysDepartment> list = sysDepartmentMapper.findByParentIdsLike(d);
+        for(SysDepartment s : list){
+            s.setParentIds(s.getParentIds().replace(oldParentIds,dept.getParentIds()));
+            sysDepartmentMapper.updateParentIds(s);
+        }
+
+        return dept;
+    }
+
+
+    @Override
+    public SysDepartment getByDeptId(String deptId) {
+        return sysDepartmentMapper.get(deptId);
+    }
+
+
+    @Override
+    public List<SysDepartment> getDeptsByUserId(String userId) {
+        return sysDepartmentMapper.findListByUserId(userId);
+    }
+
+    @Override
+    public void deleteDeptById(String deptId) {
+        sysDepartmentMapper.deleteById(deptId);
+    }
+
 
     //Role
 
