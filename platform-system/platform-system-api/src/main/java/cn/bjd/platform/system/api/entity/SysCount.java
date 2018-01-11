@@ -21,6 +21,26 @@ public class SysCount extends DataEntity {
 
     private String type;
 
+    private String top;
+
+    private Integer totalSum;
+
+    public Integer getTotalSum() {
+        return totalSum;
+    }
+
+    public void setTotalSum(Integer totalSum) {
+        this.totalSum = totalSum;
+    }
+
+    public String getTop() {
+        return top;
+    }
+
+    public void setTop(String top) {
+        this.top = top;
+    }
+
     public String getProvince() {
         return province;
     }
