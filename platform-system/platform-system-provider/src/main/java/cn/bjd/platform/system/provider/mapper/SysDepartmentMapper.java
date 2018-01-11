@@ -2,6 +2,7 @@ package cn.bjd.platform.system.provider.mapper;
 
 import cn.bjd.platform.common.service.dao.CrudDao;
 import cn.bjd.platform.system.api.entity.SysDepartment;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  *
  * @author Jason
  */
+@Mapper
 public interface SysDepartmentMapper extends CrudDao<SysDepartment> {
 
     /**

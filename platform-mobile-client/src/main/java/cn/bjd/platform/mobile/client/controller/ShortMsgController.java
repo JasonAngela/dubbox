@@ -1,3 +1,4 @@
+/*
 package cn.bjd.platform.mobile.client.controller;
 
 import cn.bjd.platform.mobile.client.common.annotation.RequestLimit;
@@ -29,31 +30,40 @@ import javax.validation.constraints.Pattern;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * The type Short msg controller.
  *
  * @author huqilang
- */
+ *//*
+
 @Validated
 @RestController
 @RequestMapping("/{version}/sms")
 @Api(tags = "短信")
 public class ShortMsgController extends BaseController {
-    /**
+    */
+/**
      * 注册
-     */
+     *//*
+
     private static final String TYPE_REGISTRY = "registry";
-    /**
+    */
+/**
      * 忘记密码
-     */
+     *//*
+
     private static final String TYPE_FORGET = "forget";
-    /**
+    */
+/**
      * 验证码服务
-     */
+     *//*
+
     @Autowired
     private ICaptchaService captchaService;
 
-    /**
+    */
+/**
      * Send captcha map.
      *
      * @param request the request
@@ -62,7 +72,8 @@ public class ShortMsgController extends BaseController {
      * @param mobile  the mobile
      * @return the map
      * @throws BusinessException the business exception
-     */
+     *//*
+
     @RequestLimit(count = 10)
     @PostMapping(value = "/captcha", produces = "application/json; charset=UTF-8")
     @ApiOperation(value = "获取短信验证码")
@@ -84,48 +95,56 @@ public class ShortMsgController extends BaseController {
         return message;
     }
 
-    /**
+    */
+/**
      * Handle user exist exception map.
      *
      * @param ex the ex
      * @return the map
-     */
+     *//*
+
     @ExceptionHandler(UserExistException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, Object> handleUserExistException(UserExistException ex) {
         return makeErrorMessage(ReturnCode.USER_EXIST, "User Exist", ex.getMessage());
     }
 
-    /**
+    */
+/**
      * Handle user not exist exception map.
      *
      * @param ex the ex
      * @return the map
-     */
+     *//*
+
     @ExceptionHandler(UserNotExistException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, Object> handleUserNotExistException(UserNotExistException ex) {
         return makeErrorMessage(ReturnCode.USER_NOT_EXIST, "User Not Exist", ex.getMessage());
     }
 
-    /**
+    */
+/**
      * Handle sms too much exception map.
      *
      * @param ex the ex
      * @return the map
-     */
+     *//*
+
     @ExceptionHandler(SmsTooMuchException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public Map<String, Object> handleSmsTooMuchException(SmsTooMuchException ex) {
         return makeErrorMessage(ReturnCode.SMS_TOO_MUCH, "SMS Too Much", ex.getMessage());
     }
 
-    /**
+    */
+/**
      * Handle illegal mobile exception map.
      *
      * @param ex the ex
      * @return the map
-     */
+     *//*
+
     @ExceptionHandler(IllegalMobileException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, Object> handleIllegalMobileException(IllegalMobileException ex) {
@@ -133,3 +152,4 @@ public class ShortMsgController extends BaseController {
     }
 
 }
+*/

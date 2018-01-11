@@ -1,12 +1,9 @@
 package cn.bjd.platform.system.api.service;
 
 
-import cn.bjd.platform.system.api.entity.SysDepartment;
-import cn.bjd.platform.system.api.entity.SysMenu;
+import cn.bjd.platform.system.api.entity.*;
 import com.github.pagehelper.PageInfo;
 import cn.bjd.platform.common.api.Paging;
-import cn.bjd.platform.system.api.entity.SysRole;
-import cn.bjd.platform.system.api.entity.SysUser;
 
 import java.util.List;
 
@@ -16,6 +13,35 @@ import java.util.List;
  * @author huqilang
  */
 public interface ISystemService {
+
+
+    /**
+     *
+     * @param count
+     * @return
+     */
+    List<SysCount> getCount(SysCount count);
+
+    /**
+     * 根据类型统计
+     * @param list
+     * @return
+     */
+    Long countForCompany(List<SysCount> list);
+
+    /**
+     * 分区域统计
+     * @param count
+     * @return
+     */
+    List<SysCount> countGroupByProvinceAndCity(SysCount count);
+
+    /**
+     * 增长消亡曲线
+     * @param count
+     * @return
+     */
+    List<SysCount> countUpDownGroupByYear(SysCount count);
 
     /**
      * 根据登录名获取用户

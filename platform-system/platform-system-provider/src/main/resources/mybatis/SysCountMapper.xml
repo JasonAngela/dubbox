@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bjd.platform.system.provider.mapper.SysCountMapper">
+    <sql id="selectColumns">
+        SELECT DISTINCT
+        a.id,
+        a.province,
+        a.city,
+        a.area,
+        a.category,
+        a.sum,
+        a.level,
+        a.year,
+        a.type
+        FROM sys_count a
+    </sql>
+
+    <select id="getCount"resultType="cn.bjd.platform.system.api.entity.SysCount">
+        <include refid="selectColumns"/>
+        <where>
+            <trim prefixOverrides="AND">
+                <if test="category != null and category != ''">
+                  AND a.category=#{category}
+                </if>
+                <if test="province != null and province != ''">
+                  AND a.province = #{province}
+                </if>
+                <if test="city != null and city != ''">
+                  AND a.city = #{city}
+                </if>
+                <if test="area != null and area != ''">
+                  AND a.area = #{area}
+                </if>
+            </trim>
+        </where>
+
+    </select>
+
+    <!-- 根据类型查询企业相关数据 -->
+    <select id="countForCompany" resultType="long" parameterType="list">
+      SELECT COUNT(1) from sys_count a
+        <where>
+              a.category in
+            <foreach collection="list" item="item" separator="," open="(" close=")" index="">
+                #{item.category}
+            </foreach>
+        </where>
+    </select>
+
+    <!--企业数量分区域统计-->
+    <select id="countGroupByProvinceAndCity" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        SELECT a.province,a.city,sum(a.sum) from sys_count a
+          <where>
+              <trim prefixOverrides="AND">
+                <if test="category != null and category != ''">
+                    AND a.category in (#{category})
+                </if>
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
+                </if>
+                <if test="city != null and city != ''">
+                    AND a.city = #{city}
+                </if>
+                    AND a.city != ''
+              </trim>
+          </where>
+        GROUP BY a.province,a.city
+    </select>
+
+    <!--企业增长消亡曲线-->
+    <select id="countUpDownGroupByYear" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        SELECT a.year,sum(a.sum) FROM sys_count a
+          <where>
+              <trim prefixOverrides="AND">
+                  <if test="category != null and category != ''">
+                      AND a.category in (#{category})
+                  </if>
+                  <if test="province != null and province != ''">
+                      AND a.province = #{province}
+                  </if>
+                  <if test="city != null and city != ''">
+                      AND a.city = #{city}
+                  </if>
+                  <if test="area != null and area != ''">
+                      AND a.area = #{area}
+                  </if>
+              </trim>
+          </where>
+        GROUP BY a.year
+    </select>
+
+
 
 </mapper>

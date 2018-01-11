@@ -1,18 +1,12 @@
 package cn.bjd.platform.system.provider.serviceimpl;
 
-import cn.bjd.platform.system.api.entity.SysDepartment;
-import cn.bjd.platform.system.provider.mapper.SysDepartmentMapper;
-import cn.bjd.platform.system.provider.mapper.SysMenuMapper;
+import cn.bjd.platform.system.api.entity.*;
+import cn.bjd.platform.system.provider.mapper.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import cn.bjd.platform.common.api.Paging;
 import cn.bjd.platform.common.utils.StringHelper;
-import cn.bjd.platform.system.api.entity.SysMenu;
-import cn.bjd.platform.system.api.entity.SysRole;
-import cn.bjd.platform.system.api.entity.SysUser;
 import cn.bjd.platform.system.api.service.ISystemService;
-import cn.bjd.platform.system.provider.mapper.SysRoleMapper;
-import cn.bjd.platform.system.provider.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +48,34 @@ public class SystemService implements ISystemService {
      */
     @Autowired
     private SysDepartmentMapper sysDepartmentMapper;
+
+    /**
+     * 统计
+     */
+    @Autowired
+    private SysCountMapper sysCountMapper;
+
+    //count
+
+    @Override
+    public List<SysCount> getCount(SysCount count) {
+        return sysCountMapper.getCount(count);
+    }
+
+    @Override
+    public Long countForCompany(List<SysCount> list) {
+        return sysCountMapper.countForCompany(list);
+    }
+
+    @Override
+    public List<SysCount> countGroupByProvinceAndCity(SysCount count) {
+        return sysCountMapper.countGroupByProvinceAndCity(count);
+    }
+
+    @Override
+    public List<SysCount> countUpDownGroupByYear(SysCount count) {
+        return sysCountMapper.countUpDownGroupByYear(count);
+    }
 
     //User
 
