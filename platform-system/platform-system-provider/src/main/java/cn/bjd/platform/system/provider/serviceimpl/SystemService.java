@@ -72,10 +72,7 @@ public class SystemService implements ISystemService {
         return sysCountMapper.countGroupByProvinceAndCity(count);
     }
 
-    @Override
-    public List<SysCount> countUpDownGroupByYear(SysCount count) {
-        return sysCountMapper.countUpDownGroupByYear(count);
-    }
+
 
     //User
 

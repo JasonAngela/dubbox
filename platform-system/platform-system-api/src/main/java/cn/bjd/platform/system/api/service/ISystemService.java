@@ -36,12 +36,7 @@ public interface ISystemService {
      */
     List<SysCount> countGroupByProvinceAndCity(SysCount count);
 
-    /**
-     * 增长消亡曲线
-     * @param count
-     * @return
-     */
-    List<SysCount> countUpDownGroupByYear(SysCount count);
+
 
     /**
      * 根据登录名获取用户

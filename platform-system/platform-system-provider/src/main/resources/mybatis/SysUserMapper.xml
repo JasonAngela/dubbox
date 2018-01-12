@@ -147,7 +147,7 @@
     </insert>
 
     <insert id="insertUserDept">
-        INSERT INTO sys_department(user_id, dept_id)
+        INSERT INTO sys_user_department(user_id, dept_id)
         <foreach collection="depts" item="dept" separator=" union all ">
             SELECT #{id}, #{dept.id}
         </foreach>

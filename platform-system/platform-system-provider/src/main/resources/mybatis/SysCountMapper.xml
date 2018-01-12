@@ -250,8 +250,6 @@
         group by a.year
     </select>
 
-    <!--Customs海关企业评级统计Tax税务企业评级统计-->
-
 
     <!--海关税务企业评级历史变化统计-->
     <select id="countCustomsTaxGradeHistory" resultType="cn.bjd.platform.system.api.entity.SysCount">
