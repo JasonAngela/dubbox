@@ -55,7 +55,7 @@
 
     <!--企业数量分区域统计-->
     <select id="countGroupByProvinceAndCity" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        SELECT a.province,a.city,sum(a.sum) from sys_count a
+        SELECT a.province,a.city,sum(a.sum) as totalSum from sys_count a
           <where>
               <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
@@ -76,7 +76,7 @@
 
     <!--企业历史数量分区域变化-->
     <select id="countAreaOnlySelectNothing" resultType="cn.bjd.platform.system.api.entity.SysCount">
-       SELECT a.province,a.year,sum(a.sum) from sys_count a
+       SELECT a.province,a.year,sum(a.sum) as totalSum from sys_count a
         <where>
             <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
@@ -90,7 +90,7 @@
     
     
     <select id="countAreaOnlySelectProvince" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        SELECT a.city,a.year,sum(a.sum) from sys_count a
+        SELECT a.city,a.year,sum(a.sum) as totalSum from sys_count a
         <where>
             <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
@@ -107,7 +107,7 @@
 
 
     <select id="countAreaOnlySelectCity" resultType="cn.bjd.platform.system.api.entity.SysCount">
-          SELECT a.area,a.year,sum(a.sum) from sys_count a
+          SELECT a.area,a.year,sum(a.sum) as totalSum from sys_count a
           <where>
               <trim prefixOverrides="AND">
                   <if test="category != null and category != ''">
@@ -127,7 +127,7 @@
 
 
     <select id="countAreaOnlySelectArea" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        SELECT a.area,a.year,sum(a.sum) from sys_count a
+        SELECT a.area,a.year,sum(a.sum) as totalSum from sys_count a
         <trim prefixOverrides="AND">
             <if test="category != null and category != ''">
                 AND a.category = #{category}
@@ -177,7 +177,7 @@
 
     <!--行业历史数量变化-->
     <select id="industryHistoryByYear" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        select sum(a.sum),a.type,a.year from sys_count a
+        select sum(a.sum) as totalSum,a.type,a.year from sys_count a
         <where>
             <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
@@ -200,7 +200,7 @@
 
     <!--涉诉信息统计  违法信息统计-->
     <select id="countDSelect" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        select sum(a.sum),a.category from sys_count a
+        select sum(a.sum) as totalSum,a.category from sys_count a
         <where>
             <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
@@ -274,7 +274,5 @@
         </where>
         group by a.type,a.year
     </select>
-    
 
-    
 </mapper>

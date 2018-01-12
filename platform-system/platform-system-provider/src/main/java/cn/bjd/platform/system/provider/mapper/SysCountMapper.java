@@ -35,10 +35,7 @@ public interface SysCountMapper  extends CrudDao<SysCount> {
      */
     List<SysCount> countGroupByProvinceAndCity(SysCount count);
 
-    /**
-     * 企业数量增长消亡曲线
-     * @param count
-     * @return
-     */
-    List<SysCount> countUpDownGroupByYear(SysCount count);
+
+
+
 }
