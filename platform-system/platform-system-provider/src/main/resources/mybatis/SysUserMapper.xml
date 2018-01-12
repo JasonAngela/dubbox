@@ -134,7 +134,7 @@
     </delete>
     
     <delete id="deleteUserDept">
-      DELETE FROM sys_department
+      DELETE FROM sys_user_department
         WHERE user_id = #{id}
     </delete>
 

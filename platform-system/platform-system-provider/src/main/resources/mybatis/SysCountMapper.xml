@@ -73,28 +73,6 @@
         GROUP BY a.province,a.city
     </select>
 
-    <!--企业增长消亡曲线-->
-    <select id="countUpDownGroupByYear" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        SELECT a.year,sum(a.sum) FROM sys_count a
-          <where>
-              <trim prefixOverrides="AND">
-                  <if test="category != null and category != ''">
-                      AND a.category in (#{category})
-                  </if>
-                  <if test="province != null and province != ''">
-                      AND a.province = #{province}
-                  </if>
-                  <if test="city != null and city != ''">
-                      AND a.city = #{city}
-                  </if>
-                  <if test="area != null and area != ''">
-                      AND a.area = #{area}
-                  </if>
-              </trim>
-          </where>
-        GROUP BY a.year
-    </select>
-
 
     <!--企业历史数量分区域变化-->
     <select id="countAreaOnlySelectNothing" resultType="cn.bjd.platform.system.api.entity.SysCount">
@@ -102,7 +80,7 @@
         <where>
             <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
-                    AND a.category in (#{category})
+                    AND a.category = #{category}
                 </if>
                 AND a.province !=''
             </trim>
@@ -116,7 +94,7 @@
         <where>
             <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
-                    AND a.category in (#{category})
+                    AND a.category = #{category}
                 </if>
                 <if test="province != null and province != ''">
                     AND a.province = #{province}
@@ -133,7 +111,7 @@
           <where>
               <trim prefixOverrides="AND">
                   <if test="category != null and category != ''">
-                      AND a.category in (#{category})
+                      AND a.category = #{category}
                   </if>
                   <if test="province != null and province != ''">
                       AND a.province = #{province}
@@ -152,7 +130,7 @@
         SELECT a.area,a.year,sum(a.sum) from sys_count a
         <trim prefixOverrides="AND">
             <if test="category != null and category != ''">
-                AND a.category in (#{category})
+                AND a.category = #{category}
             </if>
             <if test="province != null and province != ''">
                 AND a.province = #{province}
@@ -167,49 +145,16 @@
         group by a.year,a.area order by a.area, a.year
     </select>
 
-    <!--行业分类统计-->
-    <select id="industryBySelectNothingOrProvince" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        select sum(a.sum),a.type from sys_count a
+    <!--行业分类统计  TOP10 Customs海关企业评级统计 Tax税务企业评级统计 -->
+    <select id="countIndustryCustomsTaxTop" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        select sum(a.sum) as totalSum,a.type from sys_count a
         <where>
             <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
                     AND a.category = #{category}
                 </if>
-            </trim>
-        </where>
-        group by a.type,a.province
-        order by sum(a.sum) DESC
-        <if test="top != null and top != ''">
-            limit 10
-        </if>
-    </select>
-
-    <select id="industryBySelectCity" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        select sum(a.sum),a.type from sys_count a
-        <where>
-            <trim prefixOverrides="AND">
-                <if test="category != null and category != ''">
-                    AND a.category = #{category}
-                </if>
-                <if test="city != null and city != ''">
-                    AND a.city = #{city}
-                </if>
-            </trim>
-        </where>
-        group by a.type,a.city
-        order by sum(a.sum) DESC
-        <if test="top != null and top != ''">
-            limit 10
-        </if>
-    </select>
-
-
-    <select id="industryBySelectArea" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        select sum(a.sum),a.type from sys_count a
-        <where>
-            <trim prefixOverrides="AND">
-                <if test="category != null and category != ''">
-                    AND a.category = #{category}
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
                 </if>
                 <if test="city != null and city != ''">
                     AND a.city = #{city}
@@ -217,9 +162,12 @@
                 <if test="area != null and area != ''">
                     AND a.area = #{area}
                 </if>
+                <if test="type != null and type != ''">
+                    AND a.type like '%D%'
+                </if>
             </trim>
         </where>
-        group by a.type,a.area
+        group by a.type
         order by sum(a.sum) DESC
         <if test="top != null and top != ''">
             limit 10
@@ -228,41 +176,15 @@
 
 
     <!--行业历史数量变化-->
-    <select id="industryHistoryBySelectNothingOrProvince" resultType="cn.bjd.platform.system.api.entity.SysCount">
+    <select id="industryHistoryByYear" resultType="cn.bjd.platform.system.api.entity.SysCount">
         select sum(a.sum),a.type,a.year from sys_count a
         <where>
             <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
                     AND a.category = #{category}
                 </if>
-            </trim>
-        </where>
-        group by a.type,a.province,a.year
-
-    </select>
-
-    <select id="industryHistoryBySelectCity" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        select sum(a.sum),a.type,a.year from sys_count a
-        <where>
-            <trim prefixOverrides="AND">
-                <if test="category != null and category != ''">
-                    AND a.category = #{category}
-                </if>
-                <if test="city != null and city != ''">
-                    AND a.city = #{city}
-                </if>
-            </trim>
-        </where>
-        group by a.type,a.city,a.year
-    </select>
-
-
-    <select id="industryHistoryBySelectArea" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        select sum(a.sum),a.type,a.year from sys_count a
-        <where>
-            <trim prefixOverrides="AND">
-                <if test="category != null and category != ''">
-                    AND a.category = #{category}
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
                 </if>
                 <if test="city != null and city != ''">
                     AND a.city = #{city}
@@ -272,26 +194,87 @@
                 </if>
             </trim>
         </where>
-        group by a.type,a.area,a.year
+        group by a.type,a.year
     </select>
 
-    <!--涉诉信息统计-->
-    <select id="countByCategorySelectNothingOrProvince" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        select a.category,sum(a.sum) as totalSum,a.province from sys_count a
+
+    <!--涉诉信息统计  违法信息统计-->
+    <select id="countDSelect" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        select sum(a.sum),a.category from sys_count a
         <where>
             <trim prefixOverrides="AND">
-              <if test="category != null and category != ''">
-                  AND a.category = #{category}
-              </if>
-              <if test="province != null and province != ''">
-                  AND a.province = #{province}
-              </if>
+                <if test="category != null and category != ''">
+                    AND a.category = #{category}
+                </if>
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
+                </if>
+                <if test="city != null and city != ''">
+                    AND a.city = #{city}
+                </if>
+                <if test="area != null and area != ''">
+                    AND a.area = #{area}
+                </if>
+                <if test="type != null and type !=''">
+                    AND a.type like '%D%'
+                </if>
             </trim>
+
         </where>
         group by a.category
     </select>
+
+
+    <!--涉诉信息 违法信息历史变化 企业增长消亡曲线-->
+    <select id="countCompanyCommon" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        select sum(a.sum) as totalSum,a.year from sys_count a
+        <where>
+            <trim prefixOverrides="AND">
+                <if test="category != null and category != ''">
+                    AND a.category = #{category}
+                </if>
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
+                </if>
+                <if test="city != null and city != ''">
+                    AND a.city = #{city}
+                </if>
+                <if test="area != null and area != ''">
+                    AND a.area = #{area}
+                </if>
+                <if test="type != null and type != ''">
+                    AND a.type like '%D%'
+                </if>
+            </trim>
+        </where>
+        group by a.year
+    </select>
+
+    <!--Customs海关企业评级统计Tax税务企业评级统计-->
+
+
+    <!--海关税务企业评级历史变化统计-->
+    <select id="countCustomsTaxGradeHistory" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        select sum(a.sum) as totalSum,a.type,a.year from sys_count a
+        <where>
+            <trim prefixOverrides="AND">
+                <if test="category != null and category != ''">
+                    AND a.category = #{category}
+                </if>
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
+                </if>
+                <if test="city != null and city != ''">
+                    AND a.city = #{city}
+                </if>
+                <if test="area != null and area != ''">
+                    AND a.area = #{area}
+                </if>
+            </trim>
+        </where>
+        group by a.type,a.year
+    </select>
     
 
-
-
+    
 </mapper>
