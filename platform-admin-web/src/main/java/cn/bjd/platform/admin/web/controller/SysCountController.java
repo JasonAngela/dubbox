@@ -232,7 +232,7 @@ public class SysCountController extends BaseController {
             count = new SysCount();
         }
         count.setCategory("COURTPUB");
-        List<SysCount> list1 = systemService.countCompanyCommon(count)
+        List<SysCount> list1 = systemService.countCompanyCommon(count);
         map.put("COURTPUB",list1);
         count.setCategory("EXECUTED");
         List<SysCount> list2 = systemService.countCompanyCommon(count);
