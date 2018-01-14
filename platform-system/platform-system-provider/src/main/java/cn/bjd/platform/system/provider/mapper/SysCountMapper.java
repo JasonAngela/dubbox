@@ -26,7 +26,7 @@ public interface SysCountMapper  extends CrudDao<SysCount> {
      * @param list
      * @return
      */
-    Long countForCompany(List<SysCount> list);
+    Integer countForCompany(List<String> list);
 
     /**
      * 分区域统计

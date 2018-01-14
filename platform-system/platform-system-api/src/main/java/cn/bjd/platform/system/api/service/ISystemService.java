@@ -27,16 +27,56 @@ public interface ISystemService {
      * @param list
      * @return
      */
-    Long countForCompany(List<SysCount> list);
+    Integer countForCompany(List<String> list);
 
-    /**
-     * 分区域统计
-     * @param count
-     * @return
-     */
+
     List<SysCount> countGroupByProvinceAndCity(SysCount count);
 
 
+    /**
+     * 企业数量分区域变化
+     * @param count
+     * @return
+     */
+    List<SysCount> countGroupByPlace(SysCount count);
+
+    /**
+     * 行业分类统计  TOP10 Customs海关企业评级统计 Tax税务企业评级统计
+     * @param count
+     * @return
+     */
+    List<SysCount> countIndustryCustomsTaxTop(SysCount count);
+
+
+    /**
+     * 行业历史数量变化
+     * @param count
+     * @return
+     */
+    List<SysCount> industryHistoryByYear(SysCount count);
+
+
+    /**
+     * 涉诉信息统计  违法信息统计
+     * @param count
+     * @return
+     */
+    List<SysCount> countDSelect(SysCount count);
+
+
+    /**
+     * 涉诉信息 违法信息历史变化 企业增长消亡曲线
+     * @param count
+     * @return
+     */
+    List<SysCount> countCompanyCommon(SysCount count);
+
+    /**
+     * 海关税务企业评级历史变化统计
+     * @param count
+     * @return
+     */
+    List<SysCount> countCustomsTaxGradeHistory(SysCount count);
 
     /**
      * 根据登录名获取用户

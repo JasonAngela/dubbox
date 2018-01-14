@@ -63,16 +63,69 @@ public class SystemService implements ISystemService {
     }
 
     @Override
-    public Long countForCompany(List<SysCount> list) {
+    public Integer countForCompany(List<String> list) {
         return sysCountMapper.countForCompany(list);
     }
-
     @Override
-    public List<SysCount> countGroupByProvinceAndCity(SysCount count) {
+    public List<SysCount> countGroupByProvinceAndCity(SysCount count){
         return sysCountMapper.countGroupByProvinceAndCity(count);
     }
 
+    @Override
+    public List<SysCount> countGroupByPlace(SysCount count){
 
+        //分省市区
+        List<SysCount> list = null;
+        if(count == null) {
+            // 不选择 以省份显示
+            list = sysCountMapper.countAreaOnlySelectNothing(count);
+        }
+
+        if(!StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())&&StringUtils.isEmpty(count.getArea())){
+            list = sysCountMapper.countAreaOnlySelectProvince(count);
+        }
+
+        if(!StringUtils.isEmpty(count.getProvince())&&!StringUtils.isEmpty(count.getCity())&&StringUtils.isEmpty(count.getArea())){
+            list = sysCountMapper.countAreaOnlySelectCity(count);
+        }
+
+        if(StringUtils.isEmpty(count.getProvince())&&!StringUtils.isEmpty(count.getCity())&&!StringUtils.isEmpty(count.getArea())){
+            list = sysCountMapper.countAreaOnlySelectArea(count);
+        }
+
+
+        return list;
+    }
+
+    @Override
+    public List<SysCount> countIndustryCustomsTaxTop(SysCount count){
+        return sysCountMapper.countIndustryCustomsTaxTop(count);
+    }
+
+
+
+    @Override
+    public List<SysCount> industryHistoryByYear(SysCount count){
+        return sysCountMapper.industryHistoryByYear(count);
+    }
+
+
+    @Override
+    public List<SysCount> countDSelect(SysCount count){
+        return sysCountMapper.countDSelect(count);
+    }
+
+
+    @Override
+    public List<SysCount> countCompanyCommon(SysCount count){
+        return sysCountMapper.countCompanyCommon(count);
+    }
+
+
+    @Override
+    public List<SysCount> countCustomsTaxGradeHistory(SysCount count){
+        return sysCountMapper.countCustomsTaxGradeHistory(count);
+    }
 
     //User
 
