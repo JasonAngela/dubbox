@@ -1,6 +1,7 @@
 package cn.bjd.platform.system.api.entity;
 
 import cn.bjd.platform.common.api.DataEntity;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
@@ -30,7 +31,26 @@ public class SysDepartment extends DataEntity {
 
     private String deputyPerson;
 
+    private Integer level = 0;
+
     private List<SysDepartment> children = new ArrayList<>();
+
+    public Integer getLevel() {
+
+        String pIds = getParentIds();
+        if(StringUtils.isNotBlank(pIds)&&pIds.contains(",")){
+            String[] ids = pIds.split(",");
+            if(ids.length>0){
+                level = ids.length-1;
+            }
+        }
+
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public List<SysDepartment> getChildren() {
         return children;

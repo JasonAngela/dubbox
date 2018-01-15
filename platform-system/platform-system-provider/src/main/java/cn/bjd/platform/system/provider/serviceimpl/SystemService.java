@@ -234,10 +234,10 @@ public class SystemService implements ISystemService {
 
     @Override
     public List<SysMenu> getMenuList(String userId) {
-        List<SysMenu> resultList = new ArrayList<>();
+        /*List<SysMenu> resultList = new ArrayList<>();
         //按父子顺序排列菜单列表
-        sortList(resultList, getMenuListByUserId(userId), "");
-        return resultList;
+        sortList(resultList, getMenuListByUserId(userId), "");*/
+        return makeTree(getMenuListByUserId(userId), false);
     }
 
     /**
@@ -311,6 +311,10 @@ public class SystemService implements ISystemService {
             }
         }
 
+        //按照页面需求 增加一个Tree实体类
+
+
+
         return result;
     }
 
@@ -369,11 +373,32 @@ public class SystemService implements ISystemService {
      */
     @Override
     public List<SysDepartment> findAllDepts() {
-        return sysDepartmentMapper.findAllList();
+        List<SysDepartment> originals = sysDepartmentMapper.findAllList();
+        Map<String, SysDepartment> dtoMap = new HashMap<>();
+        for (SysDepartment node : originals) {
+            // 原始数据对象为Node，放入dtoMap中。
+            String id = node.getId();
+            dtoMap.put(id, node);
+        }
+        List<SysDepartment> result = new ArrayList<>();
+        for (Map.Entry<String, SysDepartment> entry : dtoMap.entrySet()) {
+            SysDepartment node = entry.getValue();
+            String parentId = node.getParentId();
+            if (dtoMap.get(parentId) == null) {
+                // 如果是顶层节点，直接添加到结果集合中
+                result.add(node);
+            } else {
+                // 如果不是顶层节点，有父节点，然后添加到父节点的子节点中
+                SysDepartment parent = dtoMap.get(parentId);
+                parent.addChild(node);
+            }
+        }
+        return result;
     }
 
 
     @Override
+    @Transactional(readOnly = false)
     public SysDepartment saveDept(SysDepartment dept) {
         SysDepartment parentDept = this.getByDeptId(dept.getParentId());
         String parentIds = parentDept == null ? "" : parentDept.getParentIds();
@@ -412,6 +437,7 @@ public class SystemService implements ISystemService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deleteDeptById(String deptId) {
         sysDepartmentMapper.deleteById(deptId);
     }

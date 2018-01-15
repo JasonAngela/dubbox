@@ -1,6 +1,7 @@
 package cn.bjd.platform.system.api.entity;
 
 import cn.bjd.platform.common.api.DataEntity;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
@@ -27,6 +28,17 @@ public class SysMenu extends DataEntity {
      * 名称
      */
     private String name;
+
+    /**
+     * 名称
+     */
+    private String text;
+
+    /**
+     * id
+     */
+    private String value;
+
     /**
      * 链接
      */
@@ -60,8 +72,42 @@ public class SysMenu extends DataEntity {
      */
     private List<SysMenu> children = new ArrayList<>();
 
+
+    private Integer level = 0;
+
+    public Integer getLevel() {
+        String pIds = getParentIds();
+        if(StringUtils.isNotBlank(pIds)&&pIds.contains(",")){
+            String[] ids = pIds.split(",");
+            if(ids.length>0){
+                level = ids.length-1;
+            }
+        }
+        return  level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
     public SysMenu() {
         super();
+    }
+
+    public String getText() {
+        return this.getName();
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getValue() {
+        return this.getId();
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public SysMenu(String id) {
