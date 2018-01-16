@@ -25,6 +25,26 @@ public class SysCount extends DataEntity {
 
     private Integer totalSum;
 
+    private String name;
+
+    private String value;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
     public Integer getTotalSum() {
         return totalSum;
     }
