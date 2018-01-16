@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +32,11 @@ public class SysCountController extends BaseController {
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/number")
     public Integer getDataForCompany(){
-       List<String> list = new ArrayList<String>();
-       list.add("ETPCOUNT");
-       list.add("CANCELLETP");
-       list.add("ENTYEAR");
-       return systemService.countForCompany(list);
+        List<String> list = new ArrayList<String>();
+        list.add("ETPCOUNT");
+        list.add("CANCELLETP");
+        list.add("ENTYEAR");
+        return systemService.countForCompany(list);
     }
 
     /**
@@ -62,7 +61,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/countByArea")
-    public List<SysCount> getCountForCompanyArea(@Valid @RequestBody SysCount count){
+    public List<SysCount> getCountForCompanyArea(SysCount count){
 
         //其余省市在页面传入
         List<SysCount> list = null;
@@ -82,8 +81,8 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/riseAndDiea")
-    public Map<String,List<SysCount>> getCurveRiseAndDie(@Valid @RequestBody SysCount count){
-        Map<String,List<SysCount>> map = new HashMap<String,List<SysCount>>();
+    public Map<String,List<SysCount>> getCurveRiseAndDie(SysCount count){
+        Map<String,List<SysCount>> map = new HashMap<>();
         if(count == null){
             count = new SysCount();
         }
@@ -107,7 +106,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/hisChangeData")
-    public List<SysCount> getCompanyHistoricalChangeData(@Valid @RequestBody SysCount count){
+    public List<SysCount> getCompanyHistoricalChangeData(SysCount count){
         List<SysCount> list = null;
         if(count == null){
             count = new SysCount();
@@ -125,7 +124,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/industryClassify")
-    public List<SysCount> getCountIndustryClassify(@Valid @RequestBody SysCount count){
+    public List<SysCount> getCountIndustryClassify(SysCount count){
         List<SysCount> list = null;
         if(count == null){
             count = new SysCount();
@@ -142,7 +141,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/top10")
-    public List<SysCount> getCountTop10(@Valid @RequestBody SysCount count){
+    public List<SysCount> getCountTop10(SysCount count){
         List<SysCount> list = null;
         if(count == null){
             count = new SysCount();
@@ -160,7 +159,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/industryHistoryClassify")
-    public List<SysCount> getCountIndustryHistoryClassify(@Valid @RequestBody SysCount count){
+    public List<SysCount> getCountIndustryHistoryClassify(SysCount count){
         List<SysCount> list = null;
         if(count == null){
             count = new SysCount();
@@ -177,7 +176,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/involveAppeal")
-    public Map<String,List<SysCount>> getCountInvolvedInAppeal(@Valid @RequestBody SysCount count){
+    public Map<String,List<SysCount>> getCountInvolvedInAppeal(SysCount count){
         Map<String,List<SysCount>> map = new HashMap<>();
         if(count == null){
             count = new SysCount();
@@ -204,7 +203,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/countIllegal")
-    public Map<String,List<SysCount>> getCountIllegalStatistics(@Valid @RequestBody SysCount count){
+    public Map<String,List<SysCount>> getCountIllegalStatistics(SysCount count){
         Map<String,List<SysCount>> map = new HashMap<>();
         if(count == null){
             count = new SysCount();
@@ -226,7 +225,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/involveAppealHistory")
-    public Map<String,List<SysCount>> getCountInvolvedInAppealHistory(@Valid @RequestBody SysCount count){
+    public Map<String,List<SysCount>> getCountInvolvedInAppealHistory(SysCount count){
         Map<String,List<SysCount>> map = new HashMap<>();
         if(count == null){
             count = new SysCount();
@@ -253,7 +252,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/countIllegalHistory")
-    public Map<String,List<SysCount>> getCountIllegalStatisticsHistory(@Valid @RequestBody SysCount count){
+    public Map<String,List<SysCount>> getCountIllegalStatisticsHistory(SysCount count){
         Map<String,List<SysCount>> map = new HashMap<>();
         if(count == null){
             count = new SysCount();
@@ -275,7 +274,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/customsLevel")
-    public List<SysCount> getCountCUSTOMSLevel(@Valid @RequestBody SysCount count){
+    public List<SysCount> getCountCUSTOMSLevel(SysCount count){
         if(count == null){
             count = new SysCount();
         }
@@ -291,7 +290,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/taxLevel")
-    public List<SysCount> getCountTAXLevel(@Valid @RequestBody SysCount count){
+    public List<SysCount> getCountTAXLevel(SysCount count){
         if(count == null){
             count = new SysCount();
         }
@@ -308,7 +307,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/customsHistoryLevel")
-    public List<SysCount> getCountCUSTOMSHistoryLevel(@Valid @RequestBody SysCount count){
+    public List<SysCount> getCountCUSTOMSHistoryLevel(SysCount count){
         if(count == null){
             count = new SysCount();
         }
@@ -324,7 +323,7 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/taxHistoryLevel")
-    public List<SysCount> getCountTAXHistoryLevel(@Valid @RequestBody SysCount count){
+    public List<SysCount> getCountTAXHistoryLevel(SysCount count){
         if(count == null){
             count = new SysCount();
         }

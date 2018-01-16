@@ -54,10 +54,39 @@
     </select>
 
     <!--企业数量分区域统计-->
-    <select id="countGroupByProvinceAndCity" resultType="cn.bjd.platform.system.api.entity.SysCount">
-        SELECT a.province,a.city,sum(a.sum) as totalSum from sys_count a
+    <select id="countGroupByProvinceAndCityN" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        SELECT a.province,sum(a.sum) as totalSum from sys_count a
           <where>
               <trim prefixOverrides="AND">
+                <if test="category != null and category != ''">
+                    AND a.category in (#{category})
+                </if>
+                    AND a.province != ''
+              </trim>
+          </where>
+        GROUP BY a.province
+    </select>
+
+    <select id="countGroupByProvinceAndCityP" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        SELECT a.city,sum(a.sum) as totalSum from sys_count a
+        <where>
+            <trim prefixOverrides="AND">
+                <if test="category != null and category != ''">
+                    AND a.category in (#{category})
+                </if>
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
+                </if>
+                AND a.city != ''
+            </trim>
+        </where>
+        GROUP BY a.city
+    </select>
+
+    <select id="countGroupByProvinceAndCityC" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        SELECT a.area,sum(a.sum) as totalSum from sys_count a
+        <where>
+            <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
                     AND a.category in (#{category})
                 </if>
@@ -67,10 +96,10 @@
                 <if test="city != null and city != ''">
                     AND a.city = #{city}
                 </if>
-                    AND a.city != ''
-              </trim>
-          </where>
-        GROUP BY a.province,a.city
+                AND a.area != ''
+            </trim>
+        </where>
+        GROUP BY a.area
     </select>
 
 

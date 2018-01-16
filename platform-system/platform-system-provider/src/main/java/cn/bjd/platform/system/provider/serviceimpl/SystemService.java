@@ -68,7 +68,19 @@ public class SystemService implements ISystemService {
     }
     @Override
     public List<SysCount> countGroupByProvinceAndCity(SysCount count){
-        return sysCountMapper.countGroupByProvinceAndCity(count);
+        List<SysCount> list = null;
+        if(StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())){
+            list = sysCountMapper.countGroupByProvinceAndCityN(count);
+        }
+        if(!StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())){
+            list = sysCountMapper.countGroupByProvinceAndCityP(count);
+        }
+
+        if(!StringUtils.isEmpty(count.getProvince())&&!StringUtils.isEmpty(count.getCity())){
+            list = sysCountMapper.countGroupByProvinceAndCityC(count);
+        }
+
+        return list;
     }
 
     @Override
@@ -76,7 +88,7 @@ public class SystemService implements ISystemService {
 
         //分省市区
         List<SysCount> list = null;
-        if(count == null) {
+        if(count == null||(StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())&&StringUtils.isEmpty(count.getArea()))) {
             // 不选择 以省份显示
             list = sysCountMapper.countAreaOnlySelectNothing(count);
         }
