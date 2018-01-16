@@ -4,6 +4,8 @@ import cn.bjd.platform.admin.web.common.controller.BaseController;
 import cn.bjd.platform.admin.web.security.utils.TokenUtil;
 import cn.bjd.platform.common.web.security.AuthenticationTokenFilter;
 import cn.bjd.platform.system.api.entity.SysUser;
+import cn.bjd.platform.system.api.service.ISystemService;
+import org.omg.CORBA.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +51,8 @@ public class AuthenticationController extends BaseController {
     @Autowired
     private TokenUtil jwtTokenUtil;
 
+    @Autowired
+    private ISystemService systemService;
     /**
      * Create authentication token bearer auth token.
      *
@@ -56,6 +61,21 @@ public class AuthenticationController extends BaseController {
      */
     @PostMapping(value = "/token")
     public Map<String, Object> createAuthenticationToken(@RequestBody SysUser sysUser) {
+
+        //检测用户的合法性
+        if(sysUser == null){
+            throw new cn.bjd.platform.system.api.exception.base.SystemException("所填信息为空");
+        }
+
+        if(StringUtils.isEmpty(sysUser.getLoginName())||StringUtils.isEmpty(sysUser.getPassword())){
+            throw new cn.bjd.platform.system.api.exception.base.SystemException("用户名或者密码不能为空");
+        }
+
+        SysUser loginUser = systemService.getByLoginName(sysUser.getLoginName());
+        if(loginUser == null){
+            throw new cn.bjd.platform.system.api.exception.base.SystemException("用户不存在");
+        }
+
 
         // Perform the security
         final Authentication authentication = authenticationManager.authenticate(

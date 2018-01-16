@@ -1,6 +1,7 @@
 package cn.bjd.platform.system.provider.serviceimpl;
 
 import cn.bjd.platform.system.api.entity.*;
+import cn.bjd.platform.system.api.exception.base.SystemException;
 import cn.bjd.platform.system.provider.mapper.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -88,7 +89,7 @@ public class SystemService implements ISystemService {
 
         //分省市区
         List<SysCount> list = null;
-        if(count == null||(StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())&&StringUtils.isEmpty(count.getArea()))) {
+        if(StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())&&StringUtils.isEmpty(count.getArea())) {
             // 不选择 以省份显示
             list = sysCountMapper.countAreaOnlySelectNothing(count);
         }
@@ -161,6 +162,11 @@ public class SystemService implements ISystemService {
 
         user.setMenus(menuList);
         return user;
+    }
+
+    @Override
+    public SysUser getByLoginName(String loginName) {
+        return sysUserMapper.getByLoginName(loginName);
     }
 
     @Override

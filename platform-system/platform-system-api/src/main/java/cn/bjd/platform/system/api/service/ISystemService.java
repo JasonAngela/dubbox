@@ -79,12 +79,15 @@ public interface ISystemService {
     List<SysCount> countCustomsTaxGradeHistory(SysCount count);
 
     /**
-     * 根据登录名获取用户
+     * 根据登录名获取用户(包含角色等信息)
      *
      * @param loginName 登录名
      * @return SysUser user by login name
      */
     SysUser getUserByLoginName(String loginName);
+
+
+    SysUser getByLoginName(String loginName);
 
     /**
      * 查询用户列表
