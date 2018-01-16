@@ -5,7 +5,6 @@ import cn.bjd.platform.admin.web.security.utils.TokenUtil;
 import cn.bjd.platform.common.web.security.AuthenticationTokenFilter;
 import cn.bjd.platform.system.api.entity.SysUser;
 import cn.bjd.platform.system.api.service.ISystemService;
-import org.omg.CORBA.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
