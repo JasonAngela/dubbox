@@ -329,9 +329,6 @@ public class SystemService implements ISystemService {
             }
         }
 
-        //按照页面需求 增加一个Tree实体类
-
-
 
         return result;
     }
