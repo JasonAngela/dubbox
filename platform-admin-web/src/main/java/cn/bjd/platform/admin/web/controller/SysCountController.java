@@ -106,15 +106,15 @@ public class SysCountController extends BaseController {
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/hisChangeData")
-    public List<SysCount> getCompanyHistoricalChangeData(SysCount count){
-        List<SysCount> list = null;
+    public Map<String,List<SysCount>> getCompanyHistoricalChangeData(SysCount count){
+        Map<String,List<SysCount>> map = null;
         if(count == null){
             count = new SysCount();
         }
         count.setCategory("ENTYEAR");
 
-        list = systemService.countGroupByPlace(count);
-        return list;
+        map = systemService.mapGroupByPlace(count);
+        return map;
     }
 
     /**

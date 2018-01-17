@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import cn.bjd.platform.common.api.Paging;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
@@ -39,6 +40,8 @@ public interface ISystemService {
      * @return
      */
     List<SysCount> countGroupByPlace(SysCount count);
+
+    Map<String,List<SysCount>> mapGroupByPlace(SysCount count);
 
     /**
      * 行业分类统计  TOP10 Customs海关企业评级统计 Tax税务企业评级统计

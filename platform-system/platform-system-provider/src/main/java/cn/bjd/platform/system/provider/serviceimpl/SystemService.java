@@ -106,8 +106,27 @@ public class SystemService implements ISystemService {
             list = sysCountMapper.countAreaOnlySelectArea(count);
         }
 
-
         return list;
+    }
+
+    @Override
+    public Map<String, List<SysCount>> mapGroupByPlace(SysCount count) {
+        Map<String,List<SysCount>> map = new HashMap<>();
+        List<SysCount> list = countGroupByPlace(count);
+
+        //找到相同name,年份,数量
+        for(SysCount c : list){
+            List<SysCount> value = new ArrayList<>();
+                if(map.containsKey(c.getName())){
+                    List<SysCount> valueCount = map.get(c.getName());
+                    valueCount.add(c);
+                    map.put(c.getName(),valueCount);
+                }else{
+                    value.add(c);
+                    map.put(c.getName(),value);
+                }
+        }
+        return map;
     }
 
     @Override
