@@ -157,6 +157,7 @@
 
     <select id="countAreaOnlySelectArea" resultType="cn.bjd.platform.system.api.entity.SysCount">
         SELECT a.area as name,a.year,sum(a.sum) as value from sys_count a
+        <where>
         <trim prefixOverrides="AND">
             <if test="category != null and category != ''">
                 AND a.category = #{category}
@@ -171,6 +172,7 @@
                 AND a.area = #{area}
             </if>
         </trim>
+        </where>
         group by a.year,a.area order by a.area, a.year
     </select>
 

@@ -102,7 +102,7 @@ public class SystemService implements ISystemService {
             list = sysCountMapper.countAreaOnlySelectCity(count);
         }
 
-        if(StringUtils.isEmpty(count.getProvince())&&!StringUtils.isEmpty(count.getCity())&&!StringUtils.isEmpty(count.getArea())){
+        if(!StringUtils.isEmpty(count.getProvince())&&!StringUtils.isEmpty(count.getCity())&&!StringUtils.isEmpty(count.getArea())){
             list = sysCountMapper.countAreaOnlySelectArea(count);
         }
 
