@@ -194,6 +194,8 @@ public interface ISystemService {
      */
     List<SysDepartment> findAllDepts();
 
+
+    List<SysDepartment> findAllEnable();
     /**
      * 保存部门信息
      * @param dept

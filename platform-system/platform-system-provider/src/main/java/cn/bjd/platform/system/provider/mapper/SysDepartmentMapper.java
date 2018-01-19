@@ -35,4 +35,8 @@ public interface SysDepartmentMapper extends CrudDao<SysDepartment> {
      * @return
      */
     List<SysDepartment> findByParentIdsLike(SysDepartment dept);
+
+    List<SysDepartment> findByParentId(String parentId);
+
+    List<SysDepartment> findAllEnable();
 }

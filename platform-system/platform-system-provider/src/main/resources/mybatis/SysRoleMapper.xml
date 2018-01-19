@@ -19,7 +19,7 @@
         WHERE a.del_flag = '0'
         AND a.enabled = TRUE
         AND ur.user_id = #{userId}
-        ORDER BY a.create_date
+        ORDER BY a.create_date DESC
     </select>
 
     <!-- 根据编号获得角色 -->
@@ -38,14 +38,14 @@
         <if test="remarks != null and remarks != ''">
             AND a.remarks like CONCAT('%', #{remarks}, '%')
         </if>
-        ORDER BY a.create_date
+        ORDER BY a.create_date DESC
     </select>
 
     <!-- 查询全部角色 -->
     <select id="findAllList" resultType="cn.bjd.platform.system.api.entity.SysRole">
         <include refid="selectColumns"/>
         WHERE a.del_flag = '0'
-        ORDER BY a.create_date
+        ORDER BY a.create_date DESC
     </select>
 
     <!-- 插入角色 -->

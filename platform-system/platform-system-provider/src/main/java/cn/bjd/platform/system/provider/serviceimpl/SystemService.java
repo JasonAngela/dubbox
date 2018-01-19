@@ -266,7 +266,7 @@ public class SystemService implements ISystemService {
 
     @Override
     public List<SysMenu> getMenuTree(String userId) {
-        return makeTree(getMenuListByUserId(userId), false);
+        return makeTree(getMenuListByUserId(userId), true);
     }
 
     @Override
@@ -348,13 +348,27 @@ public class SystemService implements ISystemService {
             }
         }
 
-
         return result;
     }
 
+    /**
+     *
+     * @param menuId 菜单ID
+     */
     @Override
     @Transactional(readOnly = false)
     public void deleteMenuById(String menuId) {
+        SysMenu menu = getMenuById(menuId);
+        if(menu == null){
+            throw new SystemException("权限不存在,删除失败!");
+        }
+
+        //has son leaf can not delete
+        List<SysMenu> list = sysMenuMapper.findByParentId(menuId);
+        if(!CollectionUtils.isEmpty(list)){
+            throw new SystemException("存在未删除的子权限，删除失败!");
+        }
+
         sysMenuMapper.deleteById(menuId);
     }
 
@@ -430,6 +444,11 @@ public class SystemService implements ISystemService {
         return result;
     }
 
+    @Override
+    public List<SysDepartment> findAllEnable() {
+        return sysDepartmentMapper.findAllEnable();
+    }
+
 
     @Override
     @Transactional(readOnly = false)
@@ -473,6 +492,14 @@ public class SystemService implements ISystemService {
     @Override
     @Transactional(readOnly = false)
     public void deleteDeptById(String deptId) {
+        SysDepartment dept = getByDeptId(deptId);
+        if(dept == null){
+            throw new SystemException("部门不存在，删除失败!");
+        }
+        List<SysDepartment> list = sysDepartmentMapper.findByParentId(deptId);
+        if(!CollectionUtils.isEmpty(list)){
+            throw new SystemException("存在未删除的子部门，删除失败!");
+        }
         sysDepartmentMapper.deleteById(deptId);
     }
 

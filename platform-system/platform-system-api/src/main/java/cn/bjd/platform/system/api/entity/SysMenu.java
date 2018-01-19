@@ -117,7 +117,10 @@ public class SysMenu extends DataEntity {
     @Override
     public void preInsert() {
         super.preInsert();
-        this.sort = 30;
+        if(getSort() == null){
+            this.sort = 30;
+        }
+
         this.isShow = true;
     }
 

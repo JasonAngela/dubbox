@@ -50,8 +50,6 @@ public class AuthenticationController extends BaseController {
     @Autowired
     private TokenUtil jwtTokenUtil;
 
-    @Autowired
-    private ISystemService systemService;
     /**
      * Create authentication token bearer auth token.
      *
@@ -62,7 +60,7 @@ public class AuthenticationController extends BaseController {
     public Map<String, Object> createAuthenticationToken(@RequestBody SysUser sysUser) {
 
         //检测用户的合法性
-        if(sysUser == null){
+        /*if(sysUser == null){
             throw new cn.bjd.platform.system.api.exception.base.SystemException("所填信息为空");
         }
 
@@ -70,10 +68,10 @@ public class AuthenticationController extends BaseController {
             throw new cn.bjd.platform.system.api.exception.base.SystemException("用户名或者密码不能为空");
         }
 
-        SysUser loginUser = systemService.getByLoginName(sysUser.getLoginName());
+        SysUser loginUser = systemService.getUserByLoginName(sysUser.getLoginName());
         if(loginUser == null){
             throw new cn.bjd.platform.system.api.exception.base.SystemException("用户不存在");
-        }
+        }*/
 
 
         // Perform the security

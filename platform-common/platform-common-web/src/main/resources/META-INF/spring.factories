@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 cn.bjd.platform.common.web.config.UploadConfig,\
-cn.bjd.platform.common.web.config.WebConfig
+cn.bjd.platform.common.web.config.WebConfig,\
+cn.bjd.platform.common.redis.RedisConfig

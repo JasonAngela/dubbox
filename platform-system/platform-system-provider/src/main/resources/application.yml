@@ -2,7 +2,7 @@ spring:
   application:
     name: Platform Service Provider
   profiles:
-    active: "@profileActive@"
+    active: local
 
 mybatis:
   config-location: classpath:mybatis-config.xml

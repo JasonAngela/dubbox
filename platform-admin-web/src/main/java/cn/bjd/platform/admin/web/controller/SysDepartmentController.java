@@ -77,4 +77,15 @@ public class SysDepartmentController  extends BaseController {
     public List<SysDepartment> getDeptList(){
         return systemService.findAllDepts();
     }
+
+    /**
+     * Gets dept list enable.
+     *
+     * @return the dept list enable
+     */
+    @PreAuthorize("hasAuthority('sys:dept:view')")
+    @GetMapping(value = "/enable")
+    public List<SysDepartment> getDeptListEnable(){
+        return systemService.findAllEnable();
+    }
 }

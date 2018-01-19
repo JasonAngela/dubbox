@@ -47,4 +47,6 @@ public interface SysMenuMapper extends CrudDao<SysMenu> {
      */
     int updateParentIds(SysMenu menu);
 
+    List<SysMenu> findByParentId(String parentId);
+
 }

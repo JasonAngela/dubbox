@@ -14,7 +14,6 @@
         a.remarks,
         a.create_date,
         a.update_date,
-        a.del_flag,
         a.master,
         a.primary_person,
         a.deputy_person
@@ -80,13 +79,25 @@
         UPDATE sys_department
         SET
         del_flag = '1'
-        WHERE id = #{id} OR parent_ids LIKE CONCAT('%', #{id}, ',%')
+        WHERE id = #{id}
     </update>
+    
+    <select id="findByParentId" resultType="cn.bjd.platform.system.api.entity.SysDepartment">
+        <include refid="selectColumns"/>
+          WHERE a.parent_id = #{parentId} AND a.del_flag = '0'
+    </select>
+    
 
     <select id="findAllList" resultType="cn.bjd.platform.system.api.entity.SysDepartment">
         <include refid="selectColumns"/>
-        WHERE a.del_flag = '0'
+        WHERE a.del_flag = '0' order by create_date desc
     </select>
+    
+    <select id="findAllEnable" resultType="cn.bjd.platform.system.api.entity.SysDepartment">
+        <include refid="selectColumns"/>
+        WHERE a.del_flag = '0' AND a.enabled = TRUE order by create_date desc
+    </select>
+
 
     <select id="get" resultType="cn.bjd.platform.system.api.entity.SysDepartment">
         <include refid="selectColumns"/>
@@ -97,7 +108,7 @@
         <include refid="selectColumns"/>
         LEFT JOIN sys_user_department sd ON sd.dept_id = a.id
         LEFT JOIN sys_user u ON u.id = sd.user_id AND u.id = #{userId}
-        WHERE a.del_flag = '0'
+        WHERE a.del_flag = '0' and a.enabled = TRUE order by create_date desc
     </select>
 
 
@@ -115,9 +126,7 @@
         a.parent_id,
         a.parent_ids
         FROM sys_department a
-        WHERE a.parent_ids LIKE #{parentIds}
+        WHERE a.parent_ids LIKE #{parentIds} order by create_date desc
     </select>
-
-
 
 </mapper>
