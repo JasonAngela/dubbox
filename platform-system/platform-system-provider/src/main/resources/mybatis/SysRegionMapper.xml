@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bjd.platform.system.provider.mapper.SysRegionMapper">
+
+    <sql id="selectColumns">
+        SELECT DISTINCT
+        a.code,
+        a.name,
+        a.parent,
+        a.short_name,
+        a.level,
+        a.area_code,
+        a.post_code,
+        a.pinyin,
+        a.lng,
+        a.lat
+        FROM sys_region a
+    </sql>
+
+
+    <select id="findByParent" resultType="cn.bjd.platform.system.api.entity.SysRegion">
+        <include refid="selectColumns"/>
+        WHERE a.parent = #{parent}
+    </select>
+
+
+    <select id="findAllList" resultType="cn.bjd.platform.system.api.entity.SysRegion">
+        <include refid="selectColumns"/>
+    </select>
+
+
+    <select id="get" resultType="cn.bjd.platform.system.api.entity.SysRegion">
+        <include refid="selectColumns"/>
+        WHERE a.code = #{code}
+    </select>
+
+
+</mapper>

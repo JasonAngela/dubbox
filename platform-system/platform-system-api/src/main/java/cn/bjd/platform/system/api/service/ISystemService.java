@@ -165,6 +165,12 @@ public interface ISystemService {
     List<SysMenu> getMenuTree(String userId);
 
     /**
+     * 查询省市区树结构
+     * @return
+     */
+    List<SysRegion> getRegionTree();
+
+    /**
      * 删除菜单
      *
      * @param menuId 菜单ID
@@ -222,6 +228,8 @@ public interface ISystemService {
      * @param deptId
      */
     void deleteDeptById(String deptId);
+
+
 
     /**
      * 查询角色列表

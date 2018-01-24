@@ -1,8 +1,10 @@
 package cn.bjd.platform.system.api.entity;
 
-import cn.bjd.platform.common.api.DataEntity;
 
-public class SysRegion extends DataEntity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SysRegion{
 
     private static final long serialVersionUID = 1L;
 
@@ -15,6 +17,9 @@ public class SysRegion extends DataEntity {
      * 名称
      */
     private String name;
+
+
+    private String parent;
 
     /**
      * 简称
@@ -44,6 +49,16 @@ public class SysRegion extends DataEntity {
 
     private String lat;
 
+    private List<SysRegion> children = new ArrayList<>();
+
+    public List<SysRegion> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysRegion> children) {
+        this.children = children;
+    }
+
     public String getCode() {
         return code;
     }
@@ -58,6 +73,14 @@ public class SysRegion extends DataEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
     }
 
     public String getShortName() {
@@ -114,5 +137,9 @@ public class SysRegion extends DataEntity {
 
     public void setLat(String lat) {
         this.lat = lat;
+    }
+
+    public void addChild(SysRegion node){
+        this.children.add(node);
     }
 }

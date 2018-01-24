@@ -58,22 +58,6 @@ public class AuthenticationController extends BaseController {
      */
     @PostMapping(value = "/token")
     public Map<String, Object> createAuthenticationToken(@RequestBody SysUser sysUser) {
-
-        //检测用户的合法性
-        /*if(sysUser == null){
-            throw new cn.bjd.platform.system.api.exception.base.SystemException("所填信息为空");
-        }
-
-        if(StringUtils.isEmpty(sysUser.getLoginName())||StringUtils.isEmpty(sysUser.getPassword())){
-            throw new cn.bjd.platform.system.api.exception.base.SystemException("用户名或者密码不能为空");
-        }
-
-        SysUser loginUser = systemService.getUserByLoginName(sysUser.getLoginName());
-        if(loginUser == null){
-            throw new cn.bjd.platform.system.api.exception.base.SystemException("用户不存在");
-        }*/
-
-
         // Perform the security
         final Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(sysUser.getLoginName(), sysUser.getPassword())

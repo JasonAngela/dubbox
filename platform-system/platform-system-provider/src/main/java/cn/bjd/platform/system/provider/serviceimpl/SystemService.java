@@ -56,6 +56,9 @@ public class SystemService implements ISystemService {
     @Autowired
     private SysCountMapper sysCountMapper;
 
+    @Autowired
+    private SysRegionMapper sysRegionMapper;
+
     //count
 
     @Override
@@ -267,6 +270,32 @@ public class SystemService implements ISystemService {
     @Override
     public List<SysMenu> getMenuTree(String userId) {
         return makeTree(getMenuListByUserId(userId), true);
+    }
+
+    @Override
+    public List<SysRegion> getRegionTree() {
+        List<SysRegion> originals = sysRegionMapper.findAllList();
+        Map<String, SysRegion> dtoMap = new HashMap<>();
+        for (SysRegion node : originals) {
+            // 原始数据对象为Node，放入dtoMap中。
+            String code = node.getCode();
+            dtoMap.put(code, node);
+        }
+        List<SysRegion> result = new ArrayList<>();
+        for (Map.Entry<String, SysRegion> entry : dtoMap.entrySet()) {
+            SysRegion node = entry.getValue();
+            String parent = node.getParent();
+            if (dtoMap.get(parent) == null) {
+                // 如果是顶层节点，直接添加到结果集合中
+                result.add(node);
+            } else {
+                // 如果不是顶层节点，有父节点，然后添加到父节点的子节点中
+                SysRegion parentRegion = dtoMap.get(parent);
+                parentRegion.addChild(node);
+            }
+        }
+
+        return null;
     }
 
     @Override
