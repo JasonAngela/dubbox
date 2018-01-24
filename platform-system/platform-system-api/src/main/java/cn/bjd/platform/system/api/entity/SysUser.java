@@ -70,6 +70,16 @@ public class SysUser extends DataEntity {
         return depts;
     }
 
+    public List<SysUserRegion> regions = new ArrayList<>();
+
+    public List<SysUserRegion> getRegions() {
+        return regions;
+    }
+
+    public void setRegions(List<SysUserRegion> regions) {
+        this.regions = regions;
+    }
+
     public void setDepts(List<SysDepartment> depts) {
         this.depts = depts;
     }
