@@ -1,17 +1,20 @@
 package cn.bjd.platform.common.web.security;
 
+import cn.bjd.platform.system.api.entity.SysRegion;
 import com.google.gson.Gson;
 import cn.bjd.platform.common.redis.RedisRepository;
 import cn.bjd.platform.common.utils.StringHelper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.zookeeper.server.util.SerializeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Token 工具类
@@ -37,6 +40,16 @@ public abstract class AbstractTokenUtil {
      * 用户信息缓存前缀
      */
     private static final String REDIS_PREFIX_USER = "user-details:";
+
+    /**
+     * 省市区缓存前缀
+     */
+    private static final String REDIS_PREFIX_REGION = "region:";
+
+    /**
+     * 菜单缓存前缀
+     */
+    private static final String REDIS_PREFIX_MENU = "menu:";
 
     /**
      * redis repository
@@ -186,6 +199,15 @@ public abstract class AbstractTokenUtil {
     private void putUserDetails(UserDetails userDetails) {
         String key = REDIS_PREFIX_USER + userDetails.getUsername();
         redisRepository.setExpire(key, new Gson().toJson(userDetails), expiration);
+    }
+
+    /**
+     * 存储省市区域信息
+     * @param list
+     */
+    private void putRegionTree(List<SysRegion> list){
+        String key = REDIS_PREFIX_REGION + "tree";
+        redisRepository.setExpire(key,new Gson().toJson(list),expiration);
     }
 
     /**

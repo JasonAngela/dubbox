@@ -295,7 +295,7 @@ public class SystemService implements ISystemService {
             }
         }
 
-        return null;
+        return result;
     }
 
     @Override

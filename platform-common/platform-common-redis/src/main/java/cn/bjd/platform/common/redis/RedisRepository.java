@@ -77,6 +77,7 @@ public class RedisRepository {
         });
     }
 
+
     /**
      * 一次性添加数组到   过期时间的  缓存，不用多次连接，节省开销
      *
@@ -364,6 +365,8 @@ public class RedisRepository {
     public ListOperations<String, String> opsForList() {
         return redisTemplate.opsForList();
     }
+
+
 
     /**
      * redis List数据结构 : 将一个或多个值 value 插入到列表 key 的表头

@@ -24,6 +24,9 @@ public class SysRegionController extends BaseController {
     @GetMapping(value = "/tree")
     public List<SysRegion> getTree(){
 
+        //从缓存中先去取 取不到就去数据库查询
+
+
         return systemService.getRegionTree();
     }
 }

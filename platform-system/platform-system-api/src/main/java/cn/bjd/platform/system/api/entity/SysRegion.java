@@ -1,13 +1,14 @@
 package cn.bjd.platform.system.api.entity;
 
 
+import cn.bjd.platform.common.api.DataEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class SysRegion{
+public class SysRegion extends DataEntity {
 
     private static final long serialVersionUID = 1L;
-
     /**
      *区域编号
      */
