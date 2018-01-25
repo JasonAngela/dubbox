@@ -46,6 +46,13 @@ public interface SysUserMapper extends CrudDao<SysUser> {
     int deleteUserDept(SysUser user);
 
     /**
+     * 删除用户区域关联数据
+     * @param user
+     * @return
+     */
+    int deleteUserRegion(SysUser user);
+
+    /**
      * 插入用户角色关联数据
      *
      * @param user the user
@@ -61,10 +68,19 @@ public interface SysUserMapper extends CrudDao<SysUser> {
      */
     int insertUserDept(SysUser user);
 
+
+    /**
+     * 插入用户区域关联数据
+     * @param user
+     * @return
+     */
+    int insertUserRegion(SysUser user);
+
     /**
      * 保存用户信息
      *
      * @param user the user
      */
     void updateInfo(SysUser user);
+
 }

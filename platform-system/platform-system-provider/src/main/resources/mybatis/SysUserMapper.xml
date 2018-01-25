@@ -137,6 +137,11 @@
       DELETE FROM sys_user_department
         WHERE user_id = #{id}
     </delete>
+    
+    <delete id="deleteUserRegion">
+        DELETE FROM sys_user_region
+        WHERE user_id = #{id}
+    </delete>
 
     <!-- 插入用户和角色关联表数据 -->
     <insert id="insertUserRole">
@@ -151,6 +156,10 @@
         <foreach collection="depts" item="dept" separator=" union all ">
             SELECT #{id}, #{dept.id}
         </foreach>
+    </insert>
+
+    <insert id="insertUserRegion">
+        INSERT INTO sys_user_region(user_id, codes) VALUES (#{id},#{codes})
     </insert>
 
 </mapper>

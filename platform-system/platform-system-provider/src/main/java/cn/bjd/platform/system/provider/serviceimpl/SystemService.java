@@ -206,6 +206,7 @@ public class SystemService implements ISystemService {
         if (user != null) {
             user.setRoles(sysRoleMapper.findListByUserId(userId));
             user.setDepts(sysDepartmentMapper.findListByUserId(userId));
+
         }
         return sysUserMapper.get(userId);
     }
@@ -222,6 +223,7 @@ public class SystemService implements ISystemService {
             sysUserMapper.update(user);
             sysUserMapper.deleteUserRole(user);
             sysUserMapper.deleteUserDept(user);
+            sysUserMapper.deleteUserRegion(user);
         }
 
         // 更新用户与角色关联
@@ -233,6 +235,23 @@ public class SystemService implements ISystemService {
         if(!CollectionUtils.isEmpty(user.getDepts())){
             sysUserMapper.insertUserDept(user);
         }
+
+        //更新用户与区域关联
+        if(!StringUtils.isEmpty(user.getCodes())){
+            //判断前后是否包含逗号","
+            String codes = user.getCodes();
+            if(!codes.startsWith(",")){
+                codes = "," + codes;
+            }
+
+            if(codes.endsWith(",")){
+                codes = codes + ",";
+            }
+
+            sysUserMapper.insertUserRegion(user);
+        }
+
+
 
         return user;
     }
