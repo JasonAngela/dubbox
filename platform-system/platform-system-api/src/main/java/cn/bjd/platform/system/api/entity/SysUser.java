@@ -56,10 +56,6 @@ public class SysUser extends DataEntity {
     private String remarks;
 
     /**
-     * 城市对应code码  多个以逗号隔开
-     */
-    private String codes;
-    /**
      * 角色列表
      */
     private List<SysRole> roles = new ArrayList<>();
@@ -72,14 +68,6 @@ public class SysUser extends DataEntity {
     private List<SysDepartment> depts = new ArrayList<>();
 
     public List<SysRegion> regions = new ArrayList<>();
-
-    public String getCodes() {
-        return codes;
-    }
-
-    public void setCodes(String codes) {
-        this.codes = codes;
-    }
 
     public List<SysRegion> getRegions() {
         return regions;

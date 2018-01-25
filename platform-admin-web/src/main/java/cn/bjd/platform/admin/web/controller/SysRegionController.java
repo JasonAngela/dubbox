@@ -2,7 +2,6 @@ package cn.bjd.platform.admin.web.controller;
 
 import cn.bjd.platform.admin.web.common.controller.BaseController;
 import cn.bjd.platform.admin.web.security.utils.TokenUtil;
-import cn.bjd.platform.common.redis.RedisRepository;
 import cn.bjd.platform.system.api.entity.SysRegion;
 import cn.bjd.platform.system.api.service.ISystemService;
 import org.springframework.beans.factory.annotation.Autowired;

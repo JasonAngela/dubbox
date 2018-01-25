@@ -1,5 +1,6 @@
 package cn.bjd.platform.system.provider.serviceimpl;
 
+import cn.bjd.platform.common.redis.RedisRepository;
 import cn.bjd.platform.system.api.entity.*;
 import cn.bjd.platform.system.api.exception.base.SystemException;
 import cn.bjd.platform.system.provider.mapper.*;
@@ -8,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import cn.bjd.platform.common.api.Paging;
 import cn.bjd.platform.common.utils.StringHelper;
 import cn.bjd.platform.system.api.service.ISystemService;
+import org.codehaus.groovy.syntax.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +61,6 @@ public class SystemService implements ISystemService {
     @Autowired
     private SysRegionMapper sysRegionMapper;
 
-    //count
 
     @Override
     public List<SysCount> getCount(SysCount count) {
@@ -206,7 +207,6 @@ public class SystemService implements ISystemService {
         if (user != null) {
             user.setRoles(sysRoleMapper.findListByUserId(userId));
             user.setDepts(sysDepartmentMapper.findListByUserId(userId));
-
         }
         return sysUserMapper.get(userId);
     }
@@ -236,22 +236,9 @@ public class SystemService implements ISystemService {
             sysUserMapper.insertUserDept(user);
         }
 
-        //更新用户与区域关联
-        if(!StringUtils.isEmpty(user.getCodes())){
-            //判断前后是否包含逗号","
-            String codes = user.getCodes();
-            if(!codes.startsWith(",")){
-                codes = "," + codes;
-            }
-
-            if(codes.endsWith(",")){
-                codes = codes + ",";
-            }
-
+        if(!CollectionUtils.isEmpty(user.getRegions())){
             sysUserMapper.insertUserRegion(user);
         }
-
-
 
         return user;
     }

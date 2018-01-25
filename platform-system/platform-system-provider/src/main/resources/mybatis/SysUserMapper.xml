@@ -159,7 +159,10 @@
     </insert>
 
     <insert id="insertUserRegion">
-        INSERT INTO sys_user_region(user_id, codes) VALUES (#{id},#{codes})
+        INSERT INTO sys_user_region(user_id, code)
+        <foreach collection="regions" item="region" separator=" union all ">
+             SELECT #{id}, #{region.code}
+        </foreach>
     </insert>
 
 </mapper>

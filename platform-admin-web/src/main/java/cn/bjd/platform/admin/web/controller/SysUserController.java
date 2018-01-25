@@ -133,9 +133,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("hasAuthority('sys:user:view')")
     @GetMapping(value = "/{userId}")
     public SysUser getUser(@PathVariable("userId") String userId) {
-
         return systemService.getUserById(userId);
-
     }
 
     /**
