@@ -42,6 +42,7 @@ public class RedisRepository {
         this.redisTemplate = redisTemplate;
     }
 
+
     /**
      * 添加到带有 过期时间的  缓存
      *
@@ -76,6 +77,9 @@ public class RedisRepository {
             return 1L;
         });
     }
+
+
+
 
 
     /**

@@ -1,11 +1,14 @@
 package cn.bjd.platform.mobile.client.security.utils;
 
 import cn.bjd.platform.mobile.client.security.model.AuthUser;
+import cn.bjd.platform.system.api.entity.SysRegion;
 import com.google.gson.Gson;
 import cn.bjd.platform.common.web.security.AbstractTokenUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * The type Token util.
@@ -24,5 +27,6 @@ public class TokenUtil extends AbstractTokenUtil {
         }
         return null;
     }
+
 
 }

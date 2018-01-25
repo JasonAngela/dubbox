@@ -1,9 +1,12 @@
 package cn.bjd.platform.admin.web.controller;
 
 import cn.bjd.platform.admin.web.common.controller.BaseController;
+import cn.bjd.platform.admin.web.security.utils.TokenUtil;
+import cn.bjd.platform.common.redis.RedisRepository;
 import cn.bjd.platform.system.api.entity.SysRegion;
 import cn.bjd.platform.system.api.service.ISystemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +24,23 @@ public class SysRegionController extends BaseController {
     @Autowired
     private ISystemService systemService;
 
+    /**
+     * Token工具
+     */
+    @Autowired
+    private TokenUtil jwtTokenUtil;
+
     @GetMapping(value = "/tree")
     public List<SysRegion> getTree(){
 
         //从缓存中先去取 取不到就去数据库查询
+        List<SysRegion> list = jwtTokenUtil.getRegionDetails();
+        if(CollectionUtils.isEmpty(list)){
+            // 为空 重新加载到redis中去
+            list = systemService.getRegionTree();
+            jwtTokenUtil.putRegionTree(list);
+        }
 
-
-        return systemService.getRegionTree();
+        return list;
     }
 }

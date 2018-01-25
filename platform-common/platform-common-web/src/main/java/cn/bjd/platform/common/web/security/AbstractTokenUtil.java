@@ -1,5 +1,6 @@
 package cn.bjd.platform.common.web.security;
 
+import cn.bjd.platform.system.api.entity.SysMenu;
 import cn.bjd.platform.system.api.entity.SysRegion;
 import com.google.gson.Gson;
 import cn.bjd.platform.common.redis.RedisRepository;
@@ -7,12 +8,13 @@ import cn.bjd.platform.common.utils.StringHelper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.zookeeper.server.util.SerializeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +51,9 @@ public abstract class AbstractTokenUtil {
     /**
      * 菜单缓存前缀
      */
-    private static final String REDIS_PREFIX_MENU = "menu:";
+    private static final String REDIS_PREFIX_MENU_TREE = "menu-tree:";
+
+    private static final String REDIS_PREFIX_MENU_LIST = "menu-list:";
 
     /**
      * redis repository
@@ -191,6 +195,7 @@ public abstract class AbstractTokenUtil {
      */
     public abstract UserDetails getUserDetails(String token);
 
+
     /**
      * 存储用户信息
      *
@@ -205,10 +210,58 @@ public abstract class AbstractTokenUtil {
      * 存储省市区域信息
      * @param list
      */
-    private void putRegionTree(List<SysRegion> list){
+    public void putRegionTree(Collection<SysRegion> list){
         String key = REDIS_PREFIX_REGION + "tree";
         redisRepository.setExpire(key,new Gson().toJson(list),expiration);
     }
+
+    /**
+     * 查询出省市区信息
+     * @return
+     */
+    public List<SysRegion> getRegionDetails(){
+        String key = REDIS_PREFIX_REGION + "tree";
+        String value = redisRepository.get(key);
+        if(!StringUtils.isEmpty(value)){
+            return new Gson().fromJson(value,List.class);
+        }
+        return null;
+    }
+
+    /**
+     * 缓存菜单数据
+     * @param list
+     */
+    public void putMenuTree(Collection<SysMenu> list,String userId,String flag){
+        String key = REDIS_PREFIX_MENU_TREE + userId;
+        if("list".equals(flag)){
+            key = REDIS_PREFIX_MENU_LIST + userId;
+        }
+        redisRepository.setExpire(key,new Gson().toJson(list),expiration);
+    }
+
+
+    public List<SysMenu> getMenuDetails(String userId,String flag){
+        String key = REDIS_PREFIX_MENU_TREE + userId;
+        if("list".equals(flag)){
+            key = REDIS_PREFIX_MENU_LIST + userId;
+        }
+        String value = redisRepository.get(key);
+        if(!StringUtils.isEmpty(value)){
+            return new Gson().fromJson(value,List.class);
+        }
+        return null;
+    }
+
+    public void delMenu(String userId,String flag){
+        String key = REDIS_PREFIX_MENU_TREE + userId;
+        if("list".equals(flag)){
+            key = REDIS_PREFIX_MENU_LIST + userId;
+        }
+        redisRepository.del(key);
+    }
+
+
 
     /**
      * 删除用户信息

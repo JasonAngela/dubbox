@@ -2,6 +2,7 @@ package cn.bjd.platform.admin.web.controller;
 
 import cn.bjd.platform.admin.web.common.controller.BaseController;
 import cn.bjd.platform.admin.web.security.model.AuthUser;
+import cn.bjd.platform.admin.web.security.utils.TokenUtil;
 import cn.bjd.platform.common.web.util.WebUtils;
 import cn.bjd.platform.system.api.entity.SysMenu;
 import cn.bjd.platform.system.api.service.ISystemService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +39,12 @@ public class SysMenuController extends BaseController {
     private ISystemService systemService;
 
     /**
+     * Token工具
+     */
+    @Autowired
+    private TokenUtil jwtTokenUtil;
+
+    /**
      * Gets menu nav.
      *
      * @return the menu nav
@@ -44,10 +52,15 @@ public class SysMenuController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/nav")
     public List<SysMenu> getMenuNav() {
-
         AuthUser user = WebUtils.getCurrentUser();
-
-        return systemService.getMenuNav(user.getId());
+        //根据用户id去缓存中查询菜单数据
+        //如果没有再从数据库中查询
+        List<SysMenu> list = jwtTokenUtil.getMenuDetails(user.getId(),"nav");
+        if(CollectionUtils.isEmpty(list)){
+            list = systemService.getMenuNav(user.getId());
+            jwtTokenUtil.putMenuTree(list,user.getId(),"nav");
+        }
+        return list;
     }
 
     /**
@@ -60,8 +73,13 @@ public class SysMenuController extends BaseController {
     public List<SysMenu> getMenuTree() {
 
         AuthUser user = WebUtils.getCurrentUser();
+        List<SysMenu> list = jwtTokenUtil.getMenuDetails(user.getId(),"tree");
+        if(CollectionUtils.isEmpty(list)){
+            list = systemService.getMenuTree(user.getId());
+            jwtTokenUtil.putMenuTree(list,user.getId(),"tree");
+        }
 
-        return systemService.getMenuTree(user.getId());
+        return list;
     }
 
     /**
@@ -72,10 +90,13 @@ public class SysMenuController extends BaseController {
     @PreAuthorize("hasAuthority('sys:menu:view')")
     @GetMapping(value = "/list")
     public List<SysMenu> getMenuList() {
-
         AuthUser user = WebUtils.getCurrentUser();
-
-        return systemService.getMenuList(user.getId());
+        List<SysMenu> list = jwtTokenUtil.getMenuDetails(user.getId(),"list");
+        if(CollectionUtils.isEmpty(list)){
+            list = systemService.getMenuList(user.getId());
+            jwtTokenUtil.putMenuTree(list,user.getId(),"list");
+        }
+        return list;
     }
 
     /**
@@ -87,9 +108,11 @@ public class SysMenuController extends BaseController {
     @PreAuthorize("hasAuthority('sys:menu:edit')")
     @DeleteMapping(value = "/{menuId}")
     public ResponseEntity deleteMenu(@PathVariable("menuId") String menuId) {
-
+        AuthUser user = WebUtils.getCurrentUser();
         systemService.deleteMenuById(menuId);
-
+        //删除成功后 需要更新缓存
+        jwtTokenUtil.delMenu(user.getId(),"tree");
+        jwtTokenUtil.delMenu(user.getId(),"list");
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -104,7 +127,6 @@ public class SysMenuController extends BaseController {
     public SysMenu getMenu(@PathVariable("menuId") String menuId) {
 
         return systemService.getMenuById(menuId);
-
     }
 
     /**
@@ -116,8 +138,11 @@ public class SysMenuController extends BaseController {
     @PreAuthorize("hasAuthority('sys:menu:edit')")
     @PostMapping(value = "")
     public SysMenu saveMenu(@Valid @RequestBody SysMenu menu) {
-
-        return systemService.saveMenu(menu);
+        AuthUser user = WebUtils.getCurrentUser();
+        SysMenu sysMenu = systemService.saveMenu(menu);
+        //保存成功后，需要刷新缓存
+        jwtTokenUtil.delMenu(user.getId(),"tree");
+        jwtTokenUtil.delMenu(user.getId(),"list");
+        return sysMenu;
     }
-
 }
