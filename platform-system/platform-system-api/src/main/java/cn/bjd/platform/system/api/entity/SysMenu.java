@@ -120,8 +120,10 @@ public class SysMenu extends DataEntity {
         if(getSort() == null){
             this.sort = 30;
         }
+        if(getShow() == null){
+            this.isShow = true;
+        }
 
-        this.isShow = true;
     }
 
     public String getParentId() {
@@ -181,7 +183,7 @@ public class SysMenu extends DataEntity {
     }
 
     public void setShow(Boolean show) {
-        isShow = show;
+        this.isShow = show;
     }
 
     @Length(min = 0, max = 200)
