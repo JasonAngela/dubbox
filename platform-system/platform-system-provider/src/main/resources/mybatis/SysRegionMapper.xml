@@ -38,7 +38,7 @@
     <select id="findListByUserId" resultType="cn.bjd.platform.system.api.entity.SysRegion">
         <include refid="selectColumns"/>
         LEFT JOIN sys_user_region sr ON sr.code = a.code
-        LEFT JOIN sys_user u ON u.id = sr.user_id AND u.id = #{userId}
+        LEFT JOIN sys_user u ON u.id = sr.user_id WHERE u.id = #{userId}
     </select>
 
 
