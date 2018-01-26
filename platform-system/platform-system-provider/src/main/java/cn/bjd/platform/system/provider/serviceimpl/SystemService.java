@@ -207,7 +207,7 @@ public class SystemService implements ISystemService {
         if (user != null) {
             user.setRoles(sysRoleMapper.findListByUserId(userId));
             user.setDepts(sysDepartmentMapper.findListByUserId(userId));
-
+            user.setRegions(sysRegionMapper.findListByUserId(userId));
         }
         return sysUserMapper.get(userId);
     }
