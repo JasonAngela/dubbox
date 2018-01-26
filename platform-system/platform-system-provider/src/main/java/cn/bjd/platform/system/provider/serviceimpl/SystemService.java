@@ -209,7 +209,7 @@ public class SystemService implements ISystemService {
             user.setDepts(sysDepartmentMapper.findListByUserId(userId));
             user.setRegions(sysRegionMapper.findListByUserId(userId));
         }
-        return sysUserMapper.get(userId);
+        return user;
     }
 
     @Override

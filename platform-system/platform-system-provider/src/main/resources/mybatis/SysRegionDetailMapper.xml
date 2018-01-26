@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bjd.platform.system.provider.mapper.SysRegionDetailMapper">
+
+    <sql id="selectColumns">
+        SELECT DISTINCT
+        a.id,
+        a.gdp_total,
+        a.gdp_avg,
+        a.tax_total,
+        a.avg_loan_deviation,
+        a.expenditure,
+        a.gdp_growth_rate,
+        a.expenditure_growth_rate,
+        a.company_growth_count,
+        a.avg_company_loan_deviation,
+        a.people_activity,
+        a.gdp_loan_rate,
+        a.avg_company_loan,
+        a.loan_ratio,
+        a.crime_index,
+        a.create_date,
+        a.update_date,
+        a.region,
+        a.code
+        FROM sys_region a
+    </sql>
+
+
+
+</mapper>

@@ -3,8 +3,9 @@ package cn.bjd.platform.common.utils.framework;
 import java.io.Serializable;
 
 /**
- *所有Http Response数据结构，只要是给客户端提供服务的，都要使用该对象返回
- *
+ * 所有Http Response数据结构，只要是给客户端提供服务的，都要使用该对象返回
+ * 缺少返回requstId 暂时没用上 对应实体类RequsetIDContext
+ * @author huqilang
  */
 public class ApiResponse implements Serializable {
     private static final long serialVersionUID = -1485867865440737606L;
