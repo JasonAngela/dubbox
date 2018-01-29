@@ -11,4 +11,7 @@
 
     <dubbo:reference interface="cn.bjd.platform.system.api.service.ITripUserService" id="tripUserService"/>
 
+    <dubbo:reference interface="cn.bjd.platform.elastic.api.service.IEtpBOService" id="etpBOService"/>
+
+    <dubbo:reference interface="cn.bjd.platform.elastic.api.service.IElasticService" id="elasticService"/>
 </beans>

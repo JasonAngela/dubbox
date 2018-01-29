@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpSamplingMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpSampling">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="inspect_office" property="inspectOffice"/>
+        <result column="type" property="type"/>
+        <result column="ins_type" property="insType"/>
+        <result column="date" property="date"/>
+        <result column="result" property="result"/>
+        <result column="out_id" property="outId"/>
+        <result column="out_etp_id" property="outEtpId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "inspect_office",
+        "type",
+        "ins_type",
+        "date",
+        "result",
+        "out_id",
+        "out_etp_id"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_sampling (
+            "id",
+            "etp_id",
+            "inspect_office",
+            "type",
+            "ins_type",
+            "date",
+            "result",
+            "out_id",
+            "out_etp_id"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.inspectOffice},
+            #{pojo.type},
+            #{pojo.insType},
+            #{pojo.date},
+            #{pojo.result},
+            #{pojo.outId},
+            #{pojo.outEtpId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_sampling
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.inspectOffice!=null"> "inspect_office",</if>
+            <if test="pojo.type!=null"> "type",</if>
+            <if test="pojo.insType!=null"> "ins_type",</if>
+            <if test="pojo.date!=null"> "date",</if>
+            <if test="pojo.result!=null"> "result",</if>
+            <if test="pojo.outId!=null"> "out_id",</if>
+            <if test="pojo.outEtpId!=null"> "out_etp_id",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.inspectOffice!=null">#{pojo.inspectOffice},</if>
+            <if test="pojo.type!=null">#{pojo.type},</if>
+            <if test="pojo.insType!=null">#{pojo.insType},</if>
+            <if test="pojo.date!=null">#{pojo.date},</if>
+            <if test="pojo.result!=null">#{pojo.result},</if>
+            <if test="pojo.outId!=null">#{pojo.outId},</if>
+            <if test="pojo.outEtpId!=null">#{pojo.outEtpId},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_sampling (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.inspectOffice},
+            #{pojo.type},
+            #{pojo.insType},
+            #{pojo.date},
+            #{pojo.result},
+            #{pojo.outId},
+            #{pojo.outEtpId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_sampling
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.inspectOffice != null"> "inspect_office" = #{pojo.inspectOffice}, </if>
+            <if test="pojo.type != null"> "type" = #{pojo.type}, </if>
+            <if test="pojo.insType != null"> "ins_type" = #{pojo.insType}, </if>
+            <if test="pojo.date != null"> "date" = #{pojo.date}, </if>
+            <if test="pojo.result != null"> "result" = #{pojo.result}, </if>
+            <if test="pojo.outId != null"> "out_id" = #{pojo.outId}, </if>
+            <if test="pojo.outEtpId != null"> "out_etp_id" = #{pojo.outEtpId} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+</mapper>
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpReportMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpReport">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="send_year" property="sendYear"/>
+        <result column="open_date" property="openDate"/>
+        <result column="detail" property="detail"/>
+        <result column="out_id" property="outId"/>
+        <result column="out_etp_id" property="outEtpId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "send_year",
+        "open_date",
+        "detail",
+        "out_id",
+        "out_etp_id"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_report (
+            "id",
+            "etp_id",
+            "send_year",
+            "open_date",
+            "detail",
+            "out_id",
+            "out_etp_id"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.sendYear},
+            #{pojo.openDate},
+            #{pojo.detail},
+            #{pojo.outId},
+            #{pojo.outEtpId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.sendYear!=null"> "send_year",</if>
+            <if test="pojo.openDate!=null"> "open_date",</if>
+            <if test="pojo.detail!=null"> "detail",</if>
+            <if test="pojo.outId!=null"> "out_id",</if>
+            <if test="pojo.outEtpId!=null"> "out_etp_id",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.sendYear!=null">#{pojo.sendYear},</if>
+            <if test="pojo.openDate!=null">#{pojo.openDate},</if>
+            <if test="pojo.detail!=null">#{pojo.detail},</if>
+            <if test="pojo.outId!=null">#{pojo.outId},</if>
+            <if test="pojo.outEtpId!=null">#{pojo.outEtpId},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_report (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.sendYear},
+            #{pojo.openDate},
+            #{pojo.detail},
+            #{pojo.outId},
+            #{pojo.outEtpId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_report
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.sendYear != null"> "send_year" = #{pojo.sendYear}, </if>
+            <if test="pojo.openDate != null"> "open_date" = #{pojo.openDate}, </if>
+            <if test="pojo.detail != null"> "detail" = #{pojo.detail}, </if>
+            <if test="pojo.outId != null"> "out_id" = #{pojo.outId}, </if>
+            <if test="pojo.outEtpId != null"> "out_etp_id" = #{pojo.outEtpId} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+</mapper>
+

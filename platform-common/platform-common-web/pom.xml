@@ -19,6 +19,11 @@
         </dependency>
         <dependency>
             <groupId>cn.bjd</groupId>
+            <artifactId>platform-elastic-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.bjd</groupId>
             <artifactId>platform-common-utils</artifactId>
             <version>${project.version}</version>
         </dependency>

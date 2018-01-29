@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpPunishMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpPunish">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="decision_num" property="decisionNum"/>
+        <result column="ilegal_type" property="ilegalType"/>
+        <result column="case_id" property="caseId"/>
+        <result column="punish_type_name" property="punishTypeName"/>
+        <result column="content" property="content"/>
+        <result column="office_name" property="officeName"/>
+        <result column="punish_date" property="punishDate"/>
+        <result column="public_date" property="publicDate"/>
+        <result column="remarks" property="remarks"/>
+        <result column="out_etp_id" property="outEtpId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "decision_num",
+        "ilegal_type",
+        "case_id",
+        "punish_type_name",
+        "content",
+        "office_name",
+        "punish_date",
+        "public_date",
+        "remarks",
+        "out_etp_id"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_punish (
+            "id",
+            "etp_id",
+            "decision_num",
+            "ilegal_type",
+            "case_id",
+            "punish_type_name",
+            "content",
+            "office_name",
+            "punish_date",
+            "public_date",
+            "remarks",
+            "out_etp_id"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.decisionNum},
+            #{pojo.ilegalType},
+            #{pojo.caseId},
+            #{pojo.punishTypeName},
+            #{pojo.content},
+            #{pojo.officeName},
+            #{pojo.punishDate},
+            #{pojo.publicDate},
+            #{pojo.remarks},
+            #{pojo.outEtpId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_punish
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.decisionNum!=null"> "decision_num",</if>
+            <if test="pojo.ilegalType!=null"> "ilegal_type",</if>
+            <if test="pojo.caseId!=null"> "case_id",</if>
+            <if test="pojo.punishTypeName!=null"> "punish_type_name",</if>
+            <if test="pojo.content!=null"> "content",</if>
+            <if test="pojo.officeName!=null"> "office_name",</if>
+            <if test="pojo.punishDate!=null"> "punish_date",</if>
+            <if test="pojo.publicDate!=null"> "public_date",</if>
+            <if test="pojo.remarks!=null"> "remarks",</if>
+            <if test="pojo.outEtpId!=null"> "out_etp_id",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.decisionNum!=null">#{pojo.decisionNum},</if>
+            <if test="pojo.ilegalType!=null">#{pojo.ilegalType},</if>
+            <if test="pojo.caseId!=null">#{pojo.caseId},</if>
+            <if test="pojo.punishTypeName!=null">#{pojo.punishTypeName},</if>
+            <if test="pojo.content!=null">#{pojo.content},</if>
+            <if test="pojo.officeName!=null">#{pojo.officeName},</if>
+            <if test="pojo.punishDate!=null">#{pojo.punishDate},</if>
+            <if test="pojo.publicDate!=null">#{pojo.publicDate},</if>
+            <if test="pojo.remarks!=null">#{pojo.remarks},</if>
+            <if test="pojo.outEtpId!=null">#{pojo.outEtpId},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_punish (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.decisionNum},
+            #{pojo.ilegalType},
+            #{pojo.caseId},
+            #{pojo.punishTypeName},
+            #{pojo.content},
+            #{pojo.officeName},
+            #{pojo.punishDate},
+            #{pojo.publicDate},
+            #{pojo.remarks},
+            #{pojo.outEtpId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_punish
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.decisionNum != null"> "decision_num" = #{pojo.decisionNum}, </if>
+            <if test="pojo.ilegalType != null"> "ilegal_type" = #{pojo.ilegalType}, </if>
+            <if test="pojo.caseId != null"> "case_id" = #{pojo.caseId}, </if>
+            <if test="pojo.punishTypeName != null"> "punish_type_name" = #{pojo.punishTypeName}, </if>
+            <if test="pojo.content != null"> "content" = #{pojo.content}, </if>
+            <if test="pojo.officeName != null"> "office_name" = #{pojo.officeName}, </if>
+            <if test="pojo.punishDate != null"> "punish_date" = #{pojo.punishDate}, </if>
+            <if test="pojo.publicDate != null"> "public_date" = #{pojo.publicDate}, </if>
+            <if test="pojo.remarks != null"> "remarks" = #{pojo.remarks}, </if>
+            <if test="pojo.outEtpId != null"> "out_etp_id" = #{pojo.outEtpId} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+<!--auto generated by codehelper on 2018-01-11 16:54:38-->
+    <select id="findByEtpId" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp_punish
+        where "etp_id"=#{etpId}
+    </select>
+
+<!--auto generated by codehelper on 2018-01-12 10:31:25-->
+    <select id="findByEtpIdIn" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp_punish
+        where "etp_id" in
+        <foreach item="item" index="index" collection="etpIdList"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
+

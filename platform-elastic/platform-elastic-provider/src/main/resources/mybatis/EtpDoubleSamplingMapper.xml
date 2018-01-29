@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpDoubleSamplingMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpDoubleSampling">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="check_no" property="checkNo"/>
+        <result column="plan_name" property="planName"/>
+        <result column="task_no" property="taskNo"/>
+        <result column="task_name" property="taskName"/>
+        <result column="type" property="type"/>
+        <result column="check_office" property="checkOffice"/>
+        <result column="finish_date" property="finishDate"/>
+        <result column="result" property="result"/>
+        <result column="remarks" property="remarks"/>
+        <result column="insenterid" property="insenterid"/>
+        <result column="uniscid" property="uniscid"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "check_no",
+        "plan_name",
+        "task_no",
+        "task_name",
+        "type",
+        "check_office",
+        "finish_date",
+        "result",
+        "remarks",
+        "insenterid",
+        "uniscid"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_double_sampling (
+            "id",
+            "etp_id",
+            "check_no",
+            "plan_name",
+            "task_no",
+            "task_name",
+            "type",
+            "check_office",
+            "finish_date",
+            "result",
+            "remarks",
+            "insenterid",
+            "uniscid"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.checkNo},
+            #{pojo.planName},
+            #{pojo.taskNo},
+            #{pojo.taskName},
+            #{pojo.type},
+            #{pojo.checkOffice},
+            #{pojo.finishDate},
+            #{pojo.result},
+            #{pojo.remarks},
+            #{pojo.insenterid},
+            #{pojo.uniscid}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_double_sampling
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.checkNo!=null"> "check_no",</if>
+            <if test="pojo.planName!=null"> "plan_name",</if>
+            <if test="pojo.taskNo!=null"> "task_no",</if>
+            <if test="pojo.taskName!=null"> "task_name",</if>
+            <if test="pojo.type!=null"> "type",</if>
+            <if test="pojo.checkOffice!=null"> "check_office",</if>
+            <if test="pojo.finishDate!=null"> "finish_date",</if>
+            <if test="pojo.result!=null"> "result",</if>
+            <if test="pojo.remarks!=null"> "remarks",</if>
+            <if test="pojo.insenterid!=null"> "insenterid",</if>
+            <if test="pojo.uniscid!=null"> "uniscid",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.checkNo!=null">#{pojo.checkNo},</if>
+            <if test="pojo.planName!=null">#{pojo.planName},</if>
+            <if test="pojo.taskNo!=null">#{pojo.taskNo},</if>
+            <if test="pojo.taskName!=null">#{pojo.taskName},</if>
+            <if test="pojo.type!=null">#{pojo.type},</if>
+            <if test="pojo.checkOffice!=null">#{pojo.checkOffice},</if>
+            <if test="pojo.finishDate!=null">#{pojo.finishDate},</if>
+            <if test="pojo.result!=null">#{pojo.result},</if>
+            <if test="pojo.remarks!=null">#{pojo.remarks},</if>
+            <if test="pojo.insenterid!=null">#{pojo.insenterid},</if>
+            <if test="pojo.uniscid!=null">#{pojo.uniscid},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_double_sampling (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.checkNo},
+            #{pojo.planName},
+            #{pojo.taskNo},
+            #{pojo.taskName},
+            #{pojo.type},
+            #{pojo.checkOffice},
+            #{pojo.finishDate},
+            #{pojo.result},
+            #{pojo.remarks},
+            #{pojo.insenterid},
+            #{pojo.uniscid}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_double_sampling
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.checkNo != null"> "check_no" = #{pojo.checkNo}, </if>
+            <if test="pojo.planName != null"> "plan_name" = #{pojo.planName}, </if>
+            <if test="pojo.taskNo != null"> "task_no" = #{pojo.taskNo}, </if>
+            <if test="pojo.taskName != null"> "task_name" = #{pojo.taskName}, </if>
+            <if test="pojo.type != null"> "type" = #{pojo.type}, </if>
+            <if test="pojo.checkOffice != null"> "check_office" = #{pojo.checkOffice}, </if>
+            <if test="pojo.finishDate != null"> "finish_date" = #{pojo.finishDate}, </if>
+            <if test="pojo.result != null"> "result" = #{pojo.result}, </if>
+            <if test="pojo.remarks != null"> "remarks" = #{pojo.remarks}, </if>
+            <if test="pojo.insenterid != null"> "insenterid" = #{pojo.insenterid}, </if>
+            <if test="pojo.uniscid != null"> "uniscid" = #{pojo.uniscid} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+</mapper>
+

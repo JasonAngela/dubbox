@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpShareholderDetailMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpShareholderDetail">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="share_holder_id" property="shareHolderId"/>
+        <result column="share_holder_name" property="shareHolderName"/>
+        <result column="payment_method" property="paymentMethod"/>
+        <result column="payment_amount" property="paymentAmount"/>
+        <result column="payment_date" property="paymentDate"/>
+        <result column="type" property="type"/>
+        <result column="open_date" property="openDate"/>
+        <result column="out_etp_id" property="outEtpId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "share_holder_id",
+        "share_holder_name",
+        "payment_method",
+        "payment_amount",
+        "payment_date",
+        "type",
+        "open_date",
+        "out_etp_id"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_shareholder_detail (
+            "id",
+            "etp_id",
+            "share_holder_id",
+            "share_holder_name",
+            "payment_method",
+            "payment_amount",
+            "payment_date",
+            "type",
+            "open_date",
+            "out_etp_id"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.shareHolderId},
+            #{pojo.shareHolderName},
+            #{pojo.paymentMethod},
+            #{pojo.paymentAmount},
+            #{pojo.paymentDate},
+            #{pojo.type},
+            #{pojo.openDate},
+            #{pojo.outEtpId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_shareholder_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.shareHolderId!=null"> "share_holder_id",</if>
+            <if test="pojo.shareHolderName!=null"> "share_holder_name",</if>
+            <if test="pojo.paymentMethod!=null"> "payment_method",</if>
+            <if test="pojo.paymentAmount!=null"> "payment_amount",</if>
+            <if test="pojo.paymentDate!=null"> "payment_date",</if>
+            <if test="pojo.type!=null"> "type",</if>
+            <if test="pojo.openDate!=null"> "open_date",</if>
+            <if test="pojo.outEtpId!=null"> "out_etp_id",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.shareHolderId!=null">#{pojo.shareHolderId},</if>
+            <if test="pojo.shareHolderName!=null">#{pojo.shareHolderName},</if>
+            <if test="pojo.paymentMethod!=null">#{pojo.paymentMethod},</if>
+            <if test="pojo.paymentAmount!=null">#{pojo.paymentAmount},</if>
+            <if test="pojo.paymentDate!=null">#{pojo.paymentDate},</if>
+            <if test="pojo.type!=null">#{pojo.type},</if>
+            <if test="pojo.openDate!=null">#{pojo.openDate},</if>
+            <if test="pojo.outEtpId!=null">#{pojo.outEtpId},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_shareholder_detail (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.shareHolderId},
+            #{pojo.shareHolderName},
+            #{pojo.paymentMethod},
+            #{pojo.paymentAmount},
+            #{pojo.paymentDate},
+            #{pojo.type},
+            #{pojo.openDate},
+            #{pojo.outEtpId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_shareholder_detail
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.shareHolderId != null"> "share_holder_id" = #{pojo.shareHolderId}, </if>
+            <if test="pojo.shareHolderName != null"> "share_holder_name" = #{pojo.shareHolderName}, </if>
+            <if test="pojo.paymentMethod != null"> "payment_method" = #{pojo.paymentMethod}, </if>
+            <if test="pojo.paymentAmount != null"> "payment_amount" = #{pojo.paymentAmount}, </if>
+            <if test="pojo.paymentDate != null"> "payment_date" = #{pojo.paymentDate}, </if>
+            <if test="pojo.type != null"> "type" = #{pojo.type}, </if>
+            <if test="pojo.openDate != null"> "open_date" = #{pojo.openDate}, </if>
+            <if test="pojo.outEtpId != null"> "out_etp_id" = #{pojo.outEtpId} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+</mapper>
+

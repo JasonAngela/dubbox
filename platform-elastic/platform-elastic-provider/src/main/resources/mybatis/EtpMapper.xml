@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.Etp">
+        <result column="id" property="id"/>
+        <result column="ent_name" property="entName"/>
+        <result column="industry" property="industry"/>
+        <result column="industry_id" property="industryId"/>
+        <result column="credit_code" property="creditCode"/>
+        <result column="legal_rep" property="legalRep"/>
+        <result column="reg_office" property="regOffice"/>
+        <result column="reg_date" property="regDate"/>
+        <result column="can_rea" property="canRea"/>
+        <result column="is_cancel" property="isCancel"/>
+        <result column="can_date" property="canDate"/>
+        <result column="un_is_cid" property="unIsCid"/>
+        <result column="type" property="type"/>
+        <result column="reg_capital" property="regCapital"/>
+        <result column="business_start" property="businessStart"/>
+        <result column="business_finish" property="businessFinish"/>
+        <result column="check_date" property="checkDate"/>
+        <result column="ent_type" property="entType"/>
+        <result column="reg_state_c_n" property="regStateCN"/>
+        <result column="reg_state" property="regState"/>
+        <result column="state" property="state"/>
+        <result column="address" property="address"/>
+        <result column="business_scope" property="businessScope"/>
+        <result column="pri_pid" property="priPid"/>
+        <result column="reg_cap_cur_cn" property="regCapCurCn"/>
+        <result column="notice_fom" property="noticeFom"/>
+        <result column="notice_to" property="noticeTo"/>
+        <result column="rev_date" property="revDate"/>
+        <result column="name_like" property="nameLike"/>
+        <result column="ent_name_hight" property="entNameHight"/>
+        <result column="country_code" property="countryCode"/>
+        <result column="add_province" property="addProvince"/>
+        <result column="c_state" property="cState"/>
+        <result column="industry_phy" property="industryPhy"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="province_code" property="provinceCode"/>
+        <result column="is_move" property="isMove"/>
+        <result column="prip_type" property="pripType"/>
+        <result column="is_button" property="isButton"/>
+        <result column="revb_basis" property="revbBasis"/>
+        <result column="compform_cn" property="compformCn"/>
+        <result column="province" property="province"/>
+        <result column="city" property="city"/>
+        <result column="area" property="area"/>
+        <result column="lng" property="lng"/>
+        <result column="lat" property="lat"/>
+        <result column="version" property="version"/>
+        <result column="ins_date" property="insDate"/>
+        <result column="update_date" property="updateDate"/>
+        <result column="c_out_status" property="cOutStatus"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        id,
+        ent_name,
+        industry,
+        industry_id,
+        credit_code,
+        legal_rep,
+        reg_office,
+        reg_date,
+        can_rea,
+        is_cancel,
+        can_date,
+        un_is_cid,
+        type,
+        reg_capital,
+        business_start,
+        business_finish,
+        check_date,
+        ent_type,
+        reg_state_c_n,
+        reg_state,
+        state,
+        address,
+        business_scope,
+        pri_pid,
+        reg_cap_cur_cn,
+        notice_fom,
+        notice_to,
+        rev_date,
+        name_like,
+        ent_name_hight,
+        country_code,
+        add_province,
+        c_state,
+        industry_phy,
+        city_code,
+        province_code,
+        is_move,
+        prip_type,
+        is_button,
+        revb_basis,
+        compform_cn,
+        province,
+        city,
+        area,
+        lng,
+        lat,
+        version,
+        ins_date,
+        update_date,
+c_out_status
+</sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO etp (
+            id,
+            ent_name,
+            industry,
+            industry_id,
+            credit_code,
+            legal_rep,
+            reg_office,
+            reg_date,
+            can_rea,
+            is_cancel,
+            can_date,
+            un_is_cid,
+            type,
+            reg_capital,
+            business_start,
+            business_finish,
+            check_date,
+            ent_type,
+            reg_state_c_n,
+            reg_state,
+            state,
+            address,
+            business_scope,
+            pri_pid,
+            reg_cap_cur_cn,
+            notice_fom,
+            notice_to,
+            rev_date,
+            name_like,
+            ent_name_hight,
+            country_code,
+            add_province,
+            c_state,
+            industry_phy,
+            city_code,
+            province_code,
+            is_move,
+            prip_type,
+            is_button,
+            revb_basis,
+            compform_cn,
+            province,
+            city,
+            area,
+            lng,
+            lat,
+            version,
+            ins_date,
+            update_date,
+            c_out_status
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.entName},
+            #{pojo.industry},
+            #{pojo.industryId},
+            #{pojo.creditCode},
+            #{pojo.legalRep},
+            #{pojo.regOffice},
+            #{pojo.regDate},
+            #{pojo.canRea},
+            #{pojo.isCancel},
+            #{pojo.canDate},
+            #{pojo.unIsCid},
+            #{pojo.type},
+            #{pojo.regCapital},
+            #{pojo.businessStart},
+            #{pojo.businessFinish},
+            #{pojo.checkDate},
+            #{pojo.entType},
+            #{pojo.regStateCN},
+            #{pojo.regState},
+            #{pojo.state},
+            #{pojo.address},
+            #{pojo.businessScope},
+            #{pojo.priPid},
+            #{pojo.regCapCurCn},
+            #{pojo.noticeFom},
+            #{pojo.noticeTo},
+            #{pojo.revDate},
+            #{pojo.nameLike},
+            #{pojo.entNameHight},
+            #{pojo.countryCode},
+            #{pojo.addProvince},
+            #{pojo.cState},
+            #{pojo.industryPhy},
+            #{pojo.cityCode},
+            #{pojo.provinceCode},
+            #{pojo.isMove},
+            #{pojo.pripType},
+            #{pojo.isButton},
+            #{pojo.revbBasis},
+            #{pojo.compformCn},
+            #{pojo.province},
+            #{pojo.city},
+            #{pojo.area},
+            #{pojo.lng},
+            #{pojo.lat},
+            #{pojo.version},
+            #{pojo.insDate},
+            #{pojo.updateDate},
+            #{pojo.cOutStatus}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO etp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">id,</if>
+            <if test="pojo.entName!=null">ent_name,</if>
+            <if test="pojo.industry!=null">industry,</if>
+            <if test="pojo.industryId!=null">industry_id,</if>
+            <if test="pojo.creditCode!=null">credit_code,</if>
+            <if test="pojo.legalRep!=null">legal_rep,</if>
+            <if test="pojo.regOffice!=null">reg_office,</if>
+            <if test="pojo.regDate!=null">reg_date,</if>
+            <if test="pojo.canRea!=null">can_rea,</if>
+            <if test="pojo.isCancel!=null">is_cancel,</if>
+            <if test="pojo.canDate!=null">can_date,</if>
+            <if test="pojo.unIsCid!=null">un_is_cid,</if>
+            <if test="pojo.type!=null">type,</if>
+            <if test="pojo.regCapital!=null">reg_capital,</if>
+            <if test="pojo.businessStart!=null">business_start,</if>
+            <if test="pojo.businessFinish!=null">business_finish,</if>
+            <if test="pojo.checkDate!=null">check_date,</if>
+            <if test="pojo.entType!=null">ent_type,</if>
+            <if test="pojo.regStateCN!=null">reg_state_c_n,</if>
+            <if test="pojo.regState!=null">reg_state,</if>
+            <if test="pojo.state!=null">state,</if>
+            <if test="pojo.address!=null">address,</if>
+            <if test="pojo.businessScope!=null">business_scope,</if>
+            <if test="pojo.priPid!=null">pri_pid,</if>
+            <if test="pojo.regCapCurCn!=null">reg_cap_cur_cn,</if>
+            <if test="pojo.noticeFom!=null">notice_fom,</if>
+            <if test="pojo.noticeTo!=null">notice_to,</if>
+            <if test="pojo.revDate!=null">rev_date,</if>
+            <if test="pojo.nameLike!=null">name_like,</if>
+            <if test="pojo.entNameHight!=null">ent_name_hight,</if>
+            <if test="pojo.countryCode!=null">country_code,</if>
+            <if test="pojo.addProvince!=null">add_province,</if>
+            <if test="pojo.cState!=null">c_state,</if>
+            <if test="pojo.industryPhy!=null">industry_phy,</if>
+            <if test="pojo.cityCode!=null">city_code,</if>
+            <if test="pojo.provinceCode!=null">province_code,</if>
+            <if test="pojo.isMove!=null">is_move,</if>
+            <if test="pojo.pripType!=null">prip_type,</if>
+            <if test="pojo.isButton!=null">is_button,</if>
+            <if test="pojo.revbBasis!=null">revb_basis,</if>
+            <if test="pojo.compformCn!=null">compform_cn,</if>
+            <if test="pojo.province!=null">province,</if>
+            <if test="pojo.city!=null">city,</if>
+            <if test="pojo.area!=null">area,</if>
+            <if test="pojo.lng!=null">lng,</if>
+            <if test="pojo.lat!=null">lat,</if>
+            <if test="pojo.version!=null">version,</if>
+            <if test="pojo.insDate!=null">ins_date,</if>
+            <if test="pojo.updateDate!=null">update_date,</if>
+            <if test="pojo.cOutStatus!=null">c_out_status</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.entName!=null">#{pojo.entName},</if>
+            <if test="pojo.industry!=null">#{pojo.industry},</if>
+            <if test="pojo.industryId!=null">#{pojo.industryId},</if>
+            <if test="pojo.creditCode!=null">#{pojo.creditCode},</if>
+            <if test="pojo.legalRep!=null">#{pojo.legalRep},</if>
+            <if test="pojo.regOffice!=null">#{pojo.regOffice},</if>
+            <if test="pojo.regDate!=null">#{pojo.regDate},</if>
+            <if test="pojo.canRea!=null">#{pojo.canRea},</if>
+            <if test="pojo.isCancel!=null">#{pojo.isCancel},</if>
+            <if test="pojo.canDate!=null">#{pojo.canDate},</if>
+            <if test="pojo.unIsCid!=null">#{pojo.unIsCid},</if>
+            <if test="pojo.type!=null">#{pojo.type},</if>
+            <if test="pojo.regCapital!=null">#{pojo.regCapital},</if>
+            <if test="pojo.businessStart!=null">#{pojo.businessStart},</if>
+            <if test="pojo.businessFinish!=null">#{pojo.businessFinish},</if>
+            <if test="pojo.checkDate!=null">#{pojo.checkDate},</if>
+            <if test="pojo.entType!=null">#{pojo.entType},</if>
+            <if test="pojo.regStateCN!=null">#{pojo.regStateCN},</if>
+            <if test="pojo.regState!=null">#{pojo.regState},</if>
+            <if test="pojo.state!=null">#{pojo.state},</if>
+            <if test="pojo.address!=null">#{pojo.address},</if>
+            <if test="pojo.businessScope!=null">#{pojo.businessScope},</if>
+            <if test="pojo.priPid!=null">#{pojo.priPid},</if>
+            <if test="pojo.regCapCurCn!=null">#{pojo.regCapCurCn},</if>
+            <if test="pojo.noticeFom!=null">#{pojo.noticeFom},</if>
+            <if test="pojo.noticeTo!=null">#{pojo.noticeTo},</if>
+            <if test="pojo.revDate!=null">#{pojo.revDate},</if>
+            <if test="pojo.nameLike!=null">#{pojo.nameLike},</if>
+            <if test="pojo.entNameHight!=null">#{pojo.entNameHight},</if>
+            <if test="pojo.countryCode!=null">#{pojo.countryCode},</if>
+            <if test="pojo.addProvince!=null">#{pojo.addProvince},</if>
+            <if test="pojo.cState!=null">#{pojo.cState},</if>
+            <if test="pojo.industryPhy!=null">#{pojo.industryPhy},</if>
+            <if test="pojo.cityCode!=null">#{pojo.cityCode},</if>
+            <if test="pojo.provinceCode!=null">#{pojo.provinceCode},</if>
+            <if test="pojo.isMove!=null">#{pojo.isMove},</if>
+            <if test="pojo.pripType!=null">#{pojo.pripType},</if>
+            <if test="pojo.isButton!=null">#{pojo.isButton},</if>
+            <if test="pojo.revbBasis!=null">#{pojo.revbBasis},</if>
+            <if test="pojo.compformCn!=null">#{pojo.compformCn},</if>
+            <if test="pojo.province!=null">#{pojo.province},</if>
+            <if test="pojo.city!=null">#{pojo.city},</if>
+            <if test="pojo.area!=null">#{pojo.area},</if>
+            <if test="pojo.lng!=null">#{pojo.lng},</if>
+            <if test="pojo.lat!=null">#{pojo.lat},</if>
+            <if test="pojo.version!=null">#{pojo.version},</if>
+            <if test="pojo.insDate!=null">#{pojo.insDate},</if>
+            <if test="pojo.updateDate!=null">#{pojo.updateDate},</if>
+            <if test="pojo.cOutStatus!=null">#{pojo.cOutStatus}</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp(
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.entName},
+            #{pojo.industry},
+            #{pojo.industryId},
+            #{pojo.creditCode},
+            #{pojo.legalRep},
+            #{pojo.regOffice},
+            #{pojo.regDate},
+            #{pojo.canRea},
+            #{pojo.isCancel},
+            #{pojo.canDate},
+            #{pojo.unIsCid},
+            #{pojo.type},
+            #{pojo.regCapital},
+            #{pojo.businessStart},
+            #{pojo.businessFinish},
+            #{pojo.checkDate},
+            #{pojo.entType},
+            #{pojo.regStateCN},
+            #{pojo.regState},
+            #{pojo.state},
+            #{pojo.address},
+            #{pojo.businessScope},
+            #{pojo.priPid},
+            #{pojo.regCapCurCn},
+            #{pojo.noticeFom},
+            #{pojo.noticeTo},
+            #{pojo.revDate},
+            #{pojo.nameLike},
+            #{pojo.entNameHight},
+            #{pojo.countryCode},
+            #{pojo.addProvince},
+            #{pojo.cState},
+            #{pojo.industryPhy},
+            #{pojo.cityCode},
+            #{pojo.provinceCode},
+            #{pojo.isMove},
+            #{pojo.pripType},
+            #{pojo.isButton},
+            #{pojo.revbBasis},
+            #{pojo.compformCn},
+            #{pojo.province},
+            #{pojo.city},
+            #{pojo.area},
+            #{pojo.lng},
+            #{pojo.lat},
+            #{pojo.version},
+            #{pojo.insDate},
+            #{pojo.updateDate},
+            #{pojo.cOutStatus}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+
+        UPDATE etp
+        <set>
+            <if test="pojo.id != null">id = #{pojo.id},</if>
+            <if test="pojo.entName != null">ent_name = #{pojo.entName},</if>
+            <if test="pojo.industry != null">industry = #{pojo.industry},</if>
+            <if test="pojo.industryId != null">industry_id = #{pojo.industryId},</if>
+            <if test="pojo.creditCode != null">credit_code = #{pojo.creditCode},</if>
+            <if test="pojo.legalRep != null">legal_rep = #{pojo.legalRep},</if>
+            <if test="pojo.regOffice != null">reg_office = #{pojo.regOffice},</if>
+            <if test="pojo.regDate != null">reg_date = #{pojo.regDate},</if>
+            <if test="pojo.canRea != null">can_rea = #{pojo.canRea},</if>
+            <if test="pojo.isCancel != null">is_cancel = #{pojo.isCancel},</if>
+            <if test="pojo.canDate != null">can_date = #{pojo.canDate},</if>
+            <if test="pojo.unIsCid != null">un_is_cid = #{pojo.unIsCid},</if>
+            <if test="pojo.type != null">type = #{pojo.type},</if>
+            <if test="pojo.regCapital != null">reg_capital = #{pojo.regCapital},</if>
+            <if test="pojo.businessStart != null">business_start = #{pojo.businessStart},</if>
+            <if test="pojo.businessFinish != null">business_finish = #{pojo.businessFinish},</if>
+            <if test="pojo.checkDate != null">check_date = #{pojo.checkDate},</if>
+            <if test="pojo.entType != null">ent_type = #{pojo.entType},</if>
+            <if test="pojo.regStateCN != null">reg_state_c_n = #{pojo.regStateCN},</if>
+            <if test="pojo.regState != null">reg_state = #{pojo.regState},</if>
+            <if test="pojo.state != null">state = #{pojo.state},</if>
+            <if test="pojo.address != null">address = #{pojo.address},</if>
+            <if test="pojo.businessScope != null">business_scope = #{pojo.businessScope},</if>
+            <if test="pojo.priPid != null">pri_pid = #{pojo.priPid},</if>
+            <if test="pojo.regCapCurCn != null">reg_cap_cur_cn = #{pojo.regCapCurCn},</if>
+            <if test="pojo.noticeFom != null">notice_fom = #{pojo.noticeFom},</if>
+            <if test="pojo.noticeTo != null">notice_to = #{pojo.noticeTo},</if>
+            <if test="pojo.revDate != null">rev_date = #{pojo.revDate},</if>
+            <if test="pojo.nameLike != null">name_like = #{pojo.nameLike},</if>
+            <if test="pojo.entNameHight != null">ent_name_hight = #{pojo.entNameHight},</if>
+            <if test="pojo.countryCode != null">country_code = #{pojo.countryCode},</if>
+            <if test="pojo.addProvince != null">add_province = #{pojo.addProvince},</if>
+            <if test="pojo.cState != null">c_state = #{pojo.cState},</if>
+            <if test="pojo.industryPhy != null">industry_phy = #{pojo.industryPhy},</if>
+            <if test="pojo.cityCode != null">city_code = #{pojo.cityCode},</if>
+            <if test="pojo.provinceCode != null">province_code = #{pojo.provinceCode},</if>
+            <if test="pojo.isMove != null">is_move = #{pojo.isMove},</if>
+            <if test="pojo.pripType != null">prip_type = #{pojo.pripType},</if>
+            <if test="pojo.isButton != null">is_button = #{pojo.isButton},</if>
+            <if test="pojo.revbBasis != null">revb_basis = #{pojo.revbBasis},</if>
+            <if test="pojo.compformCn != null">compform_cn = #{pojo.compformCn},</if>
+            <if test="pojo.province != null">province = #{pojo.province},</if>
+            <if test="pojo.city != null">city = #{pojo.city},</if>
+            <if test="pojo.area != null">area = #{pojo.area},</if>
+            <if test="pojo.lng != null">lng = #{pojo.lng},</if>
+            <if test="pojo.lat != null">lat = #{pojo.lat},</if>
+            <if test="pojo.version != null">version = #{pojo.version},</if>
+            <if test="pojo.insDate != null">ins_date = #{pojo.insDate},</if>
+            <if test="pojo.updateDate != null">update_date = #{pojo.updateDate},</if>
+            <if test="pojo.cOutStatus != null">c_out_status = #{pojo.cOutStatus}</if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+    <!--auto generated by codehelper on 2018-01-05 18:08:59-->
+    <select id="selectIdByEntName" resultType="java.lang.String">
+        select
+        id
+        from etp
+        where ent_name=#{entName}
+    </select>
+
+    <!--auto generated by codehelper on 2018-01-11 16:31:05-->
+    <select id="findByEntName" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp
+        where "ent_name"=#{entName}
+    </select>
+
+    <!--auto generated by codehelper on 2018-01-11 17:05:48-->
+    <select id="findByEntNameIn" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp
+        where "ent_name" in
+        <foreach item="item" index="index" collection="entNameList"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--auto generated by codehelper on 2018-01-26 10:11:24-->
+    <select id="findById" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp
+        where id=#{id}
+    </select>
+</mapper>
+

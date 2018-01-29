@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpShareholderMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpShareholder">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="shareholder" property="shareholder"/>
+        <result column="holder_type" property="holderType"/>
+        <result column="holder_type_name" property="holderTypeName"/>
+        <result column="card_no" property="cardNo"/>
+        <result column="card_type" property="cardType"/>
+        <result column="card_type_name" property="cardTypeName"/>
+        <result column="address" property="address"/>
+        <result column="confusing_amount" property="confusingAmount"/>
+        <result column="confusing_data" property="confusingData"/>
+        <result column="payment" property="payment"/>
+        <result column="payment_date" property="paymentDate"/>
+        <result column="country_name" property="countryName"/>
+        <result column="open_date" property="openDate"/>
+        <result column="out_id" property="outId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "shareholder",
+        "holder_type",
+        "holder_type_name",
+        "card_no",
+        "card_type",
+        "card_type_name",
+        "address",
+        "confusing_amount",
+        "confusing_data",
+        "payment",
+        "payment_date",
+        "country_name",
+        "open_date",
+        "out_id"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_shareholder (
+            "id",
+            "etp_id",
+            "shareholder",
+            "holder_type",
+            "holder_type_name",
+            "card_no",
+            "card_type",
+            "card_type_name",
+            "address",
+            "confusing_amount",
+            "confusing_data",
+            "payment",
+            "payment_date",
+            "country_name",
+            "open_date",
+            "out_id"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.shareholder},
+            #{pojo.holderType},
+            #{pojo.holderTypeName},
+            #{pojo.cardNo},
+            #{pojo.cardType},
+            #{pojo.cardTypeName},
+            #{pojo.address},
+            #{pojo.confusingAmount},
+            #{pojo.confusingData},
+            #{pojo.payment},
+            #{pojo.paymentDate},
+            #{pojo.countryName},
+            #{pojo.openDate},
+            #{pojo.outId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_shareholder
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.shareholder!=null"> "shareholder",</if>
+            <if test="pojo.holderType!=null"> "holder_type",</if>
+            <if test="pojo.holderTypeName!=null"> "holder_type_name",</if>
+            <if test="pojo.cardNo!=null"> "card_no",</if>
+            <if test="pojo.cardType!=null"> "card_type",</if>
+            <if test="pojo.cardTypeName!=null"> "card_type_name",</if>
+            <if test="pojo.address!=null"> "address",</if>
+            <if test="pojo.confusingAmount!=null"> "confusing_amount",</if>
+            <if test="pojo.confusingData!=null"> "confusing_data",</if>
+            <if test="pojo.payment!=null"> "payment",</if>
+            <if test="pojo.paymentDate!=null"> "payment_date",</if>
+            <if test="pojo.countryName!=null"> "country_name",</if>
+            <if test="pojo.openDate!=null"> "open_date",</if>
+            <if test="pojo.outId!=null"> "out_id"</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> #{pojo.id},</if>
+            <if test="pojo.etpId!=null"> #{pojo.etpId},</if>
+            <if test="pojo.shareholder!=null"> #{pojo.shareholder},</if>
+            <if test="pojo.holderType!=null"> #{pojo.holderType},</if>
+            <if test="pojo.holderTypeName!=null"> #{pojo.holderTypeName},</if>
+            <if test="pojo.cardNo!=null"> #{pojo.cardNo},</if>
+            <if test="pojo.cardType!=null"> #{pojo.cardType},</if>
+            <if test="pojo.cardTypeName!=null"> #{pojo.cardTypeName},</if>
+            <if test="pojo.address!=null"> #{pojo.address},</if>
+            <if test="pojo.confusingAmount!=null"> #{pojo.confusingAmount},</if>
+            <if test="pojo.confusingData!=null"> #{pojo.confusingData},</if>
+            <if test="pojo.payment!=null"> #{pojo.payment},</if>
+            <if test="pojo.paymentDate!=null"> #{pojo.paymentDate},</if>
+            <if test="pojo.countryName!=null"> #{pojo.countryName},</if>
+            <if test="pojo.openDate!=null"> #{pojo.openDate},</if>
+            <if test="pojo.outId!=null"> #{pojo.outId}</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_shareholder(
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.shareholder},
+            #{pojo.holderType},
+            #{pojo.holderTypeName},
+            #{pojo.cardNo},
+            #{pojo.cardType},
+            #{pojo.cardTypeName},
+            #{pojo.address},
+            #{pojo.confusingAmount},
+            #{pojo.confusingData},
+            #{pojo.payment},
+            #{pojo.paymentDate},
+            #{pojo.countryName},
+            #{pojo.openDate},
+            #{pojo.outId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_shareholder
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id},</if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId},</if>
+            <if test="pojo.shareholder != null"> "shareholder" = #{pojo.shareholder},</if>
+            <if test="pojo.holderType != null"> "holder_type" = #{pojo.holderType},</if>
+            <if test="pojo.holderTypeName != null"> "holder_type_name" = #{pojo.holderTypeName},</if>
+            <if test="pojo.cardNo != null"> "card_no" = #{pojo.cardNo},</if>
+            <if test="pojo.cardType != null"> "card_type" = #{pojo.cardType},</if>
+            <if test="pojo.cardTypeName != null"> "card_type_name" = #{pojo.cardTypeName},</if>
+            <if test="pojo.address != null"> "address" = #{pojo.address},</if>
+            <if test="pojo.confusingAmount != null"> "confusing_amount" = #{pojo.confusingAmount},</if>
+            <if test="pojo.confusingData != null"> "confusing_data" = #{pojo.confusingData},</if>
+            <if test="pojo.payment != null"> "payment" = #{pojo.payment},</if>
+            <if test="pojo.paymentDate != null"> "payment_date" = #{pojo.paymentDate},</if>
+            <if test="pojo.countryName != null"> "country_name" = #{pojo.countryName},</if>
+            <if test="pojo.openDate != null"> "open_date" = #{pojo.openDate},</if>
+            <if test="pojo.outId != null"> "out_id" = #{pojo.outId}</if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+<!--auto generated by codehelper on 2018-01-11 16:39:34-->
+    <select id="findByEtpId" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp_shareholder
+        where "etp_id"=#{etpId}
+    </select>
+
+<!--auto generated by codehelper on 2018-01-12 10:21:08-->
+    <select id="findByEtpIdIn" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp_shareholder
+        where "etp_id" in
+        <foreach item="item" index="index" collection="etpIdList"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectShareholderByEtpId" resultType="java.lang.String">
+        select
+            shareholder
+        from etp_shareholder
+        where "etp_id"=#{etpId}
+    </select>
+
+    <select id="selectEtpIdByShareholder" resultType="java.lang.String">
+        select
+            etp_id
+        from etp_shareholder
+        where "shareholder"=#{shareholder}
+    </select>
+</mapper>
+

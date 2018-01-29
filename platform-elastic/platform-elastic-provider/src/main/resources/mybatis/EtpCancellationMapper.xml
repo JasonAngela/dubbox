@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpCancellationMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpCancellation">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="notice_from" property="noticeFrom"/>
+        <result column="notice_to" property="noticeTo"/>
+        <result column="is_cancel" property="isCancel"/>
+        <result column="out_etp_id" property="outEtpId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "notice_from",
+        "notice_to",
+        "is_cancel",
+        "out_etp_id"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_cancellation (
+            "id",
+            "etp_id",
+            "notice_from",
+            "notice_to",
+            "is_cancel",
+            "out_etp_id"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.noticeFrom},
+            #{pojo.noticeTo},
+            #{pojo.isCancel},
+            #{pojo.outEtpId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_cancellation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.noticeFrom!=null"> "notice_from",</if>
+            <if test="pojo.noticeTo!=null"> "notice_to",</if>
+            <if test="pojo.isCancel!=null"> "is_cancel",</if>
+            <if test="pojo.outEtpId!=null"> "out_etp_id",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.noticeFrom!=null">#{pojo.noticeFrom},</if>
+            <if test="pojo.noticeTo!=null">#{pojo.noticeTo},</if>
+            <if test="pojo.isCancel!=null">#{pojo.isCancel},</if>
+            <if test="pojo.outEtpId!=null">#{pojo.outEtpId},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_cancellation (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.noticeFrom},
+            #{pojo.noticeTo},
+            #{pojo.isCancel},
+            #{pojo.outEtpId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_cancellation
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.noticeFrom != null"> "notice_from" = #{pojo.noticeFrom}, </if>
+            <if test="pojo.noticeTo != null"> "notice_to" = #{pojo.noticeTo}, </if>
+            <if test="pojo.isCancel != null"> "is_cancel" = #{pojo.isCancel}, </if>
+            <if test="pojo.outEtpId != null"> "out_etp_id" = #{pojo.outEtpId} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+</mapper>
+

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpBrandMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpBrand">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="brand_name" property="brandName"/>
+        <result column="reg_code" property="regCode"/>
+        <result column="reg_notice_date" property="regNoticeDate"/>
+        <result column="type_id" property="typeId"/>
+        <result column="brand_img" property="brandImg"/>
+        <result column="pic_name" property="picName"/>
+        <result column="out_id" property="outId"/>
+        <result column="out_etp_id" property="outEtpId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "brand_name",
+        "reg_code",
+        "reg_notice_date",
+        "type_id",
+        "brand_img",
+        "pic_name",
+        "out_id",
+        "out_etp_id"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_brand (
+            "id",
+            "etp_id",
+            "brand_name",
+            "reg_code",
+            "reg_notice_date",
+            "type_id",
+            "brand_img",
+            "pic_name",
+            "out_id",
+            "out_etp_id"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.brandName},
+            #{pojo.regCode},
+            #{pojo.regNoticeDate},
+            #{pojo.typeId},
+            #{pojo.brandImg},
+            #{pojo.picName},
+            #{pojo.outId},
+            #{pojo.outEtpId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_brand
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.brandName!=null"> "brand_name",</if>
+            <if test="pojo.regCode!=null"> "reg_code",</if>
+            <if test="pojo.regNoticeDate!=null"> "reg_notice_date",</if>
+            <if test="pojo.typeId!=null"> "type_id",</if>
+            <if test="pojo.brandImg!=null"> "brand_img",</if>
+            <if test="pojo.picName!=null"> "pic_name",</if>
+            <if test="pojo.outId!=null"> "out_id",</if>
+            <if test="pojo.outEtpId!=null"> "out_etp_id",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.brandName!=null">#{pojo.brandName},</if>
+            <if test="pojo.regCode!=null">#{pojo.regCode},</if>
+            <if test="pojo.regNoticeDate!=null">#{pojo.regNoticeDate},</if>
+            <if test="pojo.typeId!=null">#{pojo.typeId},</if>
+            <if test="pojo.brandImg!=null">#{pojo.brandImg},</if>
+            <if test="pojo.picName!=null">#{pojo.picName},</if>
+            <if test="pojo.outId!=null">#{pojo.outId},</if>
+            <if test="pojo.outEtpId!=null">#{pojo.outEtpId},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_brand (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.brandName},
+            #{pojo.regCode},
+            #{pojo.regNoticeDate},
+            #{pojo.typeId},
+            #{pojo.brandImg},
+            #{pojo.picName},
+            #{pojo.outId},
+            #{pojo.outEtpId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_brand
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.brandName != null"> "brand_name" = #{pojo.brandName}, </if>
+            <if test="pojo.regCode != null"> "reg_code" = #{pojo.regCode}, </if>
+            <if test="pojo.regNoticeDate != null"> "reg_notice_date" = #{pojo.regNoticeDate}, </if>
+            <if test="pojo.typeId != null"> "type_id" = #{pojo.typeId}, </if>
+            <if test="pojo.brandImg != null"> "brand_img" = #{pojo.brandImg}, </if>
+            <if test="pojo.picName != null"> "pic_name" = #{pojo.picName}, </if>
+            <if test="pojo.outId != null"> "out_id" = #{pojo.outId}, </if>
+            <if test="pojo.outEtpId != null"> "out_etp_id" = #{pojo.outEtpId} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+</mapper>
+

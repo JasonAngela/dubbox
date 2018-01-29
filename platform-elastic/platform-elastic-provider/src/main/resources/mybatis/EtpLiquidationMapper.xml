@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpLiquidationMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpLiquidation">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="personnel" property="personnel"/>
+        <result column="position" property="position"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "personnel",
+        "position"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_liquidation (
+            "id",
+            "etp_id",
+            "personnel",
+            "position"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.personnel},
+            #{pojo.position}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_liquidation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.personnel!=null"> "personnel",</if>
+            <if test="pojo.position!=null"> "position",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.personnel!=null">#{pojo.personnel},</if>
+            <if test="pojo.position!=null">#{pojo.position},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_liquidation (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.personnel},
+            #{pojo.position}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_liquidation
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.personnel != null"> "personnel" = #{pojo.personnel}, </if>
+            <if test="pojo.position != null"> "position" = #{pojo.position} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+</mapper>
+

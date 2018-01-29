@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpLicenceMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpLicence">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="permission_number" property="permissionNumber"/>
+        <result column="permission_name" property="permissionName"/>
+        <result column="permission_office" property="permissionOffice"/>
+        <result column="permission_content" property="permissionContent"/>
+        <result column="start_date" property="startDate"/>
+        <result column="finish_date" property="finishDate"/>
+        <result column="public_date" property="publicDate"/>
+        <result column="type" property="type"/>
+        <result column="out_id" property="outId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "permission_number",
+        "permission_name",
+        "permission_office",
+        "permission_content",
+        "start_date",
+        "finish_date",
+        "public_date",
+        "type",
+        "out_id"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_licence (
+            "id",
+            "etp_id",
+            "permission_number",
+            "permission_name",
+            "permission_office",
+            "permission_content",
+            "start_date",
+            "finish_date",
+            "public_date",
+            "type",
+            "out_id"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.permissionNumber},
+            #{pojo.permissionName},
+            #{pojo.permissionOffice},
+            #{pojo.permissionContent},
+            #{pojo.startDate},
+            #{pojo.finishDate},
+            #{pojo.publicDate},
+            #{pojo.type},
+            #{pojo.outId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_licence
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.permissionNumber!=null"> "permission_number",</if>
+            <if test="pojo.permissionName!=null"> "permission_name",</if>
+            <if test="pojo.permissionOffice!=null"> "permission_office",</if>
+            <if test="pojo.permissionContent!=null"> "permission_content",</if>
+            <if test="pojo.startDate!=null"> "start_date",</if>
+            <if test="pojo.finishDate!=null"> "finish_date",</if>
+            <if test="pojo.publicDate!=null"> "public_date",</if>
+            <if test="pojo.type!=null"> "type",</if>
+            <if test="pojo.outId!=null"> "out_id",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.permissionNumber!=null">#{pojo.permissionNumber},</if>
+            <if test="pojo.permissionName!=null">#{pojo.permissionName},</if>
+            <if test="pojo.permissionOffice!=null">#{pojo.permissionOffice},</if>
+            <if test="pojo.permissionContent!=null">#{pojo.permissionContent},</if>
+            <if test="pojo.startDate!=null">#{pojo.startDate},</if>
+            <if test="pojo.finishDate!=null">#{pojo.finishDate},</if>
+            <if test="pojo.publicDate!=null">#{pojo.publicDate},</if>
+            <if test="pojo.type!=null">#{pojo.type},</if>
+            <if test="pojo.outId!=null">#{pojo.outId},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_licence (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.permissionNumber},
+            #{pojo.permissionName},
+            #{pojo.permissionOffice},
+            #{pojo.permissionContent},
+            #{pojo.startDate},
+            #{pojo.finishDate},
+            #{pojo.publicDate},
+            #{pojo.type},
+            #{pojo.outId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_licence
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.permissionNumber != null"> "permission_number" = #{pojo.permissionNumber}, </if>
+            <if test="pojo.permissionName != null"> "permission_name" = #{pojo.permissionName}, </if>
+            <if test="pojo.permissionOffice != null"> "permission_office" = #{pojo.permissionOffice}, </if>
+            <if test="pojo.permissionContent != null"> "permission_content" = #{pojo.permissionContent}, </if>
+            <if test="pojo.startDate != null"> "start_date" = #{pojo.startDate}, </if>
+            <if test="pojo.finishDate != null"> "finish_date" = #{pojo.finishDate}, </if>
+            <if test="pojo.publicDate != null"> "public_date" = #{pojo.publicDate}, </if>
+            <if test="pojo.type != null"> "type" = #{pojo.type}, </if>
+            <if test="pojo.outId != null"> "out_id" = #{pojo.outId} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+<!--auto generated by codehelper on 2018-01-11 16:55:07-->
+    <select id="findByEtpId" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp_licence
+        where "etp_id"=#{etpId}
+    </select>
+
+<!--auto generated by codehelper on 2018-01-12 10:31:54-->
+    <select id="findByEtpIdIn" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp_licence
+        where "etp_id" in
+        <foreach item="item" index="index" collection="etpIdList"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
+

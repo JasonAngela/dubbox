@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpSharesFrostMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.EtpSharesFrost">
+        <result column="id" property="id"/>
+        <result column="etp_id" property="etpId"/>
+        <result column="executor" property="executor"/>
+        <result column="execute_no" property="executeNo"/>
+        <result column="stock_num" property="stockNum"/>
+        <result column="stock_num_unit" property="stockNumUnit"/>
+        <result column="stock_num_cap_cur" property="stockNumCapCur"/>
+        <result column="decide_org" property="decideOrg"/>
+        <result column="frozen_state" property="frozenState"/>
+        <result column="ext_start_date" property="extStartDate"/>
+        <result column="ext_end_date" property="extEndDate"/>
+        <result column="ext_card_id" property="extCardId"/>
+        <result column="ext_card_type" property="extCardType"/>
+        <result column="ext_matter" property="extMatter"/>
+        <result column="ext_term" property="extTerm"/>
+        <result column="public_date" property="publicDate"/>
+        <result column="ext_judge_no" property="extJudgeNo"/>
+        <result column="out_id" property="outId"/>
+        <result column="out_etp_id" property="outEtpId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        "id",
+        "etp_id",
+        "executor",
+        "execute_no",
+        "stock_num",
+        "stock_num_unit",
+        "stock_num_cap_cur",
+        "decide_org",
+        "frozen_state",
+        "ext_start_date",
+        "ext_end_date",
+        "ext_card_id",
+        "ext_card_type",
+        "ext_matter",
+        "ext_term",
+        "public_date",
+        "ext_judge_no",
+        "out_id",
+        "out_etp_id"
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert">
+        INSERT INTO etp_shares_frost (
+            "id",
+            "etp_id",
+            "executor",
+            "execute_no",
+            "stock_num",
+            "stock_num_unit",
+            "stock_num_cap_cur",
+            "decide_org",
+            "frozen_state",
+            "ext_start_date",
+            "ext_end_date",
+            "ext_card_id",
+            "ext_card_type",
+            "ext_matter",
+            "ext_term",
+            "public_date",
+            "ext_judge_no",
+            "out_id",
+            "out_etp_id"
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.executor},
+            #{pojo.executeNo},
+            #{pojo.stockNum},
+            #{pojo.stockNumUnit},
+            #{pojo.stockNumCapCur},
+            #{pojo.decideOrg},
+            #{pojo.frozenState},
+            #{pojo.extStartDate},
+            #{pojo.extEndDate},
+            #{pojo.extCardId},
+            #{pojo.extCardType},
+            #{pojo.extMatter},
+            #{pojo.extTerm},
+            #{pojo.publicDate},
+            #{pojo.extJudgeNo},
+            #{pojo.outId},
+            #{pojo.outEtpId}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective">
+        INSERT INTO etp_shares_frost
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null"> "id",</if>
+            <if test="pojo.etpId!=null"> "etp_id",</if>
+            <if test="pojo.executor!=null"> "executor",</if>
+            <if test="pojo.executeNo!=null"> "execute_no",</if>
+            <if test="pojo.stockNum!=null"> "stock_num",</if>
+            <if test="pojo.stockNumUnit!=null"> "stock_num_unit",</if>
+            <if test="pojo.stockNumCapCur!=null"> "stock_num_cap_cur",</if>
+            <if test="pojo.decideOrg!=null"> "decide_org",</if>
+            <if test="pojo.frozenState!=null"> "frozen_state",</if>
+            <if test="pojo.extStartDate!=null"> "ext_start_date",</if>
+            <if test="pojo.extEndDate!=null"> "ext_end_date",</if>
+            <if test="pojo.extCardId!=null"> "ext_card_id",</if>
+            <if test="pojo.extCardType!=null"> "ext_card_type",</if>
+            <if test="pojo.extMatter!=null"> "ext_matter",</if>
+            <if test="pojo.extTerm!=null"> "ext_term",</if>
+            <if test="pojo.publicDate!=null"> "public_date",</if>
+            <if test="pojo.extJudgeNo!=null"> "ext_judge_no",</if>
+            <if test="pojo.outId!=null"> "out_id",</if>
+            <if test="pojo.outEtpId!=null"> "out_etp_id",</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.etpId!=null">#{pojo.etpId},</if>
+            <if test="pojo.executor!=null">#{pojo.executor},</if>
+            <if test="pojo.executeNo!=null">#{pojo.executeNo},</if>
+            <if test="pojo.stockNum!=null">#{pojo.stockNum},</if>
+            <if test="pojo.stockNumUnit!=null">#{pojo.stockNumUnit},</if>
+            <if test="pojo.stockNumCapCur!=null">#{pojo.stockNumCapCur},</if>
+            <if test="pojo.decideOrg!=null">#{pojo.decideOrg},</if>
+            <if test="pojo.frozenState!=null">#{pojo.frozenState},</if>
+            <if test="pojo.extStartDate!=null">#{pojo.extStartDate},</if>
+            <if test="pojo.extEndDate!=null">#{pojo.extEndDate},</if>
+            <if test="pojo.extCardId!=null">#{pojo.extCardId},</if>
+            <if test="pojo.extCardType!=null">#{pojo.extCardType},</if>
+            <if test="pojo.extMatter!=null">#{pojo.extMatter},</if>
+            <if test="pojo.extTerm!=null">#{pojo.extTerm},</if>
+            <if test="pojo.publicDate!=null">#{pojo.publicDate},</if>
+            <if test="pojo.extJudgeNo!=null">#{pojo.extJudgeNo},</if>
+            <if test="pojo.outId!=null">#{pojo.outId},</if>
+            <if test="pojo.outEtpId!=null">#{pojo.outEtpId},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO etp_shares_frost (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.etpId},
+            #{pojo.executor},
+            #{pojo.executeNo},
+            #{pojo.stockNum},
+            #{pojo.stockNumUnit},
+            #{pojo.stockNumCapCur},
+            #{pojo.decideOrg},
+            #{pojo.frozenState},
+            #{pojo.extStartDate},
+            #{pojo.extEndDate},
+            #{pojo.extCardId},
+            #{pojo.extCardType},
+            #{pojo.extMatter},
+            #{pojo.extTerm},
+            #{pojo.publicDate},
+            #{pojo.extJudgeNo},
+            #{pojo.outId},
+            #{pojo.outEtpId}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE etp_shares_frost
+        <set>
+            <if test="pojo.id != null"> "id" = #{pojo.id}, </if>
+            <if test="pojo.etpId != null"> "etp_id" = #{pojo.etpId}, </if>
+            <if test="pojo.executor != null"> "executor" = #{pojo.executor}, </if>
+            <if test="pojo.executeNo != null"> "execute_no" = #{pojo.executeNo}, </if>
+            <if test="pojo.stockNum != null"> "stock_num" = #{pojo.stockNum}, </if>
+            <if test="pojo.stockNumUnit != null"> "stock_num_unit" = #{pojo.stockNumUnit}, </if>
+            <if test="pojo.stockNumCapCur != null"> "stock_num_cap_cur" = #{pojo.stockNumCapCur}, </if>
+            <if test="pojo.decideOrg != null"> "decide_org" = #{pojo.decideOrg}, </if>
+            <if test="pojo.frozenState != null"> "frozen_state" = #{pojo.frozenState}, </if>
+            <if test="pojo.extStartDate != null"> "ext_start_date" = #{pojo.extStartDate}, </if>
+            <if test="pojo.extEndDate != null"> "ext_end_date" = #{pojo.extEndDate}, </if>
+            <if test="pojo.extCardId != null"> "ext_card_id" = #{pojo.extCardId}, </if>
+            <if test="pojo.extCardType != null"> "ext_card_type" = #{pojo.extCardType}, </if>
+            <if test="pojo.extMatter != null"> "ext_matter" = #{pojo.extMatter}, </if>
+            <if test="pojo.extTerm != null"> "ext_term" = #{pojo.extTerm}, </if>
+            <if test="pojo.publicDate != null"> "public_date" = #{pojo.publicDate}, </if>
+            <if test="pojo.extJudgeNo != null"> "ext_judge_no" = #{pojo.extJudgeNo}, </if>
+            <if test="pojo.outId != null"> "out_id" = #{pojo.outId}, </if>
+            <if test="pojo.outEtpId != null"> "out_etp_id" = #{pojo.outEtpId} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+<!--auto generated by codehelper on 2018-01-11 16:50:56-->
+    <select id="findByEtpId" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp_shares_frost
+        where "etp_id"=#{etpId}
+    </select>
+
+<!--auto generated by codehelper on 2018-01-12 10:29:36-->
+    <select id="findByEtpIdIn" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from etp_shares_frost
+        where "etp_id" in
+        <foreach item="item" index="index" collection="etpIdList"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
+
