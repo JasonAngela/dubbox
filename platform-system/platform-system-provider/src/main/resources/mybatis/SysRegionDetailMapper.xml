@@ -23,9 +23,12 @@
         a.update_date,
         a.region,
         a.code
-        FROM sys_region a
+        FROM sys_region_detail a
     </sql>
 
-
+    <select id="selectRegionDetailByCode" resultType="cn.bjd.platform.system.api.entity.SysRegionDetail">
+        <include refid="selectColumns"/>
+        WHERE a.code = #{code}
+    </select>
 
 </mapper>

@@ -1,7 +1,7 @@
 package cn.bjd.platform.system.provider.serviceimpl;
 
-import cn.bjd.platform.common.redis.RedisRepository;
 import cn.bjd.platform.system.api.entity.*;
+import cn.bjd.platform.system.api.entity.POJO.RegionDto;
 import cn.bjd.platform.system.api.exception.base.SystemException;
 import cn.bjd.platform.system.provider.mapper.*;
 import com.github.pagehelper.PageHelper;
@@ -9,7 +9,6 @@ import com.github.pagehelper.PageInfo;
 import cn.bjd.platform.common.api.Paging;
 import cn.bjd.platform.common.utils.StringHelper;
 import cn.bjd.platform.system.api.service.ISystemService;
-import org.codehaus.groovy.syntax.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +59,12 @@ public class SystemService implements ISystemService {
 
     @Autowired
     private SysRegionMapper sysRegionMapper;
+
+    @Autowired
+    private SysRegionDetailMapper sysRegionDetailMapper;
+
+    @Autowired
+    private SysScoreMapper sysScoreMapper;
 
 
     @Override
@@ -592,5 +597,22 @@ public class SystemService implements ISystemService {
     @Transactional(readOnly = false)
     public void deleteRoleById(String roleId) {
         sysRoleMapper.deleteById(roleId);
+    }
+
+    @Override
+    public DataForRegion getDataForRegionByCode(String code) {
+        DataForRegion dataForRegion = new DataForRegion();
+        SysRegionDetail regionDetail = sysRegionDetailMapper.selectRegionDetailByCode(code);
+        SysScore sysScore = sysScoreMapper.selectScoreByCode(code);
+        if(regionDetail != null){
+            RegionDto dto = new RegionDto();
+
+            if(sysScore != null){
+
+            }
+
+        }
+
+        return dataForRegion;
     }
 }

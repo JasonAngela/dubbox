@@ -2,9 +2,6 @@ package cn.bjd.platform.system.api.entity.POJO;
 
 import cn.bjd.platform.common.api.DataEntity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 行业
  */
@@ -15,7 +12,6 @@ public class Industry extends DataEntity {
 
     private String count;
 
-    private List<Industry> topIndustry = new ArrayList<>();
 
     public String getCategory() {
         return category;
@@ -31,13 +27,5 @@ public class Industry extends DataEntity {
 
     public void setCount(String count) {
         this.count = count;
-    }
-
-    public List<Industry> getTopIndustry() {
-        return topIndustry;
-    }
-
-    public void setTopIndustry(List<Industry> topIndustry) {
-        this.topIndustry = topIndustry;
     }
 }

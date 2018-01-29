@@ -270,4 +270,7 @@ public interface ISystemService {
      */
     void deleteRoleById(String roleId);
 
+
+    DataForRegion getDataForRegionByCode(String code);
+
 }

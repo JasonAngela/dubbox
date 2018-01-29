@@ -77,6 +77,18 @@ public class SysRegionDetail extends DataEntity {
      */
     private Double crimeIndex;
 
+
+
+    private SysScore sysScore;
+
+    public SysScore getSysScore() {
+        return sysScore;
+    }
+
+    public void setSysScore(SysScore sysScore) {
+        this.sysScore = sysScore;
+    }
+
     public Double getGdpTotal() {
         return gdpTotal;
     }

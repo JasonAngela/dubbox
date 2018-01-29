@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bjd.platform.system.provider.mapper.SysScoreMapper">
+
+    <sql id="selectScore">
+        SELECT DISTINCT
+        b.id,
+        b.province,
+        b.city,
+        b.area,
+        b.code,
+        b.suggestion,
+        b.create_date,
+        b.update_date,
+        b.score,
+        b.dev_score,
+        b.stable_score,
+        b.fin_score,
+        b.risk_score
+        FROM sys_score b
+    </sql>
+
+
+   <select id="selectScoreByCode" resultType="cn.bjd.platform.system.api.entity.SysScore">
+      <include refid="selectScore" />
+       WHERE b.code = #{code}
+   </select>
+
+</mapper>
