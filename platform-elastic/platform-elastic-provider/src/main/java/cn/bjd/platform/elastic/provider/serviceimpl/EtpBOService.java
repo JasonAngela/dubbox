@@ -447,7 +447,7 @@ public class EtpBOService implements IEtpBOService {
         //将BO转为DTO
         EtpDTO etpDTO = new EtpDTO();
         etpDTO.setId(id);
-        etpDTO.setCustoms(etpBO.getEntName());
+        etpDTO.setEntName(etpBO.getEntName());
         etpDTO.setAddress(etpBO.getAddress());
         etpDTO.setRegDate(etpBO.getRegDate());
         etpDTO.setRegCapital(Double.parseDouble(etpBO.getRegCapital()));

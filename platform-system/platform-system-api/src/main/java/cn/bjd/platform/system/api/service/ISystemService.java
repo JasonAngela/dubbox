@@ -273,4 +273,8 @@ public interface ISystemService {
 
     DataForRegion getDataForRegionByCode(String code);
 
+
+    List<SysRegion> getRegionAndChild(String regionCode);
+
+    List<SysIndustry> getIndustryTree();
 }

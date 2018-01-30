@@ -14,6 +14,8 @@ public class SysRegion extends DataEntity {
      */
     private String code;
 
+    private String regionCode;
+
     /**
      * 名称
      */
@@ -21,6 +23,9 @@ public class SysRegion extends DataEntity {
 
 
     private String parent;
+
+
+    private String parentId;
 
     /**
      * 简称
@@ -50,7 +55,43 @@ public class SysRegion extends DataEntity {
 
     private String lat;
 
+    private Integer score;
+
+    private String suggestion;
+
     private List<SysRegion> children = new ArrayList<>();
+
+    public String getParentId() {
+        return getParent();
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getSuggestion() {
+        return suggestion;
+    }
+
+    public void setSuggestion(String suggestion) {
+        this.suggestion = suggestion;
+    }
+
+    public String getRegionCode() {
+        return getCode();
+    }
+
+    public void setRegionCode(String regionCode) {
+        this.regionCode = regionCode;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
 
     public List<SysRegion> getChildren() {
         return children;

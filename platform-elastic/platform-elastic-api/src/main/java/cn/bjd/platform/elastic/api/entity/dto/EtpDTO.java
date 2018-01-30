@@ -1,11 +1,12 @@
 package cn.bjd.platform.elastic.api.entity.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 返回的企业信息
  */
-public class EtpDTO {
+public class EtpDTO implements Serializable {
 
     /**
      * 企业的Id

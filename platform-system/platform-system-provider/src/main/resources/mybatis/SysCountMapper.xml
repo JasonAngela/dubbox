@@ -205,6 +205,34 @@
         </if>
     </select>
 
+    <select id="countIndustryTop5" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        select sum(a.sum) as value,a.type from sys_count a
+        <where>
+            <trim prefixOverrides="AND">
+                AND a.category IN ('INDUSTRY')
+                <if test="area != null and area != ''">
+                    AND (a.province = #{area} OR a.city = #{area} OR a.area = #{area})
+                </if>
+            </trim>
+        </where>
+        group by a.type limit 5
+    </select>
+
+    
+    <select id="countSumCompany" resultType="cn.bjd.platform.system.api.entity.SysCount">
+         select sum(a.sum) as value,a.category FROM sys_count a
+         <where>
+             <trim prefixOverrides="AND">
+                 AND a.category = 'ETPCOUNT'
+                 <if test="area != null and area !='' ">
+                     AND (a.province = #{area} OR a.city = #{area} OR a.area = #{area})
+                 </if>
+             </trim>
+         </where>
+        group by a.category;
+    </select>
+    
+    
 
     <!--行业历史数量变化-->
     <select id="industryHistoryByYear" resultType="cn.bjd.platform.system.api.entity.SysCount">
@@ -251,6 +279,32 @@
                 </if>
             </trim>
 
+        </where>
+        group by a.category
+    </select>
+    
+    <select id="countDQueryV2" resultType="cn.bjd.platform.system.api.entity.SysCount">
+      select sum(a.sum) as value,a.category from sys_count a
+        <where>
+            <trim prefixOverrides="AND">
+                AND a.category IN ('COURTPUB','EXECUTED','BREAKFAITH','COURT')
+                <if test="area != null and area != ''">
+                    AND (a.province = #{area} OR a.city = #{area} OR a.area = #{area})
+                </if>
+            </trim>
+        </where>
+      group by a.category
+    </select>
+
+    <select id="countDTypeQueryV2" resultType="cn.bjd.platform.system.api.entity.SysCount">
+        select sum(a.sum) as value,a.category from sys_count a
+        <where>
+            <trim prefixOverrides="AND">
+                AND a.category IN ('CUSTOMS','TAX') and a.type like '%D%'
+                <if test="area != null and area != ''">
+                    AND (a.province = #{area} OR a.city = #{area} OR a.area = #{area})
+                </if>
+            </trim>
         </where>
         group by a.category
     </select>

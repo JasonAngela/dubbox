@@ -5,9 +5,9 @@ import cn.bjd.platform.common.api.DataEntity;
 public class Risk extends DataEntity {
     private static final long serialVersionUID = 1L;
 
-    private Integer courtCount;
+    private Integer courtCount = 0;
 
-    private Integer illegalCount;
+    private Integer illegalCount = 0;
 
     public Integer getCourtCount() {
         return courtCount;

@@ -8,6 +8,7 @@ package cn.bjd.platform.elastic.api.entity.dto;
 
 import org.apache.commons.lang3.time.DateUtils;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
@@ -15,7 +16,7 @@ import java.util.Map;
 /**
  * 工商es搜索企业表
  */
-public class EtpEsDTO {
+public class EtpEsDTO implements Serializable {
     /**
      * 企业id
      */

@@ -3,12 +3,13 @@ package cn.bjd.platform.elastic.api.entity.dto;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Created by admin on 2018/1/26 0026.
  */
-public class EtpWhiteDTO {
+public class EtpWhiteDTO implements Serializable {
     /**
      * id
      */

@@ -1,12 +1,13 @@
 package cn.bjd.platform.elastic.api.entity.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by admin on 2018/1/26 0026.
  */
-public class EtpEsDataDTO {
+public class EtpEsDataDTO implements Serializable {
     /**
      * 总数
      */

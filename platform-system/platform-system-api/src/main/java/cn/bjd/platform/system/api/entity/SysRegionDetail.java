@@ -54,7 +54,7 @@ public class SysRegionDetail extends DataEntity {
     /**
      * 民间金融活跃度
      */
-    private Double people_activity;
+    private Double peopleActivity;
 
     /**
      * 贷款GDP贡献率
@@ -161,12 +161,12 @@ public class SysRegionDetail extends DataEntity {
         this.avgCompanyLoanDeviation = avgCompanyLoanDeviation;
     }
 
-    public Double getPeople_activity() {
-        return people_activity;
+    public Double getPeopleActivity() {
+        return peopleActivity;
     }
 
-    public void setPeople_activity(Double people_activity) {
-        this.people_activity = people_activity;
+    public void setPeopleActivity(Double peopleActivity) {
+        this.peopleActivity = peopleActivity;
     }
 
     public Double getGdpLoanRate() {

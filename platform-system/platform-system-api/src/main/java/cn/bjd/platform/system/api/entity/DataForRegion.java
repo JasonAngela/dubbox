@@ -5,16 +5,27 @@ import cn.bjd.platform.system.api.entity.POJO.Industry;
 import cn.bjd.platform.system.api.entity.POJO.RegionDto;
 import cn.bjd.platform.system.api.entity.POJO.Risk;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataForRegion extends DataEntity {
     private static final long serialVersionUID = 1L;
 
-    private RegionDto region;
+    private RegionDto region = new RegionDto();
 
-    private Risk risk;
+    private Risk risk = new Risk();
 
-    private List<Industry> topIndustry;
+    private List<Industry> topIndustry = new ArrayList<>();
+
+    private String count = "0";
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
 
     public RegionDto getRegion() {
         return region;

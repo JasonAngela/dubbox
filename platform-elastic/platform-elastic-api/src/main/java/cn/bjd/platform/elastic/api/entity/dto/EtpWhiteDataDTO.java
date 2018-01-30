@@ -1,6 +1,7 @@
 package cn.bjd.platform.elastic.api.entity.dto;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * Created by admin on 2018/1/26 0026.
  */
-public class EtpWhiteDataDTO {
+public class EtpWhiteDataDTO implements Serializable {
 
     /**
      * 总数

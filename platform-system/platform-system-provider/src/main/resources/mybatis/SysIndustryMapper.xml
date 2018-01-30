@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bjd.platform.system.provider.mapper.SysIndustryMapper">
+
+    <sql id="selectColumns">
+        SELECT DISTINCT
+        a.id,
+        a.pid,
+        a.i_level,
+        a.i_name
+        FROM sys_industry a
+    </sql>
+
+
+
+    <select id="getIndustryTree" resultType="cn.bjd.platform.system.api.entity.SysIndustry">
+        <include refid="selectColumns"/>
+        WHERE a.i_level != 4
+    </select>
+
+
+
+</mapper>

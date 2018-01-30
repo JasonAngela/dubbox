@@ -18,9 +18,22 @@
     </sql>
 
 
-    <select id="findByParent" resultType="cn.bjd.platform.system.api.entity.SysRegion">
-        <include refid="selectColumns"/>
-        WHERE a.parent = #{parent}
+    <select id="findRegionByParent" resultType="cn.bjd.platform.system.api.entity.SysRegion">
+        SELECT DISTINCT
+        a.code,
+        a.name,
+        a.parent,
+        a.short_name,
+        a.level,
+        a.area_code,
+        a.post_code,
+        a.pinyin,
+        a.lng,
+        a.lat,
+        b.suggestion,
+        b.score
+        FROM sys_region a LEFT JOIN sys_score b on a.code = b.code
+        WHERE a.parent = #{parent} AND a.level = #{level}
     </select>
 
 

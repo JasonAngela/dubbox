@@ -5,11 +5,11 @@ import cn.bjd.platform.common.api.DataEntity;
 public class RegionDto extends DataEntity {
     private static final long serialVersionUID = 1L;
 
-    private Development development;
-    private Stable stable;
-    private FinancialSupply financialSupply;
-    private RiskCulture riskCulture;
-    private Integer score;
+    private Development development = new Development();
+    private Stable stable = new Stable();
+    private FinancialSupply financialSupply = new FinancialSupply();
+    private RiskCulture riskCulture = new RiskCulture();
+    private Integer score = 0;
 
     public Development getDevelopment() {
         return development;

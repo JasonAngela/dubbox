@@ -2,14 +2,68 @@ package cn.bjd.platform.system.api.entity;
 
 import cn.bjd.platform.common.api.DataEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SysIndustry extends DataEntity {
     private static final long serialVersionUID = 1L;
 
     private String pId;
 
-    private String iLevel;
+    private String parentId;
+
+    private Integer iLevel;
 
     private String iName;
+
+    private String name;
+
+    private Integer count;
+
+    private Integer level;
+
+    private List<SysIndustry> children = new ArrayList<>();
+
+
+    public String getParentId() {
+        return getPId();
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public List<SysIndustry> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysIndustry> children) {
+        this.children = children;
+    }
+
+    public String getName() {
+        return getIName();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Integer getLevel() {
+        return getILevel();
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public String getPId() {
         return pId;
@@ -19,11 +73,11 @@ public class SysIndustry extends DataEntity {
         this.pId = pId;
     }
 
-    public String getILevel() {
+    public Integer getILevel() {
         return iLevel;
     }
 
-    public void setILevel(String iLevel) {
+    public void setILevel(Integer iLevel) {
         this.iLevel = iLevel;
     }
 
@@ -33,5 +87,9 @@ public class SysIndustry extends DataEntity {
 
     public void setIName(String iName) {
         this.iName = iName;
+    }
+
+    public void addChild(SysIndustry node){
+        this.children.add(node);
     }
 }

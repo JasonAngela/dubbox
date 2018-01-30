@@ -11,7 +11,7 @@ public interface SysRegionMapper extends CrudDao<SysRegion> {
 
     List<SysRegion> findAllList();
 
-    List<SysRegion> findByParent(String parent);
+    List<SysRegion> findRegionByParent(SysRegion region);
 
     SysRegion get(String code);
 

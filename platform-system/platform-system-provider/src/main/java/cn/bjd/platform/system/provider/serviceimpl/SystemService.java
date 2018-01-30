@@ -1,7 +1,7 @@
 package cn.bjd.platform.system.provider.serviceimpl;
 
 import cn.bjd.platform.system.api.entity.*;
-import cn.bjd.platform.system.api.entity.POJO.RegionDto;
+import cn.bjd.platform.system.api.entity.POJO.*;
 import cn.bjd.platform.system.api.exception.base.SystemException;
 import cn.bjd.platform.system.provider.mapper.*;
 import com.github.pagehelper.PageHelper;
@@ -65,6 +65,11 @@ public class SystemService implements ISystemService {
 
     @Autowired
     private SysScoreMapper sysScoreMapper;
+
+
+
+    @Autowired
+    private SysIndustryMapper sysIndustryMapper;
 
 
     @Override
@@ -307,6 +312,35 @@ public class SystemService implements ISystemService {
             }
         }
 
+        return result;
+    }
+
+
+    /**
+     * 加载行业树
+     * @return
+     */
+    @Override
+    public List<SysIndustry> getIndustryTree() {
+        List<SysIndustry> originals = sysIndustryMapper.getIndustryTree();
+        Map<String, SysIndustry> dtoMap = new HashMap<>();
+        for (SysIndustry node : originals) {
+            // 原始数据对象为Node，放入dtoMap中。
+            String id = node.getId();
+            dtoMap.put(id, node);
+        }
+        List<SysIndustry> result = new ArrayList<>();
+        for (Map.Entry<String, SysIndustry> entry : dtoMap.entrySet()) {
+            SysIndustry node = entry.getValue();
+            String parent = node.getPId();
+            if (dtoMap.get(parent) == null) {
+                result.add(node);
+            }else {
+                // 如果不是顶层节点，有父节点，然后添加到父节点的子节点中
+                SysIndustry parentRegion = dtoMap.get(parent);
+                parentRegion.addChild(node);
+            }
+        }
         return result;
     }
 
@@ -604,15 +638,113 @@ public class SystemService implements ISystemService {
         DataForRegion dataForRegion = new DataForRegion();
         SysRegionDetail regionDetail = sysRegionDetailMapper.selectRegionDetailByCode(code);
         SysScore sysScore = sysScoreMapper.selectScoreByCode(code);
+        SysRegion region = sysRegionMapper.get(code);
+        String name = region.getName();
+        SysCount pCount = new SysCount();
+        pCount.setArea(name);
         if(regionDetail != null){
             RegionDto dto = new RegionDto();
 
-            if(sysScore != null){
+            Development development = new Development();
+            development.setgDPtotal(regionDetail.getGdpTotal());
+            development.setgDPAvg(regionDetail.getGdpAvg());
+            development.setTaxTotal(regionDetail.getTaxTotal());
+            development.setAvgLoanDeviation(regionDetail.getAvgLoanDeviation());
+            development.setExpenditure(regionDetail.getExpenditure());
 
+            Stable stable = new Stable();
+            stable.setGdpGrowthRate(regionDetail.getGdpGrowthRate());
+            stable.setExpenditureGrowthRate(regionDetail.getExpenditureGrowthRate());
+            stable.setCompanyGrowthCount(regionDetail.getCompanyGrowthCount());
+
+            FinancialSupply financialSupply = new FinancialSupply();
+            financialSupply.setAvgLoanDeviation(regionDetail.getAvgLoanDeviation());
+            financialSupply.setPeopleActivity(regionDetail.getPeopleActivity());
+            financialSupply.setGdpLoanRate(regionDetail.getGdpLoanRate());
+
+
+            RiskCulture riskCulture = new RiskCulture();
+            riskCulture.setAvgCompanyLoan(regionDetail.getAvgCompanyLoan());
+            riskCulture.setLoanRatio(regionDetail.getLoanRatio());
+            riskCulture.setCrimeIndex(regionDetail.getCrimeIndex());
+
+            if(sysScore != null){
+                development.setScore(sysScore.getDevScore());
+                stable.setScore(sysScore.getStableScore());
+                financialSupply.setScore(sysScore.getFinScore());
+                riskCulture.setScore(sysScore.getRiskScore());
+                dto.setScore(sysScore.getScore());
             }
 
+            dto.setDevelopment(development);
+            dto.setStable(stable);
+            dto.setFinancialSupply(financialSupply);
+            dto.setRiskCulture(riskCulture);
+            dataForRegion.setRegion(dto);
+
+            //cityName by Code
+
+            Risk risk = new Risk();
+
+
+            if(null != region){
+                List<SysCount> countList = sysCountMapper.countDQueryV2(pCount);
+                if(!CollectionUtils.isEmpty(countList)){
+                    Integer totalValue = 0;
+                    for(SysCount count : countList){
+                        totalValue += Integer.parseInt(StringUtils.isEmpty(count.getValue())?"0":count.getValue());
+                    }
+                    risk.setCourtCount(totalValue);
+                }
+
+                List<SysCount> countDList = sysCountMapper.countDTypeQueryV2(pCount);
+                if(!CollectionUtils.isEmpty(countList)){
+                    Integer totalTypeValue = 0;
+                    for(SysCount count : countDList){
+                        totalTypeValue += Integer.parseInt(StringUtils.isEmpty(count.getValue())?"0":count.getValue());
+                    }
+                    risk.setIllegalCount(totalTypeValue);
+                }
+
+                List<SysCount> top5List = sysCountMapper.countIndustryTop5(pCount);
+                if(!CollectionUtils.isEmpty(top5List)){
+                    List<Industry> topIndustry = new ArrayList<>();
+                    for(SysCount count: top5List){
+                        Industry industry = new Industry();
+                        industry.setCategory(count.getType());
+                        industry.setCount(count.getValue());
+                        topIndustry.add(industry);
+                    }
+                    dataForRegion.setTopIndustry(topIndustry);
+                }
+                dataForRegion.setRisk(risk);
+            }
+            //区域企业总数
+            SysCount totalCompany = sysCountMapper.countSumCompany(pCount);
+            if(totalCompany != null){
+                dataForRegion.setCount(totalCompany.getValue());
+            }
         }
 
         return dataForRegion;
     }
+
+    @Override
+    public List<SysRegion> getRegionAndChild(String regionCode) {
+        SysRegion region = sysRegionMapper.get(regionCode);
+        List<SysRegion> list = new ArrayList<>();
+        if(region != null){
+            //查询子区域
+            String code = region.getCode();
+            Integer level = region.getLevel() + 1;//下一层
+            SysRegion selRegion = new SysRegion();
+            selRegion.setParent(code);
+            selRegion.setLevel(level);
+            list = sysRegionMapper.findRegionByParent(selRegion);
+        }
+
+        return list;
+    }
+
+
 }

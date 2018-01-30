@@ -104,4 +104,12 @@ public interface SysCountMapper  extends CrudDao<SysCount> {
      */
     List<SysCount> countCustomsTaxGradeHistory(SysCount count);
 
+
+    List<SysCount> countDQueryV2(SysCount count);
+
+    List<SysCount> countDTypeQueryV2(SysCount count);
+
+    List<SysCount> countIndustryTop5(SysCount count);
+
+    SysCount countSumCompany(SysCount count);
 }
