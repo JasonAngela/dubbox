@@ -22,8 +22,17 @@ public class SysIndustry extends DataEntity {
 
     private Integer level;
 
+    private String category;
+
     private List<SysIndustry> children = new ArrayList<>();
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getParentId() {
         return getPId();

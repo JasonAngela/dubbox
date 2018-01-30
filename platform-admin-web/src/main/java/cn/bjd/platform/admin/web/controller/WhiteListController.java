@@ -103,7 +103,29 @@ public class WhiteListController extends BaseController {
         return response.success().setResult(systemService.getIndustryTree());
     }
 
+    /**
+     * 白名单查询(其他参数暂时不考虑)
+     * @param regionCode
+     * @param count
+     * @return
+     */
+    @GetMapping(value = "/region/{regionCode}/whiteList")
+    public ApiResponse getWhiteList(@PathVariable("regionCode") String regionCode,String count){
+        ApiResponse response = ApiResponse.getInstances();
+        return response.success().setResult(elasticService.findWhiteList(regionCode,null,null,null,null,null,null,null,count));
+    }
+
+    /**
+     * 导出接口
+     * @return
+     */
+    @GetMapping(value = "/company/{regionCode}/export")
+    public ApiResponse downLoadFile(@PathVariable("regionCode") String regionCode){
+        ApiResponse response = ApiResponse.getInstances();
 
 
+        //查询出数据 直接返回
+        return response.success().setResult("");
+    }
 
 }

@@ -11,6 +11,8 @@ public class ApiResponse implements Serializable {
     private static final long serialVersionUID = -1485867865440737606L;
 
     private static final String success = "200";
+    private static final String ERR_405 = "405";//参数无效
+    private static final String ERR_404 = "404";
     private String code;                       // 返回业务状态码
     private long timestamp;                    // 响应请求的时间戳
     private String reason;                       // 返回消息

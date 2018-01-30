@@ -639,6 +639,10 @@ public class SystemService implements ISystemService {
         SysRegionDetail regionDetail = sysRegionDetailMapper.selectRegionDetailByCode(code);
         SysScore sysScore = sysScoreMapper.selectScoreByCode(code);
         SysRegion region = sysRegionMapper.get(code);
+        if(null == region){
+            //区域找不到 其余的白搭
+            return null;
+        }
         String name = region.getName();
         SysCount pCount = new SysCount();
         pCount.setArea(name);
@@ -681,19 +685,16 @@ public class SystemService implements ISystemService {
             dto.setFinancialSupply(financialSupply);
             dto.setRiskCulture(riskCulture);
             dataForRegion.setRegion(dto);
-
+        }
             //cityName by Code
 
             Risk risk = new Risk();
-
-
-            if(null != region){
-                List<SysCount> countList = sysCountMapper.countDQueryV2(pCount);
-                if(!CollectionUtils.isEmpty(countList)){
-                    Integer totalValue = 0;
-                    for(SysCount count : countList){
-                        totalValue += Integer.parseInt(StringUtils.isEmpty(count.getValue())?"0":count.getValue());
-                    }
+            List<SysCount> countList = sysCountMapper.countDQueryV2(pCount);
+            if(!CollectionUtils.isEmpty(countList)){
+                Integer totalValue = 0;
+                for(SysCount count : countList){
+                    totalValue += Integer.parseInt(StringUtils.isEmpty(count.getValue())?"0":count.getValue());
+                }
                     risk.setCourtCount(totalValue);
                 }
 
@@ -718,13 +719,13 @@ public class SystemService implements ISystemService {
                     dataForRegion.setTopIndustry(topIndustry);
                 }
                 dataForRegion.setRisk(risk);
-            }
+
             //区域企业总数
             SysCount totalCompany = sysCountMapper.countSumCompany(pCount);
             if(totalCompany != null){
                 dataForRegion.setCount(totalCompany.getValue());
             }
-        }
+
 
         return dataForRegion;
     }
