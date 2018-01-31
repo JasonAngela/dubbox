@@ -7,6 +7,7 @@ import cn.bjd.platform.elastic.api.entity.dto.EtpEsDataDTO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDTO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDataDTO;
 import cn.bjd.platform.elastic.api.service.IElasticService;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.elasticsearch.action.search.*;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -108,14 +109,13 @@ public class ElasticService implements IElasticService {
         //设置查询的字段
         searchRequestBuilder.setFetchSource(whiteList, null);
 
-        //all查询所有
-
-        if("downLoad".equals(count)){
+        //count 是数字
+        if(NumberUtils.isNumber(count)){
+            searchRequestBuilder.setFrom(0).setSize(Integer.parseInt(count));
+        }else if("downLoad".equals(count)){
             searchRequestBuilder.setFrom(0).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
         }else if("all".equals(count)){
-            searchRequestBuilder.setFrom(Integer.parseInt(count)).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
-        }else{
-            searchRequestBuilder.setFrom(0).setSize(Integer.parseInt(count));
+            searchRequestBuilder.setFrom(0).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
         }
 
         //区域代码

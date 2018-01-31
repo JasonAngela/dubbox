@@ -56,7 +56,15 @@ public interface CrdBreakfaithMapper {
      */
     int updateByPrimaryKey(CrdBreakfaith record);
 
-     List<CrdBreakfaith> findByEtpId(@Param("personName") String personName);
+    List<CrdBreakfaith> findByEtpId(@Param("company") String company);
 
-     List<CrdBreakfaith> findByPersonNameIn(@Param("personNameList") List<String> personNameList);
+    List<CrdBreakfaith> findByPersonNameIn(@Param("personNameList") List<String> personNameList);
+
+    /**
+     * 根据企业名查询失信数量
+     *
+     * @param company
+     * @return int
+     */
+    int findCountByEtpName(@Param("company") String company);
 }

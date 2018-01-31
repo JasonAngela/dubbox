@@ -80,7 +80,8 @@ public class ApiResponse implements Serializable {
         return reason;
     }
 
-    public void setReason(String reason) {
+    public ApiResponse setReason(String reason) {
         this.reason = reason;
+        return this;
     }
 }

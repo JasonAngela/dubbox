@@ -276,5 +276,5 @@ public interface ISystemService {
 
     List<SysRegion> getRegionAndChild(String regionCode);
 
-    List<SysIndustry> getIndustryTree();
+    List<SysIndustry> getIndustryTree(String regionCode);
 }

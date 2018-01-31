@@ -16,7 +16,15 @@ public interface EtpPunishMapper {
 
     int update(@Param("pojo") EtpPunish pojo);
 
-     List<EtpPunish> findByEtpId(@Param("etpId") String etpId);
+    List<EtpPunish> findByEtpId(@Param("etpId") String etpId);
 
-     List<EtpPunish> findByEtpIdIn(@Param("etpIdList") List<String> etpIdList);
+    List<EtpPunish> findByEtpIdIn(@Param("etpIdList") List<String> etpIdList);
+
+    /**
+     * 根据企业id获取行政处罚数量
+     *
+     * @param etpId
+     * @return int
+     */
+    int findCountByEtpId(@Param("etpId") String etpId);
 }

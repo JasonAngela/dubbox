@@ -56,7 +56,15 @@ public interface CrdExecutedMapper {
      */
     int updateByPrimaryKey(CrdExecuted record);
 
-     List<CrdExecuted> findByEtpId(@Param("executed") String executed);
+    List<CrdExecuted> findByEtpId(@Param("executed") String executed);
 
-     List<CrdExecuted> findByExecutedIn(@Param("executedList") List<String> executedList);
+    List<CrdExecuted> findByExecutedIn(@Param("executedList") List<String> executedList);
+
+    /**
+     * 根据企业名获取被执行人数量
+     *
+     * @param executed
+     * @return int
+     */
+    int findCountByExecuted(@Param("executed") String executed);
 }

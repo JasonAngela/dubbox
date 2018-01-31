@@ -28,7 +28,7 @@ public class EtpWhiteDTO implements Serializable {
     /**
      * category
      */
-    private String category;
+    private String category = "";
 
     public EtpWhiteDTO() {
     }

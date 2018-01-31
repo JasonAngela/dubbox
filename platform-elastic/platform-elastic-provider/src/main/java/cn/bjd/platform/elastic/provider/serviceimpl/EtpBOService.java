@@ -1,23 +1,7 @@
 package cn.bjd.platform.elastic.provider.serviceimpl;
 
 
-import cn.bjd.platform.elastic.api.entity.CrdBreakfaith;
-import cn.bjd.platform.elastic.api.entity.CrdCourt;
-import cn.bjd.platform.elastic.api.entity.CrdCourtpub;
-import cn.bjd.platform.elastic.api.entity.CrdExecuted;
-import cn.bjd.platform.elastic.api.entity.Etp;
-import cn.bjd.platform.elastic.api.entity.EtpAbnormal;
-import cn.bjd.platform.elastic.api.entity.EtpAlter;
-import cn.bjd.platform.elastic.api.entity.EtpBranch;
-import cn.bjd.platform.elastic.api.entity.EtpChattel;
-import cn.bjd.platform.elastic.api.entity.EtpIllegal;
-import cn.bjd.platform.elastic.api.entity.EtpLicence;
-import cn.bjd.platform.elastic.api.entity.EtpPunish;
-import cn.bjd.platform.elastic.api.entity.EtpSeniorManager;
-import cn.bjd.platform.elastic.api.entity.EtpShareholder;
-import cn.bjd.platform.elastic.api.entity.EtpSharesFrost;
-import cn.bjd.platform.elastic.api.entity.EtpStock;
-import cn.bjd.platform.elastic.api.entity.EtpStockChange;
+import cn.bjd.platform.elastic.api.entity.*;
 import cn.bjd.platform.elastic.api.entity.bo.EtpBO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpDTO;
 import cn.bjd.platform.elastic.api.exception.ServiceException;
@@ -496,17 +480,26 @@ public class EtpBOService implements IEtpBOService {
         }
         EtpBO etpBO = getEtpBOByEtp(etp);
 
+        if (etpBO == null) {
+            return null;
+        }
+
         //获取税收评级
-        String tax = etpBO.getSteadyOperationScore().getTaxRate();
+        SteadyOperationScore steadyOperationScore = etpBO.getSteadyOperationScore();
+        String tax = steadyOperationScore==null?"":steadyOperationScore.getTaxRate();
 
         //获取海关评级
-        String customs = etpBO.getSteadyOperationScore().getCustomRate();
+        String customs = steadyOperationScore==null?"":steadyOperationScore.getCustomRate();
 
         //获取涉讼数量
-        Integer courtCount = etpBO.getCrdBreakfaithList().size() + etpBO.getCrdCourtList().size() + etpBO.getCrdCourtpubList().size() + etpBO.getCrdExecutedList().size();
+        Integer courtCount = crdBreakfaithMapper.findCountByEtpName(etpBO.getEntName())
+                + crdCourtMapper.findCountByEtpName(etpBO.getEntName(), "defendant")
+                + crdCourtpubMapper.findCountByEtpName(etpBO.getEntName())
+                + crdExecutedMapper.findCountByExecuted(etpBO.getEntName());
 
         //获取违法数量
-        Integer illegalCount = etpBO.getEtpIllegalList().size() + etpBO.getEtpPunishList().size() + etpBO.getTaxLegelList().size();
+        Integer illegalCount = etpIllegalMapper.findCountByEtpId(id)
+                + etpPunishMapper.findCountByEtpId(id) + taxLegelMapper.findCountByCompanyName(etpBO.getEntName());
 
         //将BO转为DTO
         EtpDTO etpDTO = new EtpDTO();

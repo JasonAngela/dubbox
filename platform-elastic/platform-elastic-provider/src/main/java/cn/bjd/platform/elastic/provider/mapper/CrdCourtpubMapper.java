@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+
 @Mapper
 public interface CrdCourtpubMapper {
     /**
@@ -55,7 +56,14 @@ public interface CrdCourtpubMapper {
      */
     int updateByPrimaryKey(CrdCourtpub record);
 
-     List<CrdCourtpub> findByEtpId(@Param("etpId") String etpId);
+    List<CrdCourtpub> findByEtpId(@Param("etpId") String etpId);
 
-     List<CrdCourtpub> findByEtpIdIn(@Param("etpIdList") List<String> etpIdList);
+    List<CrdCourtpub> findByEtpIdIn(@Param("etpIdList") List<String> etpIdList);
+
+    /**
+     * 根据企业名获取为法院公告当事人的数量
+     * @param name
+     * @return int
+     */
+    int findCountByEtpName(@Param("name") String name);
 }

@@ -321,24 +321,31 @@ public class SystemService implements ISystemService {
      * @return
      */
     @Override
-    public List<SysIndustry> getIndustryTree() {
-        List<SysIndustry> originals = sysIndustryMapper.getIndustryTree();
-        Map<String, SysIndustry> dtoMap = new HashMap<>();
-        for (SysIndustry node : originals) {
-            // 原始数据对象为Node，放入dtoMap中。
-            String id = node.getId();
-            dtoMap.put(id, node);
-        }
+    public List<SysIndustry> getIndustryTree(String regionCode) {
+        SysRegion region = sysRegionMapper.get(regionCode);
         List<SysIndustry> result = new ArrayList<>();
-        for (Map.Entry<String, SysIndustry> entry : dtoMap.entrySet()) {
-            SysIndustry node = entry.getValue();
-            String parent = node.getPId();
-            if (dtoMap.get(parent) == null) {
+
+        if(null!=region){
+            SysIndustry industry = new SysIndustry();
+            industry.setArea(region.getName());
+            List<SysIndustry> originals = sysIndustryMapper.getIndustryTree(industry);
+            Map<String, SysIndustry> dtoMap = new HashMap<>();
+            for (SysIndustry node : originals) {
+                // 原始数据对象为Node，放入dtoMap中。
+                String id = node.getId();
+                dtoMap.put(id, node);
+            }
+
+            for (Map.Entry<String, SysIndustry> entry : dtoMap.entrySet()) {
+                SysIndustry node = entry.getValue();
+                String parent = node.getPId();
+                if (dtoMap.get(parent) == null) {
                 result.add(node);
-            }else {
+                }else {
                 // 如果不是顶层节点，有父节点，然后添加到父节点的子节点中
                 SysIndustry parentRegion = dtoMap.get(parent);
                 parentRegion.addChild(node);
+                }
             }
         }
         return result;

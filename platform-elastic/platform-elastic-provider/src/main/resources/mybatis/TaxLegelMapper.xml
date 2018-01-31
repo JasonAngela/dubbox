@@ -172,5 +172,12 @@
         from tax_legel
         where company_name=#{companyName}
     </select>
+
+    <select id="findCountByCompanyName" resultType="int">
+        select
+        "count"(*)
+        from tax_legel
+        where company_name=#{companyName}
+    </select>
 </mapper>
 

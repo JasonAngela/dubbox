@@ -18,13 +18,23 @@ public class SysIndustry extends DataEntity {
 
     private String name;
 
-    private Integer count;
+    private Integer count = 0;
 
     private Integer level;
 
     private String category;
 
+    private String area;
+
     private List<SysIndustry> children = new ArrayList<>();
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
 
     public String getCategory() {
         return category;

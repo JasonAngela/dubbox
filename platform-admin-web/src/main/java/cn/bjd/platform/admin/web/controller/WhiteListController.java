@@ -1,5 +1,6 @@
 package cn.bjd.platform.admin.web.controller;
 
+import cn.bjd.platform.admin.web.Dto.RegionDto;
 import cn.bjd.platform.admin.web.common.controller.BaseController;
 import cn.bjd.platform.admin.web.security.utils.TokenUtil;
 import cn.bjd.platform.common.api.Paging;
@@ -17,7 +18,6 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -75,6 +76,17 @@ public class WhiteListController extends BaseController {
     @GetMapping(value = "/company")
     public ApiResponse companyByName(String name,Paging page){
         ApiResponse response = ApiResponse.getInstances();
+        List<String> tempList = Arrays.asList(RegionDto.getSensitiveWords());
+        if(tempList.contains(name)){
+            //敏感词 直接调回
+            return response.error("404").setReason("查询条件敏感，禁止查询");
+        }
+
+        if(page.getPageSize() > 100){
+            //超过100 按照100条处理
+            page.setPageSize(100);
+        }
+
         EtpEsDataDTO dto = null;
         try{
             dto = elasticService.findByKeyword(name,page.getPageNum(),page.getPageSize());
@@ -111,10 +123,10 @@ public class WhiteListController extends BaseController {
      * 行业树
      * @return
      */
-    @GetMapping(value = "/industry/tree")
-    public ApiResponse getIndustryTree(){
+    @GetMapping(value = "/industry/{regionCode}/tree")
+    public ApiResponse getIndustryTree(@PathVariable("regionCode") String regionCode){
         ApiResponse response = ApiResponse.getInstances();
-        return response.success().setResult(systemService.getIndustryTree());
+        return response.success().setResult(systemService.getIndustryTree(regionCode));
     }
 
     /**
@@ -164,7 +176,7 @@ public class WhiteListController extends BaseController {
             book = Workbook.createWorkbook(os);
             WritableSheet sheet = book.createSheet("企业白名单信息", 0);
             //第一列中文显示信息
-            String[] columns = {"序号","企业类型","企业所在经度","企业所在纬度"};
+            String[] columns = {"企业名称","企业类型","行业门类","行业大类","行业中类","企业所在经度","企业所在纬度","具体地址","企业法人","注册时间","注册资本"};
             for (int i = 0; i < columns.length; i++) {
                 sheet.addCell(new Label(i,0,columns[i]));
             }
@@ -174,6 +186,9 @@ public class WhiteListController extends BaseController {
                 sheet.addCell(new Label(1,i+1,list.get(i).getCategory()));
                 sheet.addCell(new Label(2,i+1,String.valueOf(list.get(i).getLat())));
                 sheet.addCell(new Label(3,i+1,String.valueOf(list.get(i).getLng())));
+                //.....添加个属性
+
+
             }
 
             book.write();

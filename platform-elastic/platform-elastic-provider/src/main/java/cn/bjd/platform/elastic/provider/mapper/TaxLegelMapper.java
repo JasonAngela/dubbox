@@ -1,10 +1,10 @@
 package cn.bjd.platform.elastic.provider.mapper;
 
+import cn.bjd.platform.elastic.api.entity.TaxLegel;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import cn.bjd.platform.elastic.api.entity.TaxLegel;
 
 @Mapper
 public interface TaxLegelMapper {
@@ -18,10 +18,18 @@ public interface TaxLegelMapper {
 
     /**
      * 根据企业名获取税收违法数据
+     *
      * @param companyName
      * @return List
      */
     List<TaxLegel> findByCompanyName(@Param("companyName") String companyName);
 
+    /**
+     * 根据企业名获取税收违法数据数量
+     *
+     * @param companyName
+     * @return int
+     */
+    int findCountByCompanyName(@Param("companyName") String companyName);
 
 }

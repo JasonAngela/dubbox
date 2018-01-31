@@ -8,17 +8,17 @@
         a.pid,
         a.i_level,
         a.i_name,
-        a.type_xxl as category
+        a.type_xxl as category,
+        b.sum as count
         FROM sys_industry a
     </sql>
 
 
 
     <select id="getIndustryTree" resultType="cn.bjd.platform.system.api.entity.SysIndustry">
-        <include refid="selectColumns"/>
-        WHERE a.i_level != 4
+        <include refid="selectColumns"/> left join sys_count b on b.type = a.i_name
+        WHERE a.i_level != 4 and (b.area = #{area} or b.province = #{area} or b.city = #{area})
     </select>
-
 
 
 </mapper>

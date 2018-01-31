@@ -16,7 +16,15 @@ public interface EtpIllegalMapper {
 
     int update(@Param("pojo") EtpIllegal pojo);
 
-     List<EtpIllegal> findByEtpId(@Param("etpId") String etpId);
+    List<EtpIllegal> findByEtpId(@Param("etpId") String etpId);
 
-     List<EtpIllegal> findByEtpIdIn(@Param("etpIdList") List<String> etpIdList);
+    List<EtpIllegal> findByEtpIdIn(@Param("etpIdList") List<String> etpIdList);
+
+    /**
+     * 根据企业id获取严重违法失信数
+     *
+     * @param etpId
+     * @return int
+     */
+    int findCountByEtpId(@Param("etpId") String etpId);
 }

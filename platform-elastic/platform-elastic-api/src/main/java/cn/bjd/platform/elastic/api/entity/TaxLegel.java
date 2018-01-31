@@ -1,4 +1,5 @@
 package cn.bjd.platform.elastic.api.entity;
+
 /**
  * 税收违法信息
  */
@@ -78,6 +79,22 @@ public class TaxLegel {
      * 网址
      */
     private String url;
+
+    /**
+     * Gets id
+     *
+     * @return value of id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * @param id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
     /**
      * Gets illegalFacts
