@@ -14,7 +14,7 @@
     <properties>
         <start-class>cn.bjd.platform.admin.web.WebAdminApplication</start-class>
         <lombok.version>1.16.14</lombok.version>
-
+        <jxl.version>2.6.10</jxl.version>
     </properties>
 
     <profiles>
@@ -98,6 +98,12 @@
             <scope>provided</scope>
         </dependency>
 
+
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>${jxl.version}</version>
+        </dependency>
 
     </dependencies>
 

@@ -112,6 +112,16 @@ public class EtpBO extends Etp{
     private List<CrdExecuted> crdExecutedList;
 
     /**
+     * 企业税收、海关评级信息
+     */
+    private SteadyOperationScore steadyOperationScore;
+
+    /**
+     * 税收违法
+     */
+    private List<TaxLegel> taxLegelList;
+
+    /**
      * Gets industryCategory
      *
      * @return value of industryCategory
@@ -431,5 +441,35 @@ public class EtpBO extends Etp{
         this.crdExecutedList = crdExecutedList;
     }
 
+    /**
+     * Gets steadyOperationScore
+     *
+     * @return value of steadyOperationScore
+     */
+    public SteadyOperationScore getSteadyOperationScore() {
+        return steadyOperationScore;
+    }
 
+    /**
+     * @param steadyOperationScore
+     */
+    public void setSteadyOperationScore(SteadyOperationScore steadyOperationScore) {
+        this.steadyOperationScore = steadyOperationScore;
+    }
+
+    /**
+     * Gets taxLegelList
+     *
+     * @return value of taxLegelList
+     */
+    public List<TaxLegel> getTaxLegelList() {
+        return taxLegelList;
+    }
+
+    /**
+     * @param taxLegelList
+     */
+    public void setTaxLegelList(List<TaxLegel> taxLegelList) {
+        this.taxLegelList = taxLegelList;
+    }
 }

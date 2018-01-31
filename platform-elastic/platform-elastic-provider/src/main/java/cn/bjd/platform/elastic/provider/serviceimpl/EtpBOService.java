@@ -1,20 +1,58 @@
 package cn.bjd.platform.elastic.provider.serviceimpl;
 
 
-import cn.bjd.platform.elastic.provider.mapper.*;
-import cn.bjd.platform.elastic.provider.utils.BeanUtils;
-import cn.bjd.platform.elastic.provider.utils.StringUtils;
-import cn.bjd.platform.elastic.api.entity.*;
+import cn.bjd.platform.elastic.api.entity.CrdBreakfaith;
+import cn.bjd.platform.elastic.api.entity.CrdCourt;
+import cn.bjd.platform.elastic.api.entity.CrdCourtpub;
+import cn.bjd.platform.elastic.api.entity.CrdExecuted;
+import cn.bjd.platform.elastic.api.entity.Etp;
+import cn.bjd.platform.elastic.api.entity.EtpAbnormal;
+import cn.bjd.platform.elastic.api.entity.EtpAlter;
+import cn.bjd.platform.elastic.api.entity.EtpBranch;
+import cn.bjd.platform.elastic.api.entity.EtpChattel;
+import cn.bjd.platform.elastic.api.entity.EtpIllegal;
+import cn.bjd.platform.elastic.api.entity.EtpLicence;
+import cn.bjd.platform.elastic.api.entity.EtpPunish;
+import cn.bjd.platform.elastic.api.entity.EtpSeniorManager;
+import cn.bjd.platform.elastic.api.entity.EtpShareholder;
+import cn.bjd.platform.elastic.api.entity.EtpSharesFrost;
+import cn.bjd.platform.elastic.api.entity.EtpStock;
+import cn.bjd.platform.elastic.api.entity.EtpStockChange;
 import cn.bjd.platform.elastic.api.entity.bo.EtpBO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpDTO;
 import cn.bjd.platform.elastic.api.exception.ServiceException;
 import cn.bjd.platform.elastic.api.service.IEtpBOService;
+import cn.bjd.platform.elastic.provider.mapper.CrdBreakfaithMapper;
+import cn.bjd.platform.elastic.provider.mapper.CrdCourtMapper;
+import cn.bjd.platform.elastic.provider.mapper.CrdCourtpubMapper;
+import cn.bjd.platform.elastic.provider.mapper.CrdExecutedMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpAbnormalMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpAlterMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpBranchMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpChattelMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpIllegalMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpLicenceMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpPunishMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpSeniorManagerMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpShareholderMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpSharesFrostMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpStockChangeMapper;
+import cn.bjd.platform.elastic.provider.mapper.EtpStockMapper;
+import cn.bjd.platform.elastic.provider.mapper.SteadyOperationScoreMapper;
+import cn.bjd.platform.elastic.provider.mapper.TaxLegelMapper;
+import cn.bjd.platform.elastic.provider.utils.BeanUtils;
+import cn.bjd.platform.elastic.provider.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2018/1/11.
@@ -125,6 +163,18 @@ public class EtpBOService implements IEtpBOService {
     @Autowired
     private CrdExecutedMapper crdExecutedMapper;
 
+    /**
+     * 税收、海关评级信息
+     */
+    @Autowired
+    private SteadyOperationScoreMapper steadyOperationScoreMapper;
+
+    /**
+     * 税收违法
+     */
+    @Autowired
+    private TaxLegelMapper taxLegelMapper;
+
     @Autowired
     private IndustryService industryService;
 
@@ -184,6 +234,8 @@ public class EtpBOService implements IEtpBOService {
         etpBO.setCrdCourtList(crdCourtMapper.findByEtpId(entName, "defendant"));
         etpBO.setCrdCourtpubList(crdCourtpubMapper.findByEtpId(entName));
         etpBO.setCrdExecutedList(crdExecutedMapper.findByEtpId(entName));
+        etpBO.setSteadyOperationScore(steadyOperationScoreMapper.findById(etp.getId()));
+        etpBO.setTaxLegelList(taxLegelMapper.findByCompanyName(entName));
         return etpBO;
     }
 
@@ -444,6 +496,18 @@ public class EtpBOService implements IEtpBOService {
         }
         EtpBO etpBO = getEtpBOByEtp(etp);
 
+        //获取税收评级
+        String tax = etpBO.getSteadyOperationScore().getTaxRate();
+
+        //获取海关评级
+        String customs = etpBO.getSteadyOperationScore().getCustomRate();
+
+        //获取涉讼数量
+        Integer courtCount = etpBO.getCrdBreakfaithList().size() + etpBO.getCrdCourtList().size() + etpBO.getCrdCourtpubList().size() + etpBO.getCrdExecutedList().size();
+
+        //获取违法数量
+        Integer illegalCount = etpBO.getEtpIllegalList().size() + etpBO.getEtpPunishList().size() + etpBO.getTaxLegelList().size();
+
         //将BO转为DTO
         EtpDTO etpDTO = new EtpDTO();
         etpDTO.setId(id);
@@ -457,6 +521,10 @@ public class EtpBOService implements IEtpBOService {
         etpDTO.setBigCategoryName(etpBO.getIndustryBigType());
         etpDTO.setMiddleCategoryName(etpBO.getIndustryMiddleType());
         etpDTO.setSmallCategoryName(etpBO.getIndustrySmallType());
+        etpDTO.setCustoms(customs);
+        etpDTO.setTax(tax);
+        etpDTO.setCourtCount(courtCount);
+        etpDTO.setIllegalCount(illegalCount);
         return etpDTO;
     }
 }

@@ -3,17 +3,31 @@ package cn.bjd.platform.admin.web.controller;
 import cn.bjd.platform.admin.web.common.controller.BaseController;
 import cn.bjd.platform.admin.web.security.utils.TokenUtil;
 import cn.bjd.platform.common.api.Paging;
+import cn.bjd.platform.common.utils.Exception.SystemException;
 import cn.bjd.platform.common.utils.framework.ApiResponse;
 import cn.bjd.platform.elastic.api.entity.dto.EtpEsDataDTO;
+import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDTO;
+import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDataDTO;
 import cn.bjd.platform.elastic.api.service.IElasticService;
 import cn.bjd.platform.elastic.api.service.IEtpBOService;
 import cn.bjd.platform.system.api.service.ISystemService;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * 白名单Controller
@@ -120,12 +134,71 @@ public class WhiteListController extends BaseController {
      * @return
      */
     @GetMapping(value = "/company/{regionCode}/export")
-    public ApiResponse downLoadFile(@PathVariable("regionCode") String regionCode){
-        ApiResponse response = ApiResponse.getInstances();
-
-
+    public void downLoadFile(@PathVariable("regionCode") String regionCode,
+                              Integer minScore,
+                              Integer maxScore,
+                              String industryId,
+                              Integer startReg,
+                              Integer endReg,
+                              Integer startCap,
+                              Integer endCap,
+                              HttpServletResponse response) throws IOException,WriteException{
         //查询出数据 直接返回
-        return response.success().setResult("");
+        EtpWhiteDataDTO dto = elasticService.findWhiteList(regionCode,minScore,maxScore,industryId,startReg,endReg,startCap,endCap,"downLoad");
+        if(null == dto){
+            throw new SystemException("查询无数据");
+        }
+
+        List<EtpWhiteDTO> list = dto.getWhileList();
+        if(CollectionUtils.isEmpty(list)){
+            throw new SystemException("查询无企业数据");
+        }
+        OutputStream os = null;
+        WritableWorkbook book = null;
+        PrintWriter out = null;
+        try{
+            os = response.getOutputStream();// 取得输出流
+            response.reset();// 清空输出流
+            response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("企业详情.xls", "utf-8"));
+            response.setContentType("application/msexcel");// 定义输出类型
+            book = Workbook.createWorkbook(os);
+            WritableSheet sheet = book.createSheet("企业白名单信息", 0);
+            //第一列中文显示信息
+            String[] columns = {"序号","企业类型","企业所在经度","企业所在纬度"};
+            for (int i = 0; i < columns.length; i++) {
+                sheet.addCell(new Label(i,0,columns[i]));
+            }
+
+            for(int i=0;i<list.size();i++){
+                sheet.addCell(new Label(0,i+1,list.get(i).getId()));
+                sheet.addCell(new Label(1,i+1,list.get(i).getCategory()));
+                sheet.addCell(new Label(2,i+1,String.valueOf(list.get(i).getLat())));
+                sheet.addCell(new Label(3,i+1,String.valueOf(list.get(i).getLng())));
+            }
+
+            book.write();
+            response.flushBuffer();
+            out = response.getWriter();
+        }catch (Exception e){
+            throw new SystemException("导出失败");
+        }finally {
+            if(null != book){
+                book.close();
+            }
+            if(null != os){
+                os.flush();
+                os.close();
+            }
+
+            if(null != out){
+                out.flush();
+                out.close();
+            }
+
+        }
+
+
+
     }
 
 }

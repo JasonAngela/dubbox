@@ -109,10 +109,13 @@ public class ElasticService implements IElasticService {
         searchRequestBuilder.setFetchSource(whiteList, null);
 
         //all查询所有
-        if(!"all".equals(count)){
-            searchRequestBuilder.setFrom(0).setSize(5000);
+
+        if("downLoad".equals(count)){
+            searchRequestBuilder.setFrom(0).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
+        }else if("all".equals(count)){
+            searchRequestBuilder.setFrom(Integer.parseInt(count)).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
         }else{
-            searchRequestBuilder.setFrom(5000).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
+            searchRequestBuilder.setFrom(0).setSize(Integer.parseInt(count));
         }
 
         //区域代码
