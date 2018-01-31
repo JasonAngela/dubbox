@@ -2,8 +2,11 @@ package cn.bjd.platform.elastic.api.entity.dto;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -16,6 +19,30 @@ public class EtpWhiteDTO implements Serializable {
     private String id;
 
     /**
+     * 公司名称
+     */
+    private String entName;
+
+    /**
+     * category
+     */
+    private String category;
+
+    /**
+     * 大类
+     */
+    private String bigCategory;
+
+    /**
+     * 中类
+     */
+    private String middleCategroy;
+
+    /**
+     * 小类
+     */
+    private String smallCategory;
+    /**
      * lng
      */
     private Double lng;
@@ -26,18 +53,170 @@ public class EtpWhiteDTO implements Serializable {
     private Double lat;
 
     /**
-     * category
+     * 地址
      */
-    private String category = "";
+    private String address;
+
+    /**
+     * 法人
+     */
+    private String legalRep;
+
+    /**
+     * 注册时间
+     */
+    private Date regDate;
+
+    /**
+     * 注册资本
+     */
+    private Double regCapital;
+
 
     public EtpWhiteDTO() {
     }
 
-    public EtpWhiteDTO(Map<String,Object> map) {
+    public EtpWhiteDTO(Map<String,Object> map) throws ParseException {
         this.id = (String)map.get("id");
+        this.entName = map.get("entName") == null?null:(String) map.get("entName");
+        this.category = map.get("category") == null?null:(String) map.get("category");
+        this.bigCategory = map.get("bigCategory") == null?null:(String) map.get("bigCategory");
+        this.middleCategroy = map.get("middleCategroy") == null?null:(String) map.get("middleCategroy");
+        this.smallCategory = map.get("smallCategory") == null?null:(String) map.get("smallCategory");
         this.lng = StringUtils.isEmpty((String)map.get("lng"))?null:Double.parseDouble((String)map.get("lng"));
         this.lat = StringUtils.isEmpty((String)map.get("lng"))?null:Double.parseDouble((String)map.get("lat"));
-        this.category = (String)map.get("category");
+        this.address = map.get("address") == null?null:(String) map.get("address");
+        this.legalRep = map.get("legalRep") == null?null:(String) map.get("legalRep");
+        this.regDate = map.get("regDate") == null?null: DateUtils.parseDate((String) map.get("regDate"),"yyyy-MM-dd");
+        this.regCapital = map.get("regCapital")==null?null:(Double) map.get("regCapital");
+    }
+
+    /**
+     * Gets entName
+     *
+     * @return value of entName
+     */
+    public String getEntName() {
+        return entName;
+    }
+
+    /**
+     * @param entName
+     */
+    public void setEntName(String entName) {
+        this.entName = entName;
+    }
+
+    /**
+     * Gets bigCategory
+     *
+     * @return value of bigCategory
+     */
+    public String getBigCategory() {
+        return bigCategory;
+    }
+
+    /**
+     * @param bigCategory
+     */
+    public void setBigCategory(String bigCategory) {
+        this.bigCategory = bigCategory;
+    }
+
+    /**
+     * Gets middleCategroy
+     *
+     * @return value of middleCategroy
+     */
+    public String getMiddleCategroy() {
+        return middleCategroy;
+    }
+
+    /**
+     * @param middleCategroy
+     */
+    public void setMiddleCategroy(String middleCategroy) {
+        this.middleCategroy = middleCategroy;
+    }
+
+    /**
+     * Gets smallCategory
+     *
+     * @return value of smallCategory
+     */
+    public String getSmallCategory() {
+        return smallCategory;
+    }
+
+    /**
+     * @param smallCategory
+     */
+    public void setSmallCategory(String smallCategory) {
+        this.smallCategory = smallCategory;
+    }
+
+    /**
+     * Gets address
+     *
+     * @return value of address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * Gets legalRep
+     *
+     * @return value of legalRep
+     */
+    public String getLegalRep() {
+        return legalRep;
+    }
+
+    /**
+     * @param legalRep
+     */
+    public void setLegalRep(String legalRep) {
+        this.legalRep = legalRep;
+    }
+
+    /**
+     * Gets regDate
+     *
+     * @return value of regDate
+     */
+    public Date getRegDate() {
+        return regDate;
+    }
+
+    /**
+     * @param regDate
+     */
+    public void setRegDate(Date regDate) {
+        this.regDate = regDate;
+    }
+
+    /**
+     * Gets regCapital
+     *
+     * @return value of regCapital
+     */
+    public Double getRegCapital() {
+        return regCapital;
+    }
+
+    /**
+     * @param regCapital
+     */
+    public void setRegCapital(Double regCapital) {
+        this.regCapital = regCapital;
     }
 
     /**

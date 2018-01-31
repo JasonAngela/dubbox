@@ -14,6 +14,8 @@ public class SysIndustry extends DataEntity {
 
     private Integer iLevel;
 
+    private String iPath;
+
     private String iName;
 
     private String name;
@@ -27,6 +29,14 @@ public class SysIndustry extends DataEntity {
     private String area;
 
     private List<SysIndustry> children = new ArrayList<>();
+
+    public String getIPath() {
+        return iPath;
+    }
+
+    public void setIPath(String iPath) {
+        this.iPath = iPath;
+    }
 
     public String getArea() {
         return area;

@@ -12,6 +12,7 @@ import org.elasticsearch.action.search.*;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,12 +33,21 @@ public class ElasticService implements IElasticService {
     private TransportClient client;
 
     /**
-     * 设置所需返回的字段
+     * 关键字查询返回的字段
      */
     private static String[] include = {"id", "entName", "regDate", "regCapital", "lng", "lat", "category"};
 
+    /**
+     *白名单查询返回的字段
+     */
     private static String[] whiteList = {"id","lng", "lat", "category"};
 
+
+    /**
+     *白名单导出返回的字段
+     */
+    private static String[] exportWhiteList = {"id","entName","category","bigCategory","middleCategroy"
+                                                    ,"smallCategory","lng", "lat","address","legalRep","regDate","regCapital"};
     /**
      * 根据名称查询
      *
@@ -52,14 +62,17 @@ public class ElasticService implements IElasticService {
         EtpEsDataDTO etpEsDataDTO = new EtpEsDataDTO();
 
         //获取查询
-        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("company").setTypes("etp")
+        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("company-etp").setTypes("etp")
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH);
 
         //需返回的字段
         searchRequestBuilder.setFetchSource(include, null);
 
+        //从多少条数据开始
+        Integer from = page == 1?0:page*pageNum;
+
         //名称查询
-        SearchResponse response = searchRequestBuilder.setFrom(page * pageNum).setSize(pageNum).
+        SearchResponse response = searchRequestBuilder.setFrom(from).setSize(pageNum).
                 setQuery(QueryBuilders
                         .matchQuery("entName", keyword)).get();
 
@@ -95,48 +108,69 @@ public class ElasticService implements IElasticService {
      * @return
      */
     @Override
-    public EtpWhiteDataDTO findWhiteList(String regionCode, Integer startScore, Integer endScore, String industry, Integer startReg, Integer endReg, Integer startCap, Integer endCap, String count) {
+    public EtpWhiteDataDTO findWhiteList(String regionCode, Integer startScore, Integer endScore, String industry, Integer startReg, Integer endReg, Integer startCap, Integer endCap, String count) throws ParseException {
 
         EtpWhiteDataDTO etpWhiteDataDTO = new EtpWhiteDataDTO();
 
         //获取查询
-        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("company").setTypes("etp").setFetchSource(true)
+        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("company-etp").setTypes("etp").setFetchSource(true)
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH);
 
         //bool查询
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
 
-        //设置查询的字段
-        searchRequestBuilder.setFetchSource(whiteList, null);
 
-        //count 是数字
+
+        //all查询所有
         if(NumberUtils.isNumber(count)){
+            //设置白名单查询字段
+            searchRequestBuilder.setFetchSource(whiteList, null);
             searchRequestBuilder.setFrom(0).setSize(Integer.parseInt(count));
         }else if("downLoad".equals(count)){
+            //设置导出字段
+            searchRequestBuilder.setFetchSource(exportWhiteList, null);
             searchRequestBuilder.setFrom(0).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
         }else if("all".equals(count)){
-            searchRequestBuilder.setFrom(0).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
+            //设置白名单查询字段
+            searchRequestBuilder.setFetchSource(whiteList, null);
+            searchRequestBuilder.setFrom(5000).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
         }
 
         //区域代码
         if (!StringUtils.isEmpty(regionCode)) {
-            queryBuilder.must(QueryBuilders.termQuery("countryCode.keyword", regionCode));
+            queryBuilder.must(QueryBuilders.termQuery("countryCode", regionCode));
         }
 
         //判断行业字段是否存在
         if (!StringUtils.isEmpty(industry)) {
-            queryBuilder.must(QueryBuilders.termQuery("category.keyword", industry));
+            queryBuilder.must(QueryBuilders.termQuery("category", industry));
+        }
+
+        //查询在营业的企业
+        queryBuilder.must(QueryBuilders.termQuery("regState", 1));
+
+
+        //得分过滤
+        if(null != startScore || null != endScore){
+            queryBuilder.must(builderRange(QueryBuilders.rangeQuery("score"),startScore,endScore));
         }
 
         //判断资本字段
-        if (startCap != null && endCap != null) {
-
-            queryBuilder.must(QueryBuilders.rangeQuery("regCapital").gte(startCap).lt(endCap));
+        if(null != startCap || null != endCap){
+            queryBuilder.must(builderRange(QueryBuilders.rangeQuery("regCapital"),startCap,endCap));
         }
 
         //判断注册年限
-        if (startReg != null && endReg != null) {
-            queryBuilder.must(QueryBuilders.rangeQuery("regDate").gte(getRegDate(endReg)).lt(getRegDate(startReg)));
+        if(null != startReg || null != endReg){
+            String start = null;
+            String end = null;
+            if(null != endReg){
+                start = getRegDate(endReg);
+            }
+            if(null != startReg){
+                end = getRegDate(startReg);
+            }
+            queryBuilder.must(builderRange(QueryBuilders.rangeQuery("regDate"),start,end));
         }
 
         //返回数据
@@ -178,7 +212,7 @@ public class ElasticService implements IElasticService {
 
 
         //获取查询
-        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("company").setTypes("etp").setFetchSource(true)
+        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("company-etp").setTypes("etp").setFetchSource(true)
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH);
 
         //bool查询
@@ -189,30 +223,43 @@ public class ElasticService implements IElasticService {
 
         //区域代码
         if (!StringUtils.isEmpty(regionCode)) {
-            queryBuilder.must(QueryBuilders.termQuery("countryCode.keyword", regionCode));
+            queryBuilder.must(QueryBuilders.termQuery("countryCode", regionCode));
         }
 
         //判断行业字段是否存在
         if (!StringUtils.isEmpty(industry)) {
-            queryBuilder.must(QueryBuilders.termQuery("category.keyword", industry));
+            queryBuilder.must(QueryBuilders.termQuery("category", industry));
+        }
+
+        //查询在营业的企业
+        queryBuilder.must(QueryBuilders.termQuery("regState", 1));
+
+
+        //得分过滤
+        if(null != startScore || null != endScore){
+            queryBuilder.must(builderRange(QueryBuilders.rangeQuery("score"),startScore,endScore));
         }
 
         //判断资本字段
-        if (startCap != null && endCap != null) {
-
-            queryBuilder.must(QueryBuilders.rangeQuery("regCapital").gte(startCap).lt(endCap));
+        if(null != startCap || null != endCap){
+            queryBuilder.must(builderRange(QueryBuilders.rangeQuery("regCapital"),startCap,endCap));
         }
 
         //判断注册年限
-        if (startReg != null && endReg != null) {
-            queryBuilder.must(QueryBuilders.rangeQuery("regDate").gte(getRegDate(endReg)).lt(getRegDate(startReg)));
+        if(null != startReg || null != endReg){
+            String start = null;
+            String end = null;
+            if(null != endReg){
+                start = getRegDate(endReg);
+            }
+            if(null != startReg){
+                end = getRegDate(startReg);
+            }
+            queryBuilder.must(builderRange(QueryBuilders.rangeQuery("regDate"),start,end));
         }
 
         //返回数据
         SearchResponse response = searchRequestBuilder.setQuery(queryBuilder).get();
-
-        //迭代数据
-        Iterator<SearchHit> searchHitsIterator = response.getHits().iterator();
 
         //返回空即返回
         if (null == response) {
@@ -223,4 +270,20 @@ public class ElasticService implements IElasticService {
         return (int)response.getHits().totalHits;
     }
 
+    /**
+     * 构建查询范围
+     * @param rangeQueryBuilder
+     * @param start
+     * @param end
+     * @return
+     */
+    private RangeQueryBuilder builderRange(RangeQueryBuilder rangeQueryBuilder,Object start,Object end){
+            if(null != start){
+                rangeQueryBuilder.gte(start);
+            }
+            if(null != end){
+                rangeQueryBuilder.lt(end);
+            }
+            return rangeQueryBuilder;
+    }
 }

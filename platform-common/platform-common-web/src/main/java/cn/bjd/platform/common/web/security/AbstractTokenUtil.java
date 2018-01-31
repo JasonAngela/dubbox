@@ -1,5 +1,6 @@
 package cn.bjd.platform.common.web.security;
 
+import cn.bjd.platform.system.api.entity.SysIndustry;
 import cn.bjd.platform.system.api.entity.SysMenu;
 import cn.bjd.platform.system.api.entity.SysRegion;
 import com.google.gson.Gson;
@@ -14,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Token 工具类
@@ -54,6 +53,8 @@ public abstract class AbstractTokenUtil {
     private static final String REDIS_PREFIX_MENU_TREE = "menu-tree:";
 
     private static final String REDIS_PREFIX_MENU_LIST = "menu-list:";
+
+    private static final String REDIS_PREFIX_INDUSTRY_LIST = "industry-list:";
 
     /**
      * redis repository
@@ -224,6 +225,27 @@ public abstract class AbstractTokenUtil {
         String value = redisRepository.get(key);
         if(!StringUtils.isEmpty(value)){
             return new Gson().fromJson(value,List.class);
+        }
+        return null;
+    }
+
+
+    public void putIndustryList(Collection<SysIndustry> list){
+        //转化为Map
+        Map<String,String> map = new HashMap<>();
+        for(SysIndustry industry : list){
+            map.put(industry.getIPath(),industry.getName());
+        }
+        String key = REDIS_PREFIX_INDUSTRY_LIST + "list";
+        redisRepository.setExpire(key,new Gson().toJson(map),expiration);
+    }
+
+
+    public Map<String,String> getIndustryDetails(){
+        String key = REDIS_PREFIX_INDUSTRY_LIST + "list";
+        String value = redisRepository.get(key);
+        if(!StringUtils.isEmpty(value)){
+            return new Gson().fromJson(value,Map.class);
         }
         return null;
     }

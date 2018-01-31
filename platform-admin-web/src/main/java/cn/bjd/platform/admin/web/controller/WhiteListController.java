@@ -11,6 +11,7 @@ import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDTO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDataDTO;
 import cn.bjd.platform.elastic.api.service.IElasticService;
 import cn.bjd.platform.elastic.api.service.IEtpBOService;
+import cn.bjd.platform.system.api.entity.SysIndustry;
 import cn.bjd.platform.system.api.service.ISystemService;
 import jxl.Workbook;
 import jxl.write.Label;
@@ -27,8 +28,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 白名单Controller
@@ -136,7 +140,7 @@ public class WhiteListController extends BaseController {
      * @return
      */
     @GetMapping(value = "/region/{regionCode}/whiteList")
-    public ApiResponse getWhiteList(@PathVariable("regionCode") String regionCode,String count){
+    public ApiResponse getWhiteList(@PathVariable("regionCode") String regionCode,String count) throws ParseException{
         ApiResponse response = ApiResponse.getInstances();
         return response.success().setResult(elasticService.findWhiteList(regionCode,null,null,null,null,null,null,null,count));
     }
@@ -154,7 +158,7 @@ public class WhiteListController extends BaseController {
                               Integer endReg,
                               Integer startCap,
                               Integer endCap,
-                              HttpServletResponse response) throws IOException,WriteException{
+                              HttpServletResponse response) throws IOException,WriteException,ParseException{
         //查询出数据 直接返回
         EtpWhiteDataDTO dto = elasticService.findWhiteList(regionCode,minScore,maxScore,industryId,startReg,endReg,startCap,endCap,"downLoad");
         if(null == dto){
@@ -176,19 +180,36 @@ public class WhiteListController extends BaseController {
             book = Workbook.createWorkbook(os);
             WritableSheet sheet = book.createSheet("企业白名单信息", 0);
             //第一列中文显示信息
-            String[] columns = {"企业名称","企业类型","行业门类","行业大类","行业中类","企业所在经度","企业所在纬度","具体地址","企业法人","注册时间","注册资本"};
+            String[] columns = {"企业名称","行业门类","行业大类","行业中类","企业所在经度","企业所在纬度","具体地址","企业法人","注册时间","注册资本"};
             for (int i = 0; i < columns.length; i++) {
                 sheet.addCell(new Label(i,0,columns[i]));
             }
+            //行业名称从缓存中去查询
+            //加载行业list去缓存
+
+            Map<String,String> map = jwtTokenUtil.getIndustryDetails();
+            if(map==null || map.isEmpty()){
+                map = new HashMap<>();
+                List<SysIndustry> industryList = systemService.findIndustry();
+                for(SysIndustry industry: industryList){
+                    map.put(industry.getIPath(),industry.getName());
+                }
+                jwtTokenUtil.putIndustryList(industryList);
+            }
 
             for(int i=0;i<list.size();i++){
-                sheet.addCell(new Label(0,i+1,list.get(i).getId()));
-                sheet.addCell(new Label(1,i+1,list.get(i).getCategory()));
-                sheet.addCell(new Label(2,i+1,String.valueOf(list.get(i).getLat())));
-                sheet.addCell(new Label(3,i+1,String.valueOf(list.get(i).getLng())));
-                //.....添加个属性
+                sheet.addCell(new Label(0,i+1,list.get(i).getEntName()));
+                sheet.addCell(new Label(1,i+1,map.isEmpty()?"":map.get(list.get(i).getCategory())));
+                sheet.addCell(new Label(2,i+1,map.isEmpty()?"":map.get(list.get(i).getCategory()+"/"+list.get(i).getBigCategory())));
+                sheet.addCell(new Label(3,i+1,map.isEmpty()?"":map.get(list.get(i).getCategory()+"/"+list.get(i).getBigCategory()+"/"+list.get(i).getMiddleCategroy())));
 
 
+                sheet.addCell(new Label(4,i+1,String.valueOf(list.get(i).getLng())));
+                sheet.addCell(new Label(5,i+1,String.valueOf(list.get(i).getLat())));
+                sheet.addCell(new Label(6,i+1,list.get(i).getAddress()));
+                sheet.addCell(new Label(7,i+1,list.get(i).getLegalRep()));
+                sheet.addCell(new Label(8,i+1,list.get(i).getRegDate()==null?"":list.get(i).getRegDate().toString()));
+                sheet.addCell(new Label(9,i+1,list.get(i).getRegCapital()==null?"":String.valueOf(list.get(i).getRegCapital())));
             }
 
             book.write();

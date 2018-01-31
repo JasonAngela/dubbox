@@ -6,6 +6,7 @@
         SELECT DISTINCT
         a.id,
         a.pid,
+        a.i_path,
         a.i_level,
         a.i_name,
         a.type_xxl as category,
@@ -18,6 +19,16 @@
     <select id="getIndustryTree" resultType="cn.bjd.platform.system.api.entity.SysIndustry">
         <include refid="selectColumns"/> left join sys_count b on b.type = a.i_name
         WHERE a.i_level != 4 and (b.area = #{area} or b.province = #{area} or b.city = #{area})
+    </select>
+
+    <select id="findIndustry" resultType="cn.bjd.platform.system.api.entity.SysIndustry">
+        SELECT DISTINCT
+        a.id,
+        a.pid,
+        a.i_path,
+        a.i_level,
+        a.i_name
+        FROM sys_industry a WHERE a.i_level != 4
     </select>
 
 

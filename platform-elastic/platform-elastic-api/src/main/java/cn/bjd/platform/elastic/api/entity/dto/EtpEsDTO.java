@@ -6,6 +6,7 @@ package cn.bjd.platform.elastic.api.entity.dto;
 
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.io.Serializable;
@@ -57,13 +58,13 @@ public class EtpEsDTO implements Serializable {
     }
 
     public EtpEsDTO(Map<String,Object> map) throws ParseException {
-        this.setId((String) map.get("id"));
-        this.setEntName((String) map.get("entName"));
-        this.setRegCapital((Double) map.get("regCapital"));
-        this.setRegDate(DateUtils.parseDate((String)map.get("regDate"),"yyyy-MM-dd"));
-        this.setLng(Double.parseDouble((String) map.get("lng")));
-        this.setLat(Double.parseDouble((String) map.get("lat")));
-        this.setCategory((String) map.get("category"));
+        this.setId(map.get("id") == null?null:(String) map.get("id"));
+        this.setEntName(map.get("entName") == null?null:(String) map.get("entName"));
+        this.setRegCapital(map.get("regCapital") == null?null:(Double) map.get("regCapital"));
+        this.setRegDate(map.get("regDate") == null?null:DateUtils.parseDate((String)map.get("regDate"),"yyyy-MM-dd"));
+        this.setLng(map.get("lng") == null?null:Double.parseDouble((String) map.get("lng")));
+        this.setLat(map.get("lat") == null?null:Double.parseDouble((String) map.get("lat")));
+        this.setCategory(map.get("category") == null?null:(String) map.get("category"));
     }
 
     /**

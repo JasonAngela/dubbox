@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface SysIndustryMapper  extends CrudDao<SysIndustry> {
     List<SysIndustry> getIndustryTree(SysIndustry industry);
+
+    List<SysIndustry> findIndustry();
 }

@@ -30,7 +30,7 @@ public class ElasticSearchConfig {
     public TransportClient client(){
         TransportClient client = null;
         try {
-            Settings settings = Settings.builder().put("cluster.name", "elasticsearch").build();
+            Settings settings = Settings.builder().put("cluster.name", "bigdata").build();
             client = new PreBuiltTransportClient(settings)
                     .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), port));
         } catch (UnknownHostException e) {

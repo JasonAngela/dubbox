@@ -340,11 +340,11 @@ public class SystemService implements ISystemService {
                 SysIndustry node = entry.getValue();
                 String parent = node.getPId();
                 if (dtoMap.get(parent) == null) {
-                result.add(node);
+                    result.add(node);
                 }else {
                 // 如果不是顶层节点，有父节点，然后添加到父节点的子节点中
-                SysIndustry parentRegion = dtoMap.get(parent);
-                parentRegion.addChild(node);
+                    SysIndustry parentRegion = dtoMap.get(parent);
+                    parentRegion.addChild(node);
                 }
             }
         }
@@ -754,5 +754,8 @@ public class SystemService implements ISystemService {
         return list;
     }
 
-
+    @Override
+    public List<SysIndustry> findIndustry() {
+        return sysIndustryMapper.findIndustry();
+    }
 }

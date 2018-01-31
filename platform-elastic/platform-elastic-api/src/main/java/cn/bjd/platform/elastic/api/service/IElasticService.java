@@ -11,5 +11,5 @@ import java.text.ParseException;
 public interface IElasticService {
     EtpEsDataDTO findByKeyword(String keyword, Integer page, Integer pageNum) throws ParseException;
 
-    EtpWhiteDataDTO findWhiteList(String regionCode, Integer startScore, Integer endScore, String industry, Integer startReg, Integer endReg, Integer startCap, Integer endCap, String count);
+    EtpWhiteDataDTO findWhiteList(String regionCode, Integer startScore, Integer endScore, String industry, Integer startReg, Integer endReg, Integer startCap, Integer endCap, String count) throws ParseException;
 }
