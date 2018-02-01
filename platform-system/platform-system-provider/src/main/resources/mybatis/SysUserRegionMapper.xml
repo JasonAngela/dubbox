@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bjd.platform.system.provider.mapper.SysUserRegionMapper">
+
+    <sql id="selectColumns">
+        SELECT
+        a.user_id,
+        a.code
+        FROM sys_user_region a
+    </sql>
+
+    <select id="findByUserId" resultType="cn.bjd.platform.system.api.entity.SysUserRegion">
+        <include refid="selectColumns"/>
+        WHERE a.user_id = #{userId} and a.code = #{code}
+    </select>
+
+</mapper>

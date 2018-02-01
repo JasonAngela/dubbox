@@ -38,4 +38,7 @@ public interface SysRoleMapper extends CrudDao<SysRole> {
      * @return the int
      */
     int insertRoleMenu(SysRole role);
+
+
+    List<SysRole> findEnabled();
 }

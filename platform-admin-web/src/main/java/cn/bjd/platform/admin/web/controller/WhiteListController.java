@@ -2,24 +2,31 @@ package cn.bjd.platform.admin.web.controller;
 
 import cn.bjd.platform.admin.web.Dto.RegionDto;
 import cn.bjd.platform.admin.web.common.controller.BaseController;
+import cn.bjd.platform.admin.web.security.model.AuthUser;
 import cn.bjd.platform.admin.web.security.utils.TokenUtil;
 import cn.bjd.platform.common.api.Paging;
 import cn.bjd.platform.common.utils.Exception.SystemException;
 import cn.bjd.platform.common.utils.framework.ApiResponse;
+import cn.bjd.platform.common.web.util.WebUtils;
+import cn.bjd.platform.elastic.api.entity.dto.EtpDTO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpEsDataDTO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDTO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDataDTO;
 import cn.bjd.platform.elastic.api.service.IElasticService;
 import cn.bjd.platform.elastic.api.service.IEtpBOService;
 import cn.bjd.platform.system.api.entity.SysIndustry;
+import cn.bjd.platform.system.api.entity.SysRegion;
+import cn.bjd.platform.system.api.entity.SysUserRegion;
 import cn.bjd.platform.system.api.service.ISystemService;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,6 +75,19 @@ public class WhiteListController extends BaseController {
     @GetMapping(value = "/region/{regionCode}/statistics")
     public ApiResponse regionStatistics(@PathVariable("regionCode") String regionCode){
         ApiResponse response = ApiResponse.getInstances();
+
+
+        SysRegion region = systemService.getRegionByCode(regionCode);
+        if(null == region){
+            return response.error("404").setResult("code对应省市区不存在");
+        }
+
+        AuthUser user = WebUtils.getCurrentUser();
+        Boolean b = systemService.findUserRegion(user.getId(),regionCode);
+        if(b.booleanValue() == false){
+            return response.error("404").setResult("无访问此区域权限");
+        }
+
         return response.success().setResult(systemService.getDataForRegionByCode(regionCode));
     }
 
@@ -80,10 +100,19 @@ public class WhiteListController extends BaseController {
     @GetMapping(value = "/company")
     public ApiResponse companyByName(String name,Paging page){
         ApiResponse response = ApiResponse.getInstances();
+
+       if(StringUtils.isEmpty(name)){
+            return response.error("001").setReason("无效参数");
+       }
+
+       if(name.length()<= 2){
+           return response.error("001").setReason("无效参数");
+       }
+
         List<String> tempList = Arrays.asList(RegionDto.getSensitiveWords());
         if(tempList.contains(name)){
             //敏感词 直接调回
-            return response.error("404").setReason("查询条件敏感，禁止查询");
+            return response.error("001").setReason("查询条件敏感，禁止查询");
         }
 
         if(page.getPageSize() > 100){
@@ -108,6 +137,10 @@ public class WhiteListController extends BaseController {
     @GetMapping(value = "/company/{id}")
     public ApiResponse getCompanyById(@PathVariable("id") String id){
         ApiResponse response = ApiResponse.getInstances();
+        EtpDTO dto = etpBOService.findById(id);
+        if(null == dto){
+           return response.error("404").setResult("查询不到此企业信息");
+        }
         return response.success().setResult(etpBOService.findById(id));
     }
 
@@ -118,7 +151,12 @@ public class WhiteListController extends BaseController {
      */
     @GetMapping(value = "/region/{regionCode}/children")
     public ApiResponse getChildRegion(@PathVariable("regionCode") String regionCode){
+
         ApiResponse response = ApiResponse.getInstances();
+        SysRegion region = systemService.getRegionByCode(regionCode);
+        if(null == region){
+            return response.error("404").setResult("code对应省市区不存在");
+        }
         return response.success().setResult(systemService.getRegionAndChild(regionCode));
     }
 
@@ -142,6 +180,21 @@ public class WhiteListController extends BaseController {
     @GetMapping(value = "/region/{regionCode}/whiteList")
     public ApiResponse getWhiteList(@PathVariable("regionCode") String regionCode,String count) throws ParseException{
         ApiResponse response = ApiResponse.getInstances();
+        if(!NumberUtils.isNumber(regionCode)){
+            return response.error("405").setReason("参数无效");
+        }
+        if(!NumberUtils.isNumber(count)&&!"all".equals(count)&&"downLoad".equals(count)){
+            return response.error("405").setReason("参数无效");
+        }
+        SysRegion region = systemService.getRegionByCode(regionCode);
+        if(null == region){
+            return response.error("404").setResult("code对应省市区不存在");
+        }
+        AuthUser user = WebUtils.getCurrentUser();
+        Boolean b = systemService.findUserRegion(user.getId(),regionCode);
+        if(b.booleanValue() == false){
+            return response.error("404").setResult("无访问此区域权限");
+        }
         return response.success().setResult(elasticService.findWhiteList(regionCode,null,null,null,null,null,null,null,count));
     }
 
@@ -161,6 +214,11 @@ public class WhiteListController extends BaseController {
                               HttpServletResponse response) throws IOException,WriteException,ParseException{
         ApiResponse apiResponse = ApiResponse.getInstances();
         //查询出数据 直接返回
+        AuthUser user = WebUtils.getCurrentUser();
+        Boolean b = systemService.findUserRegion(user.getId(),regionCode);
+        if(b.booleanValue() == false){
+            return apiResponse.error("404").setResult("无访问此区域权限");
+        }
         EtpWhiteDataDTO dto = elasticService.findWhiteList(regionCode,minScore,maxScore,industryId,startReg,endReg,startCap,endCap,"downLoad");
         if(null == dto){
             return apiResponse.error("404").setReason("查询无企业");

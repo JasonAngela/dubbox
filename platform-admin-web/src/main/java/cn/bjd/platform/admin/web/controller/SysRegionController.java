@@ -33,13 +33,7 @@ public class SysRegionController extends BaseController {
     public List<SysRegion> getTree(){
 
         //从缓存中先去取 取不到就去数据库查询
-        List<SysRegion> list = jwtTokenUtil.getRegionDetails();
-        if(CollectionUtils.isEmpty(list)){
-            // 为空 重新加载到redis中去
-            list = systemService.getRegionTree();
-            jwtTokenUtil.putRegionTree(list);
-        }
-
+        List<SysRegion> list = systemService.getRegionTree();
         return list;
     }
 }

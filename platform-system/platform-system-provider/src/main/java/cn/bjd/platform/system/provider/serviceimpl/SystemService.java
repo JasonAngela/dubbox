@@ -71,6 +71,9 @@ public class SystemService implements ISystemService {
     @Autowired
     private SysIndustryMapper sysIndustryMapper;
 
+    @Autowired
+    private SysUserRegionMapper sysUserRegionMapper;
+
 
     @Override
     public List<SysCount> getCount(SysCount count) {
@@ -641,6 +644,11 @@ public class SystemService implements ISystemService {
     }
 
     @Override
+    public List<SysRole> findEnabled() {
+        return sysRoleMapper.findEnabled();
+    }
+
+    @Override
     public DataForRegion getDataForRegionByCode(String code) {
         DataForRegion dataForRegion = new DataForRegion();
         SysRegionDetail regionDetail = sysRegionDetailMapper.selectRegionDetailByCode(code);
@@ -757,5 +765,22 @@ public class SystemService implements ISystemService {
     @Override
     public List<SysIndustry> findIndustry() {
         return sysIndustryMapper.findIndustry();
+    }
+
+    @Override
+    public SysRegion getRegionByCode(String code) {
+        return sysRegionMapper.get(code);
+    }
+
+    @Override
+    public Boolean findUserRegion(String userId,String code) {
+        SysUserRegion userRegion = new SysUserRegion();
+        userRegion.setUserId(userId);
+        userRegion.setCode(code);
+        SysUserRegion userRegionDto = sysUserRegionMapper.findByUserId(userRegion);
+        if(userRegionDto != null){
+            return true;
+        }
+        return false;
     }
 }

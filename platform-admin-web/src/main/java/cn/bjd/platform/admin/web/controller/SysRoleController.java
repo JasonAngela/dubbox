@@ -61,6 +61,13 @@ public class SysRoleController extends BaseController {
         return systemService.findAllRoleList();
     }
 
+    @PreAuthorize("hasAuthority('sys:role:view')")
+    @GetMapping(value = "/enabled")
+    public List<SysRole> enabled() {
+        return systemService.findEnabled();
+    }
+
+
     /**
      * Gets role.
      *

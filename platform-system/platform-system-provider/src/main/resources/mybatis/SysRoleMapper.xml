@@ -48,6 +48,12 @@
         ORDER BY a.create_date DESC
     </select>
 
+    <select id="findEnabled" resultType="cn.bjd.platform.system.api.entity.SysRole">
+        <include refid="selectColumns"/>
+        WHERE a.del_flag = '0' AND a.enabled = TRUE
+        ORDER BY a.create_date DESC
+    </select>
+
     <!-- 插入角色 -->
     <insert id="insert">
         INSERT INTO sys_role (

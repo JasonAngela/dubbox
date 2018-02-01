@@ -38,11 +38,7 @@ public class SysMenuController extends BaseController {
     @Autowired
     private ISystemService systemService;
 
-    /**
-     * Token工具
-     */
-    @Autowired
-    private TokenUtil jwtTokenUtil;
+
 
     /**
      * Gets menu nav.
@@ -55,11 +51,7 @@ public class SysMenuController extends BaseController {
         AuthUser user = WebUtils.getCurrentUser();
         //根据用户id去缓存中查询菜单数据
         //如果没有再从数据库中查询
-        List<SysMenu> list = jwtTokenUtil.getMenuDetails(user.getId(),"nav");
-        if(CollectionUtils.isEmpty(list)){
-            list = systemService.getMenuNav(user.getId());
-            jwtTokenUtil.putMenuTree(list,user.getId(),"nav");
-        }
+        List<SysMenu> list = systemService.getMenuNav(user.getId());
         return list;
     }
 
@@ -71,14 +63,8 @@ public class SysMenuController extends BaseController {
     @PreAuthorize("hasAuthority('sys:menu:view')")
     @GetMapping(value = "/tree")
     public List<SysMenu> getMenuTree() {
-
         AuthUser user = WebUtils.getCurrentUser();
-        List<SysMenu> list = jwtTokenUtil.getMenuDetails(user.getId(),"tree");
-        if(CollectionUtils.isEmpty(list)){
-            list = systemService.getMenuTree(user.getId());
-            jwtTokenUtil.putMenuTree(list,user.getId(),"tree");
-        }
-
+        List<SysMenu> list = systemService.getMenuTree(user.getId());
         return list;
     }
 
@@ -91,11 +77,7 @@ public class SysMenuController extends BaseController {
     @GetMapping(value = "/list")
     public List<SysMenu> getMenuList() {
         AuthUser user = WebUtils.getCurrentUser();
-        List<SysMenu> list = jwtTokenUtil.getMenuDetails(user.getId(),"list");
-        if(CollectionUtils.isEmpty(list)){
-            list = systemService.getMenuList(user.getId());
-            jwtTokenUtil.putMenuTree(list,user.getId(),"list");
-        }
+        List<SysMenu> list =  systemService.getMenuList(user.getId());
         return list;
     }
 
@@ -108,11 +90,7 @@ public class SysMenuController extends BaseController {
     @PreAuthorize("hasAuthority('sys:menu:edit')")
     @DeleteMapping(value = "/{menuId}")
     public ResponseEntity deleteMenu(@PathVariable("menuId") String menuId) {
-        AuthUser user = WebUtils.getCurrentUser();
         systemService.deleteMenuById(menuId);
-        //删除成功后 需要更新缓存
-        jwtTokenUtil.delMenu(user.getId(),"tree");
-        jwtTokenUtil.delMenu(user.getId(),"list");
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -138,11 +116,7 @@ public class SysMenuController extends BaseController {
     @PreAuthorize("hasAuthority('sys:menu:edit')")
     @PostMapping(value = "")
     public SysMenu saveMenu(@Valid @RequestBody SysMenu menu) {
-        AuthUser user = WebUtils.getCurrentUser();
         SysMenu sysMenu = systemService.saveMenu(menu);
-        //保存成功后，需要刷新缓存
-        jwtTokenUtil.delMenu(user.getId(),"tree");
-        jwtTokenUtil.delMenu(user.getId(),"list");
         return sysMenu;
     }
 }

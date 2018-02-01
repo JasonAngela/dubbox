@@ -271,6 +271,9 @@ public interface ISystemService {
     void deleteRoleById(String roleId);
 
 
+    List<SysRole> findEnabled();
+
+
     DataForRegion getDataForRegionByCode(String code);
 
 
@@ -279,4 +282,8 @@ public interface ISystemService {
     List<SysIndustry> getIndustryTree(String regionCode);
 
     List<SysIndustry> findIndustry();
+
+    SysRegion getRegionByCode(String code);
+
+    Boolean findUserRegion(String userId,String code);
 }

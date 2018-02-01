@@ -22,6 +22,9 @@ public class SysRegion extends DataEntity {
     private String name;
 
 
+    private String text = name;
+
+
     private String parent;
 
 
@@ -60,6 +63,14 @@ public class SysRegion extends DataEntity {
     private String suggestion;
 
     private List<SysRegion> children = new ArrayList<>();
+
+    public String getText() {
+        return getName();
+    }
+
+    public void setText(String text) {
+        this.text = name;
+    }
 
     public String getParentId() {
         return getParent();
