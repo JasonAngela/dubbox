@@ -84,6 +84,11 @@ public class EtpDTO implements Serializable {
     private Integer illegalCount;
 
     /**
+     * 企业评分
+     */
+    private Double etpSingleScore;
+
+    /**
      * Gets id
      *
      * @return value of id
@@ -321,5 +326,21 @@ public class EtpDTO implements Serializable {
      */
     public void setIllegalCount(Integer illegalCount) {
         this.illegalCount = illegalCount;
+    }
+
+    /**
+     * Gets etpSingleScore
+     *
+     * @return value of etpSingleScore
+     */
+    public Double getEtpSingleScore() {
+        return etpSingleScore;
+    }
+
+    /**
+     * @param etpSingleScore
+     */
+    public void setEtpSingleScore(Double etpSingleScore) {
+        this.etpSingleScore = etpSingleScore;
     }
 }

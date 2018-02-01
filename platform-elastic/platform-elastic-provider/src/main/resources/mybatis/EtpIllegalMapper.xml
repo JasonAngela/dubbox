@@ -105,7 +105,7 @@
         </foreach>
     </select>
 
-    <select id="findCountByEtpId" resultType="int">
+    <select id="findCountByEtpId" resultType="java.lang.Integer">
         select
         "count"(*)
         from etp_illegal

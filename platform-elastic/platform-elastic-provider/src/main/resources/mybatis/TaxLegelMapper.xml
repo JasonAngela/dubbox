@@ -173,7 +173,7 @@
         where company_name=#{companyName}
     </select>
 
-    <select id="findCountByCompanyName" resultType="int">
+    <select id="findCountByCompanyName" resultType="java.lang.Integer">
         select
         "count"(*)
         from tax_legel

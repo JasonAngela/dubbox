@@ -441,7 +441,7 @@
         </foreach>
     </select>
 
-    <select id="findCountByExecuted" resultType="int">
+    <select id="findCountByExecuted" resultType="java.lang.Integer">
     select
     "count"(*)
     from public.crd_executed

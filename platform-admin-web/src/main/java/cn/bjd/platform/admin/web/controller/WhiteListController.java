@@ -150,7 +150,7 @@ public class WhiteListController extends BaseController {
      * @return
      */
     @GetMapping(value = "/company/{regionCode}/export")
-    public void downLoadFile(@PathVariable("regionCode") String regionCode,
+    public ApiResponse downLoadFile(@PathVariable("regionCode") String regionCode,
                               Integer minScore,
                               Integer maxScore,
                               String industryId,
@@ -159,15 +159,16 @@ public class WhiteListController extends BaseController {
                               Integer startCap,
                               Integer endCap,
                               HttpServletResponse response) throws IOException,WriteException,ParseException{
+        ApiResponse apiResponse = ApiResponse.getInstances();
         //查询出数据 直接返回
         EtpWhiteDataDTO dto = elasticService.findWhiteList(regionCode,minScore,maxScore,industryId,startReg,endReg,startCap,endCap,"downLoad");
         if(null == dto){
-            throw new SystemException("查询无数据");
+            return apiResponse.error("404").setReason("查询无企业");
         }
 
         List<EtpWhiteDTO> list = dto.getWhileList();
         if(CollectionUtils.isEmpty(list)){
-            throw new SystemException("查询无企业数据");
+            return apiResponse.error("404").setReason("查询无企业数据");
         }
         OutputStream os = null;
         WritableWorkbook book = null;
@@ -233,7 +234,7 @@ public class WhiteListController extends BaseController {
 
         }
 
-
+        return null;
 
     }
 

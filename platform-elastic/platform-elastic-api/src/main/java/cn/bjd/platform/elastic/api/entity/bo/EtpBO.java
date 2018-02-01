@@ -122,6 +122,11 @@ public class EtpBO extends Etp{
     private List<TaxLegel> taxLegelList;
 
     /**
+     * 企业评分
+     */
+    private EtpSingleScore etpSingleScore;
+
+    /**
      * Gets industryCategory
      *
      * @return value of industryCategory
@@ -471,5 +476,21 @@ public class EtpBO extends Etp{
      */
     public void setTaxLegelList(List<TaxLegel> taxLegelList) {
         this.taxLegelList = taxLegelList;
+    }
+
+    /**
+     * Gets etpSingleScore
+     *
+     * @return value of etpSingleScore
+     */
+    public EtpSingleScore getEtpSingleScore() {
+        return etpSingleScore;
+    }
+
+    /**
+     * @param etpSingleScore
+     */
+    public void setEtpSingleScore(EtpSingleScore etpSingleScore) {
+        this.etpSingleScore = etpSingleScore;
     }
 }

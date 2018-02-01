@@ -485,7 +485,7 @@
         </foreach>
     </select>
 
-    <select id="findCountByEtpName" resultType="int">
+    <select id="findCountByEtpName" resultType="java.lang.Integer">
     select
     "count"(*)
     from public.crd_client

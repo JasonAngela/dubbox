@@ -13,8 +13,9 @@
 
     <properties>
         <start-class>cn.bjd.platform.admin.web.WebAdminApplication</start-class>
-        <lombok.version>1.16.14</lombok.version>
         <jxl.version>2.6.10</jxl.version>
+        <lombok.version>1.16.14</lombok.version>
+
     </properties>
 
     <profiles>
@@ -91,12 +92,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
 
 
         <dependency>
@@ -104,6 +99,14 @@
             <artifactId>jxl</artifactId>
             <version>${jxl.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
 

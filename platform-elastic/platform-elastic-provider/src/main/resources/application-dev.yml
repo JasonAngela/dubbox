@@ -73,4 +73,4 @@ spring:
    # password: xxx
    # testConnection: false
 server:
-  port: 8085
+  port: 8086
