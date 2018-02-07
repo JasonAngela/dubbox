@@ -32,4 +32,15 @@
     </select>
 
 
+    <select id="get" resultType="cn.bjd.platform.system.api.entity.SysIndustry">
+        SELECT DISTINCT
+        a.id,
+        a.pid,
+        a.i_path,
+        a.i_level,
+        a.i_name
+        FROM sys_industry a WHERE a.id = #{id}
+    </select>
+
+
 </mapper>

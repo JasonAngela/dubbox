@@ -5,6 +5,7 @@ import cn.bjd.platform.admin.web.common.controller.BaseController;
 import cn.bjd.platform.admin.web.security.model.AuthUser;
 import cn.bjd.platform.admin.web.security.utils.TokenUtil;
 import cn.bjd.platform.common.api.Paging;
+import cn.bjd.platform.common.utils.DateHelper;
 import cn.bjd.platform.common.utils.Exception.SystemException;
 import cn.bjd.platform.common.utils.framework.ApiResponse;
 import cn.bjd.platform.common.web.util.WebUtils;
@@ -16,7 +17,6 @@ import cn.bjd.platform.elastic.api.service.IElasticService;
 import cn.bjd.platform.elastic.api.service.IEtpBOService;
 import cn.bjd.platform.system.api.entity.SysIndustry;
 import cn.bjd.platform.system.api.entity.SysRegion;
-import cn.bjd.platform.system.api.entity.SysUserRegion;
 import cn.bjd.platform.system.api.service.ISystemService;
 import jxl.Workbook;
 import jxl.write.Label;
@@ -82,11 +82,11 @@ public class WhiteListController extends BaseController {
             return response.error("404").setResult("code对应省市区不存在");
         }
 
-        AuthUser user = WebUtils.getCurrentUser();
-        Boolean b = systemService.findUserRegion(user.getId(),regionCode);
+       /* AuthUser user = WebUtils.getCurrentUser();*/
+        /*Boolean b = systemService.findUserRegion(user.getId(),regionCode);
         if(b.booleanValue() == false){
             return response.error("404").setResult("无访问此区域权限");
-        }
+        }*/
 
         return response.success().setResult(systemService.getDataForRegionByCode(regionCode));
     }
@@ -102,11 +102,11 @@ public class WhiteListController extends BaseController {
         ApiResponse response = ApiResponse.getInstances();
 
        if(StringUtils.isEmpty(name)){
-            return response.error("001").setReason("无效参数");
+            return response.error("001").setReason("暂未搜索到相关公司信息");
        }
 
-       if(name.length()<= 2){
-           return response.error("001").setReason("无效参数");
+       if(name.length() <= 1){
+           return response.error("001").setReason("暂未搜索到相关公司信息");
        }
 
         List<String> tempList = Arrays.asList(RegionDto.getSensitiveWords());
@@ -217,8 +217,19 @@ public class WhiteListController extends BaseController {
         AuthUser user = WebUtils.getCurrentUser();
         Boolean b = systemService.findUserRegion(user.getId(),regionCode);
         if(b.booleanValue() == false){
-            return apiResponse.error("404").setResult("无访问此区域权限");
+            return apiResponse.error("404").setReason("无访问此区域权限");
         }
+
+        //根据industryId查询行业code
+        if(!StringUtils.isEmpty(industryId)){
+            SysIndustry industry = systemService.getIndustry(industryId);
+            if(industry != null){
+                String iPath = industry.getIPath();
+                String[] res = iPath.split("/");
+                industryId = res[res.length-1];
+            }
+        }
+
         EtpWhiteDataDTO dto = elasticService.findWhiteList(regionCode,minScore,maxScore,industryId,startReg,endReg,startCap,endCap,"downLoad");
         if(null == dto){
             return apiResponse.error("404").setReason("查询无企业");
@@ -239,7 +250,7 @@ public class WhiteListController extends BaseController {
             book = Workbook.createWorkbook(os);
             WritableSheet sheet = book.createSheet("企业白名单信息", 0);
             //第一列中文显示信息
-            String[] columns = {"企业名称","行业门类","行业大类","行业中类","企业所在经度","企业所在纬度","具体地址","企业法人","注册时间","注册资本"};
+            String[] columns = {"企业名称","行业门类","行业大类","行业中类","企业所在经度","企业所在纬度","具体地址","企业法人","注册时间","注册资本(万)"};
             for (int i = 0; i < columns.length; i++) {
                 sheet.addCell(new Label(i,0,columns[i]));
             }
@@ -267,7 +278,7 @@ public class WhiteListController extends BaseController {
                 sheet.addCell(new Label(5,i+1,String.valueOf(list.get(i).getLat())));
                 sheet.addCell(new Label(6,i+1,list.get(i).getAddress()));
                 sheet.addCell(new Label(7,i+1,list.get(i).getLegalRep()));
-                sheet.addCell(new Label(8,i+1,list.get(i).getRegDate()==null?"":list.get(i).getRegDate().toString()));
+                sheet.addCell(new Label(8,i+1,list.get(i).getRegDate()==null?"": DateHelper.formatDate(list.get(i).getRegDate())));
                 sheet.addCell(new Label(9,i+1,list.get(i).getRegCapital()==null?"":String.valueOf(list.get(i).getRegCapital())));
             }
 

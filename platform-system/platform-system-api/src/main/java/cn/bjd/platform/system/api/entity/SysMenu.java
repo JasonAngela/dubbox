@@ -95,7 +95,7 @@ public class SysMenu extends DataEntity {
     }
 
     public String getText() {
-        return this.getName();
+        return this.text;
     }
 
     public void setText(String text) {

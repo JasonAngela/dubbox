@@ -30,6 +30,25 @@
         WHERE a.login_name = #{loginName} and a.del_flag = '0'
     </select>
 
+    <resultMap id="userInfo" type="cn.bjd.platform.system.api.entity.SysUser">
+        <id property="id" column="id"/>
+        <collection property="depts" column="id" select="cn.bjd.platform.system.provider.mapper.SysDepartmentMapper.findListByUserId">
+
+        </collection>
+    </resultMap>
+
+    <select id="findUserDeptList" resultMap="userInfo">
+        <include refid="selectColumns"/>
+        WHERE a.del_flag = '0'
+        <if test="loginName != null and loginName != ''">
+            AND a.login_name like CONCAT('%', #{loginName}, '%')
+        </if>
+        <if test="name != null and name != ''">
+            AND a.name like CONCAT('%', #{name}, '%')
+        </if>
+        ORDER BY a.create_date DESC
+    </select>
+
     <!-- 分页查询用户信息 -->
     <select id="findList" resultType="cn.bjd.platform.system.api.entity.SysUser">
         <include refid="selectColumns"/>

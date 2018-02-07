@@ -13,7 +13,7 @@ public class EtpSingleScore {
     /**
      * 评分
      */
-    private Double etpSingleScore;
+    private Double etpSingleScore = new Double(0);
 
     /**
      * Gets id

@@ -79,16 +79,16 @@ public class EtpWhiteDTO implements Serializable {
     public EtpWhiteDTO(Map<String,Object> map) throws ParseException {
         this.id = (String)map.get("id");
         this.entName = map.get("entName") == null?null:(String) map.get("entName");
-        this.category = map.get("category") == null?null:(String) map.get("category");
+        this.category = map.get("category") == null?"":(String) map.get("category");
         this.bigCategory = map.get("bigCategory") == null?null:(String) map.get("bigCategory");
-        this.middleCategroy = map.get("middleCategroy") == null?null:(String) map.get("middleCategroy");
+        this.middleCategroy = map.get("middleCategory") == null?null:(String) map.get("middleCategory");
         this.smallCategory = map.get("smallCategory") == null?null:(String) map.get("smallCategory");
         this.lng = StringUtils.isEmpty((String)map.get("lng"))?null:Double.parseDouble((String)map.get("lng"));
         this.lat = StringUtils.isEmpty((String)map.get("lng"))?null:Double.parseDouble((String)map.get("lat"));
         this.address = map.get("address") == null?null:(String) map.get("address");
         this.legalRep = map.get("legalRep") == null?null:(String) map.get("legalRep");
         this.regDate = map.get("regDate") == null?null: DateUtils.parseDate((String) map.get("regDate"),"yyyy-MM-dd");
-        this.regCapital = map.get("regCapital")==null?null:(Double) map.get("regCapital");
+        this.regCapital = map.get("regCapital") == null?null:(Double)map.get("regCapital");
     }
 
     /**

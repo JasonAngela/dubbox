@@ -6,7 +6,7 @@ import java.util.Map;
 public class Test {
 
     public static void main(String[] args){
-        Map<String,String> map = new HashMap<>();
+        /*Map<String,String> map = new HashMap<>();
         map.put("a","1");
         map.put("b","2");
 
@@ -16,6 +16,10 @@ public class Test {
 
         for (String s:map.values()){
             System.out.println(s);
-        }
+        }*/
+
+        /*String str = "A";
+        String[] res = str.split("/");
+        System.out.println(res[res.length-1]);*/
     }
 }

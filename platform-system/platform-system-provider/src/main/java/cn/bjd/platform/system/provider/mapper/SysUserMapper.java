@@ -5,6 +5,8 @@ import cn.bjd.platform.common.service.dao.CrudDao;
 import cn.bjd.platform.system.api.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 用户DAO接口
  *
@@ -83,4 +85,6 @@ public interface SysUserMapper extends CrudDao<SysUser> {
      */
     void updateInfo(SysUser user);
 
+
+    List<SysUser> findUserDeptList(SysUser user);
 }

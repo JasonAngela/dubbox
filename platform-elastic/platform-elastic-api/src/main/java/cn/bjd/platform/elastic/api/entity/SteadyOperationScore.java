@@ -22,12 +22,12 @@ public class SteadyOperationScore {
     /**
      * 税收评级
      */
-    private String taxRate;
+    private String taxRate = "";
 
     /**
      * 海关评级
      */
-    private String customRate;
+    private String customRate = "";
 
     /**
      * 企业评分

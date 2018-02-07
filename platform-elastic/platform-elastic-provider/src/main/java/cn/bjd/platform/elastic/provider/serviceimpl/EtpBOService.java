@@ -1,25 +1,10 @@
 package cn.bjd.platform.elastic.provider.serviceimpl;
 
 
-import cn.bjd.platform.elastic.api.entity.CrdBreakfaith;
-import cn.bjd.platform.elastic.api.entity.CrdCourt;
-import cn.bjd.platform.elastic.api.entity.CrdCourtpub;
-import cn.bjd.platform.elastic.api.entity.CrdExecuted;
-import cn.bjd.platform.elastic.api.entity.Etp;
-import cn.bjd.platform.elastic.api.entity.EtpAbnormal;
-import cn.bjd.platform.elastic.api.entity.EtpAlter;
-import cn.bjd.platform.elastic.api.entity.EtpBranch;
-import cn.bjd.platform.elastic.api.entity.EtpChattel;
-import cn.bjd.platform.elastic.api.entity.EtpIllegal;
-import cn.bjd.platform.elastic.api.entity.EtpLicence;
-import cn.bjd.platform.elastic.api.entity.EtpPunish;
-import cn.bjd.platform.elastic.api.entity.EtpSeniorManager;
-import cn.bjd.platform.elastic.api.entity.EtpShareholder;
-import cn.bjd.platform.elastic.api.entity.EtpSharesFrost;
-import cn.bjd.platform.elastic.api.entity.EtpStock;
-import cn.bjd.platform.elastic.api.entity.EtpStockChange;
+import cn.bjd.platform.elastic.api.entity.*;
 import cn.bjd.platform.elastic.api.entity.bo.EtpBO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpDTO;
+import cn.bjd.platform.elastic.api.entity.dto.ReadDTO;
 import cn.bjd.platform.elastic.api.exception.ServiceException;
 import cn.bjd.platform.elastic.api.service.IEtpBOService;
 import cn.bjd.platform.elastic.provider.mapper.CrdBreakfaithMapper;
@@ -224,7 +209,7 @@ public class EtpBOService implements IEtpBOService {
         etpBO.setIndustryBigType(industryService.getBigCategory(etpBO.getIndustryId()));
         etpBO.setIndustryMiddleType(industryService.getMiddleCategory(etpBO.getIndustryId()));
         etpBO.setIndustrySmallType(industryService.getSmallCategory(etpBO.getIndustryId()));
-
+        /*
         etpBO.setEtpShareholderList(etpShareholderMapper.findByEtpId(entName));
         etpBO.setEtpSeniorManagerList(etpSeniorManagerMapper.findByEtpId(entName));
         etpBO.setEtpAlterList(etpAlterMapper.findByEtpId(entName));
@@ -240,10 +225,10 @@ public class EtpBOService implements IEtpBOService {
         etpBO.setCrdBreakfaithList(crdBreakfaithMapper.findByEtpId(entName));
         etpBO.setCrdCourtList(crdCourtMapper.findByEtpId(entName, "defendant"));
         etpBO.setCrdCourtpubList(crdCourtpubMapper.findByEtpId(entName));
-        etpBO.setCrdExecutedList(crdExecutedMapper.findByEtpId(entName));
+        etpBO.setCrdExecutedList(crdExecutedMapper.findByEtpId(entName));*/
         etpBO.setSteadyOperationScore(steadyOperationScoreMapper.findById(etp.getId()));
-        etpBO.setTaxLegelList(taxLegelMapper.findByCompanyName(entName));
-        etpBO.setEtpSingleScore(etpSingleScoreMapper.findById(etp.getId()));
+        /*etpBO.setTaxLegelList(taxLegelMapper.findByCompanyName(entName));
+        etpBO.setEtpSingleScore(etpSingleScoreMapper.findById(etp.getId()));*/
         return etpBO;
     }
 
@@ -509,10 +494,11 @@ public class EtpBOService implements IEtpBOService {
         }
 
         //获取税收评级
-        String tax = etpBO.getSteadyOperationScore().getTaxRate();
+        SteadyOperationScore steadyOperationScore = etpBO.getSteadyOperationScore();
+        String tax = steadyOperationScore==null?"":steadyOperationScore.getTaxRate();
 
         //获取海关评级
-        String customs = etpBO.getSteadyOperationScore().getCustomRate();
+        String customs = steadyOperationScore==null?"":steadyOperationScore.getCustomRate();
 
         //获取涉讼数量
         Integer courtCount = crdBreakfaithMapper.findCountByEtpName(etpBO.getEntName())
@@ -541,7 +527,24 @@ public class EtpBOService implements IEtpBOService {
         etpDTO.setTax(tax);
         etpDTO.setCourtCount(courtCount);
         etpDTO.setIllegalCount(illegalCount);
-        etpDTO.setEtpSingleScore(etpBO.getEtpSingleScore().getEtpSingleScore());
+        etpDTO.setEtpSingleScore(etpBO.getEtpSingleScore() == null?0:etpBO.getEtpSingleScore().getEtpSingleScore());
         return etpDTO;
+    }
+
+    @Override
+    public ReadDTO findReadByEtpId(String id) {
+        Etp etp = etpMapper.findById(id);
+        ReadDTO dto = new ReadDTO();
+        if(etp != null){
+            dto.setAddress(etp.getAddress());
+            dto.setEntName(etp.getEntName());
+            dto.setNameLike(etp.getNameLike());
+            dto.setRegCapital(etp.getRegCapital());
+            dto.setRegDate(etp.getRegDate());
+
+        }
+
+
+        return dto;
     }
 }

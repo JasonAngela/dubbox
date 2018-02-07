@@ -46,8 +46,8 @@ public class ElasticService implements IElasticService {
     /**
      *白名单导出返回的字段
      */
-    private static String[] exportWhiteList = {"id","entName","category","bigCategory","middleCategroy"
-                                                    ,"smallCategory","lng", "lat","address","legalRep","regDate","regCapital"};
+    private static String[] exportWhiteList = {"id","entName","category","bigCategory","middleCategory"
+            ,"smallCategory","lng", "lat","address","legalRep","regDate","regCapital"};
     /**
      * 根据名称查询
      *
@@ -143,7 +143,10 @@ public class ElasticService implements IElasticService {
 
         //判断行业字段是否存在
         if (!StringUtils.isEmpty(industry)) {
-            queryBuilder.must(QueryBuilders.termQuery("category", industry));
+            queryBuilder.should(QueryBuilders.termQuery("category", industry));
+            queryBuilder.should(QueryBuilders.termQuery("bigCategory", industry));
+            queryBuilder.should(QueryBuilders.termQuery("middleCategory", industry));
+            queryBuilder.should(QueryBuilders.termQuery("smallCategory", industry));
         }
 
         //查询在营业的企业
@@ -278,12 +281,12 @@ public class ElasticService implements IElasticService {
      * @return
      */
     private RangeQueryBuilder builderRange(RangeQueryBuilder rangeQueryBuilder,Object start,Object end){
-            if(null != start){
-                rangeQueryBuilder.gte(start);
-            }
-            if(null != end){
-                rangeQueryBuilder.lt(end);
-            }
-            return rangeQueryBuilder;
+        if(null != start){
+            rangeQueryBuilder.gte(start);
+        }
+        if(null != end){
+            rangeQueryBuilder.lt(end);
+        }
+        return rangeQueryBuilder;
     }
 }

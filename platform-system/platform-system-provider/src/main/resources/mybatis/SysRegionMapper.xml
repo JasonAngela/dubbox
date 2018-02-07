@@ -5,7 +5,8 @@
     <sql id="selectColumns">
         SELECT DISTINCT
         a.code,
-        a.name,
+        a.name as name,
+        a.name as text,
         a.parent,
         a.short_name,
         a.level,

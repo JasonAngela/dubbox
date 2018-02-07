@@ -4,6 +4,7 @@ package cn.bjd.platform.elastic.api.entity.bo;
 
 import cn.bjd.platform.elastic.api.entity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,117 +15,117 @@ public class EtpBO extends Etp{
     /**
      * 所属门类
      */
-    private String industryCategory;
+    private String industryCategory = "";
 
     /**
      * 所属大类
      */
-    private String industryBigType;
+    private String industryBigType = "";
 
     /**
      * 所属中类
      */
-    private String industryMiddleType;
+    private String industryMiddleType = "";
 
     /**
      * 所属小类
      */
-    private String industrySmallType;
+    private String industrySmallType = "";
 
     /**
      * 股东出资信息
      */
-    private List<EtpShareholder> etpShareholderList;
+    private List<EtpShareholder> etpShareholderList = new ArrayList<>();
 
     /**
      * 企业高管:主要人员信息
      */
-    private List<EtpSeniorManager> etpSeniorManagerList;
+    private List<EtpSeniorManager> etpSeniorManagerList = new ArrayList<>();
 
     /**
      * 企业变更信息
      */
-    private List<EtpAlter> etpAlterList;
+    private List<EtpAlter> etpAlterList = new ArrayList<>();
 
     /**
      * 分支机构
      */
-    private List<EtpBranch> etpBranchList;
+    private List<EtpBranch> etpBranchList = new ArrayList<>();
 
     /**
      * 股权出质登记信息
      */
-    private List<EtpStock> etpStockList;
+    private List<EtpStock> etpStockList = new ArrayList<>();
 
     /**
      * 股权变更信息
      */
-    private List<EtpStockChange> etpStockChangeList;
+    private List<EtpStockChange> etpStockChangeList = new ArrayList<>();
 
     /**
      * 股权冻结历史信息
      */
-    private List<EtpSharesFrost> etpSharesFrostList;
+    private List<EtpSharesFrost> etpSharesFrostList = new ArrayList<>();
 
     /**
      * 动产抵押信息
      */
-    private List<EtpChattel> etpChattelList;
+    private List<EtpChattel> etpChattelList = new ArrayList<>();
 
     /**
      * 列入经营异常名录信息
      */
-    private List<EtpAbnormal> etpAbnormalList;
+    private List<EtpAbnormal> etpAbnormalList = new ArrayList<>();
 
     /**
      * 列入严重违法失信企业名单（黑名单）信息
      */
-    private List<EtpIllegal> etpIllegalList;
+    private List<EtpIllegal> etpIllegalList = new ArrayList<>();
 
     /**
      * 行政处罚信息
      */
-    private List<EtpPunish> etpPunishList;
+    private List<EtpPunish> etpPunishList = new ArrayList<>();
 
     /**
      * 行政许可证信息
      */
-    private List<EtpLicence> etpLicenceList;
+    private List<EtpLicence> etpLicenceList = new ArrayList<>();
 
     /**
      * 失信
      */
-    private List<CrdBreakfaith> crdBreakfaithList;
+    private List<CrdBreakfaith> crdBreakfaithList = new ArrayList<>();
 
     /**
      * 裁判文书
      */
-    private List<CrdCourt> crdCourtList;
+    private List<CrdCourt> crdCourtList = new ArrayList<>();
 
     /**
      * 法院公告
      */
-    private List<CrdCourtpub> crdCourtpubList;
+    private List<CrdCourtpub> crdCourtpubList = new ArrayList<>();
 
     /**
      * 被执行人
      */
-    private List<CrdExecuted> crdExecutedList;
+    private List<CrdExecuted> crdExecutedList = new ArrayList<>();
 
     /**
      * 企业税收、海关评级信息
      */
-    private SteadyOperationScore steadyOperationScore;
+    private SteadyOperationScore steadyOperationScore = new SteadyOperationScore();
 
     /**
      * 税收违法
      */
-    private List<TaxLegel> taxLegelList;
+    private List<TaxLegel> taxLegelList = new ArrayList<>();
 
     /**
      * 企业评分
      */
-    private EtpSingleScore etpSingleScore;
+    private EtpSingleScore etpSingleScore = new EtpSingleScore();
 
     /**
      * Gets industryCategory

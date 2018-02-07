@@ -283,7 +283,11 @@ public interface ISystemService {
 
     List<SysIndustry> findIndustry();
 
+    SysIndustry getIndustry(String id);
+
     SysRegion getRegionByCode(String code);
 
     Boolean findUserRegion(String userId,String code);
+
+    List<SysUser> findUserDeptList(SysUser user);
 }

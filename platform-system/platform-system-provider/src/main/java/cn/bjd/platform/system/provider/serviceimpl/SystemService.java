@@ -210,6 +210,9 @@ public class SystemService implements ISystemService {
         // 执行分页查询
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
         List<SysUser> list = sysUserMapper.findList(user);
+        for(SysUser sysUser:list){
+            sysUser.setDepts(sysDepartmentMapper.findListByUserId(sysUser.getId()));
+        }
         return new PageInfo<>(list);
     }
 
@@ -353,6 +356,9 @@ public class SystemService implements ISystemService {
         }
         return result;
     }
+
+
+
 
     @Override
     public List<SysMenu> getMenuList(String userId) {
@@ -507,6 +513,10 @@ public class SystemService implements ISystemService {
     @Override
     public List<SysDepartment> findAllDepts() {
         List<SysDepartment> originals = sysDepartmentMapper.findAllList();
+        return revoseDept(originals);
+    }
+
+    private List<SysDepartment> revoseDept(List<SysDepartment> originals){
         Map<String, SysDepartment> dtoMap = new HashMap<>();
         for (SysDepartment node : originals) {
             // 原始数据对象为Node，放入dtoMap中。
@@ -525,14 +535,18 @@ public class SystemService implements ISystemService {
                 SysDepartment parent = dtoMap.get(parentId);
                 parent.addChild(node);
             }
-        }
+         }
         return result;
     }
 
     @Override
     public List<SysDepartment> findAllEnable() {
-        return sysDepartmentMapper.findAllEnable();
+        List<SysDepartment> originals = sysDepartmentMapper.findAllEnable();
+        return revoseDept(originals);
     }
+
+
+
 
 
     @Override
@@ -768,6 +782,11 @@ public class SystemService implements ISystemService {
     }
 
     @Override
+    public SysIndustry getIndustry(String id) {
+        return sysIndustryMapper.get(id);
+    }
+
+    @Override
     public SysRegion getRegionByCode(String code) {
         return sysRegionMapper.get(code);
     }
@@ -782,5 +801,10 @@ public class SystemService implements ISystemService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<SysUser> findUserDeptList(SysUser user) {
+        return sysUserMapper.findUserDeptList(user);
     }
 }

@@ -1,6 +1,7 @@
 package cn.bjd.platform.admin.web.controller;
 
 import cn.bjd.platform.admin.web.security.model.AuthUser;
+import cn.bjd.platform.common.utils.framework.ApiResponse;
 import com.github.pagehelper.PageInfo;
 import cn.bjd.platform.admin.web.common.controller.BaseController;
 import cn.bjd.platform.common.api.Paging;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * The type Sys user controller.
@@ -90,7 +92,8 @@ public class SysUserController extends BaseController {
      */
     @PreAuthorize("isAuthenticated()")
     @PutMapping(value = "/password")
-    public ResponseEntity<String> resetPassword(@RequestBody BaseDto dto) throws BusinessException {
+    public ApiResponse resetPassword(@RequestBody BaseDto dto) throws BusinessException {
+        ApiResponse response = ApiResponse.getInstances();
 
         String oldPassword = dto.getString("oldPassword");
         String newPassword = dto.getString("newPassword");
@@ -101,13 +104,13 @@ public class SysUserController extends BaseController {
         if (StringHelper.isNotBlank(oldPassword) && StringHelper.isNotBlank(newPassword)) {
 
             if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-                throw new BusinessException("旧密码错误");
+                return response.error("404").setReason("旧密码不一致");
             }
 
             systemService.updateUserPasswordById(user.getId(), passwordEncoder.encode(newPassword));
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return response.success().setReason("修改成功");
     }
 
     /**
@@ -134,6 +137,14 @@ public class SysUserController extends BaseController {
     @GetMapping(value = "/{userId}")
     public SysUser getUser(@PathVariable("userId") String userId) {
         return systemService.getUserById(userId);
+    }
+
+
+    @PreAuthorize("hasAuthority('sys:user:view')")
+    @GetMapping(value = "/test")
+    public List<SysUser> test() {
+        SysUser user = new SysUser();
+        return systemService.findUserDeptList(user);
     }
 
     /**
