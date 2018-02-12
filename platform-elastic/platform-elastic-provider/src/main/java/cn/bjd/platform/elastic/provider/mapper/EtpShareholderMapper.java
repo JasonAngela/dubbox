@@ -23,4 +23,6 @@ public interface EtpShareholderMapper {
     List<String> selectShareholderByEtpId(@Param("etpId") String etpId);
 
     List<String> selectEtpIdByShareholder(@Param("shareholder") String shareholder);
+
+    EtpShareholder findByEtpIdAndShareholder(@Param("etpId") String etpId,@Param("shareholder") String shareholder);
 }

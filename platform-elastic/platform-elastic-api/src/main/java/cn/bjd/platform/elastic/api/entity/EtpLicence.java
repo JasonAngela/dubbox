@@ -1,11 +1,12 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 行政许可证信息
  */
-public class EtpLicence implements EtpBase {
+public class EtpLicence implements EtpBase,Serializable {
 
     /**
      * id

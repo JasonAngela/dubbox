@@ -1,11 +1,14 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 列入经营异常名录信息
  */
-public class EtpAbnormal implements EtpBase {
+public class EtpAbnormal implements EtpBase, Serializable {
 
     /**
      * id
@@ -25,6 +28,7 @@ public class EtpAbnormal implements EtpBase {
     /**
      * 列入日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date enrolDate;
 
     /**

@@ -1,11 +1,14 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 动产抵押信息
  */
-public class EtpChattel implements EtpBase {
+public class EtpChattel implements EtpBase,Serializable {
 
     /**
      * id
@@ -25,6 +28,7 @@ public class EtpChattel implements EtpBase {
     /**
      * 登记日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date recordDate;
 
     /**

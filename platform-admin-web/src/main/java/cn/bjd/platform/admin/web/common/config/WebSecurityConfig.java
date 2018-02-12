@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 
 
 /**
@@ -59,6 +60,13 @@ public class WebSecurityConfig extends AbstractWebSecurityConfig {
         super.configure(security);
 
     }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        //忽略权限校验的访问路径
+        web.ignoring().antMatchers(HttpMethod.GET, "/v1/etp/**");
+    }
+
 
 
    /* @Bean

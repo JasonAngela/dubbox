@@ -1,9 +1,11 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
+
 /**
  * 企业高管:主要人员信息
  */
-public class EtpSeniorManager implements EtpBase {
+public class EtpSeniorManager implements EtpBase,Serializable {
 
     /**
      * id

@@ -1,11 +1,14 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 企业变更信息
  */
-public class EtpAlter implements EtpBase {
+public class EtpAlter implements EtpBase,Serializable {
 
     /**
      * id
@@ -30,6 +33,7 @@ public class EtpAlter implements EtpBase {
     /**
      * 变更前
      */
+
     private String preChange;
 
     /**
@@ -40,6 +44,7 @@ public class EtpAlter implements EtpBase {
     /**
      * 变更时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date changeDate;
 
     /**

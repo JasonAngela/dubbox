@@ -66,4 +66,6 @@ public interface CrdCourtpubMapper {
      * @return int
      */
     int findCountByEtpName(@Param("name") String name);
+
+    List<String> findLikeClient(@Param("client") String client);
 }

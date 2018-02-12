@@ -91,7 +91,8 @@
     crd."flag",
     crd."create_time",
     crd."update_time",
-    etp."name" as etp_id
+    etp."name" as etp_id,
+    etp."type" as text
   </sql>
 
     <resultMap id="BaseResultMap" type="cn.bjd.platform.elastic.api.entity.CrdCourt">
@@ -679,8 +680,11 @@
         select
         <include refid="all_column_etpId"/>
         from public.crd_court_dp etp LEFT JOIN crd_court crd ON etp.court_id = crd."id"
-        where
-        etp."name" = #{etpId} AND etp."type" = #{type};
+        where etp."name" = #{etpId}
+        <if test="type != null and type != ''">
+            AND etp."type" = #{type};
+        </if>
+
     </select>
 
     <select id="findByEtpIdIn" resultMap="BaseResultMap">
@@ -693,7 +697,10 @@
                  open="(" separator="," close=")">
             #{item}
         </foreach>
-        AND etp."type" = #{type};
+        <if test="type != null and type != ''">
+            AND etp."type" = #{type};
+        </if>
+
     </select>
 
     <select id="findCountByEtpName" resultType="java.lang.Integer">
@@ -703,4 +710,19 @@
     where
     "name" = #{name} AND "type" = #{type};
   </select>
+    
+    
+    
+    <select id="findByEntName" resultType="cn.bjd.platform.elastic.api.entity.CrdCourt">
+        SELECT
+        <include refid="all_column"/>
+        from public.crd_court where POSITION(#{entName} IN defendant)>0 OR POSITION(#{entName} IN plaintiff)>0
+    </select>
+
+
+    <select id="findLikeByDeOrPl" resultType="java.lang.String">
+
+    </select>
+    
+    
 </mapper>

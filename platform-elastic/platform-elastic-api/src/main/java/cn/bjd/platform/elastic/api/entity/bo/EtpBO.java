@@ -4,7 +4,6 @@ package cn.bjd.platform.elastic.api.entity.bo;
 
 import cn.bjd.platform.elastic.api.entity.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,117 +14,122 @@ public class EtpBO extends Etp{
     /**
      * 所属门类
      */
-    private String industryCategory = "";
+    private String industryCategory;
 
     /**
      * 所属大类
      */
-    private String industryBigType = "";
+    private String industryBigType;
 
     /**
      * 所属中类
      */
-    private String industryMiddleType = "";
+    private String industryMiddleType;
 
     /**
      * 所属小类
      */
-    private String industrySmallType = "";
+    private String industrySmallType;
 
     /**
      * 股东出资信息
      */
-    private List<EtpShareholder> etpShareholderList = new ArrayList<>();
+    private List<EtpShareholder> etpShareholderList;
 
     /**
      * 企业高管:主要人员信息
      */
-    private List<EtpSeniorManager> etpSeniorManagerList = new ArrayList<>();
+    private List<EtpSeniorManager> etpSeniorManagerList;
 
     /**
      * 企业变更信息
      */
-    private List<EtpAlter> etpAlterList = new ArrayList<>();
+    private List<EtpAlter> etpAlterList;
 
     /**
      * 分支机构
      */
-    private List<EtpBranch> etpBranchList = new ArrayList<>();
+    private List<EtpBranch> etpBranchList;
 
     /**
      * 股权出质登记信息
      */
-    private List<EtpStock> etpStockList = new ArrayList<>();
+    private List<EtpStock> etpStockList;
 
     /**
      * 股权变更信息
      */
-    private List<EtpStockChange> etpStockChangeList = new ArrayList<>();
+    private List<EtpStockChange> etpStockChangeList;
 
     /**
      * 股权冻结历史信息
      */
-    private List<EtpSharesFrost> etpSharesFrostList = new ArrayList<>();
+    private List<EtpSharesFrost> etpSharesFrostList;
 
     /**
      * 动产抵押信息
      */
-    private List<EtpChattel> etpChattelList = new ArrayList<>();
+    private List<EtpChattel> etpChattelList;
 
     /**
      * 列入经营异常名录信息
      */
-    private List<EtpAbnormal> etpAbnormalList = new ArrayList<>();
+    private List<EtpAbnormal> etpAbnormalList;
 
     /**
      * 列入严重违法失信企业名单（黑名单）信息
      */
-    private List<EtpIllegal> etpIllegalList = new ArrayList<>();
+    private List<EtpIllegal> etpIllegalList;
 
     /**
      * 行政处罚信息
      */
-    private List<EtpPunish> etpPunishList = new ArrayList<>();
+    private List<EtpPunish> etpPunishList;
 
     /**
      * 行政许可证信息
      */
-    private List<EtpLicence> etpLicenceList = new ArrayList<>();
+    private List<EtpLicence> etpLicenceList;
 
     /**
      * 失信
      */
-    private List<CrdBreakfaith> crdBreakfaithList = new ArrayList<>();
+    private List<CrdBreakfaith> crdBreakfaithList;
 
     /**
      * 裁判文书
      */
-    private List<CrdCourt> crdCourtList = new ArrayList<>();
+    private List<CrdCourt> crdCourtList;
 
     /**
      * 法院公告
      */
-    private List<CrdCourtpub> crdCourtpubList = new ArrayList<>();
+    private List<CrdCourtpub> crdCourtpubList;
 
     /**
      * 被执行人
      */
-    private List<CrdExecuted> crdExecutedList = new ArrayList<>();
+    private List<CrdExecuted> crdExecutedList;
 
     /**
      * 企业税收、海关评级信息
      */
-    private SteadyOperationScore steadyOperationScore = new SteadyOperationScore();
+    private SteadyOperationScore steadyOperationScore;
 
     /**
      * 税收违法
      */
-    private List<TaxLegel> taxLegelList = new ArrayList<>();
+    private List<TaxLegel> taxLegelList;
 
     /**
      * 企业评分
      */
-    private EtpSingleScore etpSingleScore = new EtpSingleScore();
+    private EtpSingleScore etpSingleScore;
+
+    /**
+     * 商标
+     */
+    private List<EtpBrand> etpBrandList;
 
     /**
      * Gets industryCategory
@@ -493,5 +497,21 @@ public class EtpBO extends Etp{
      */
     public void setEtpSingleScore(EtpSingleScore etpSingleScore) {
         this.etpSingleScore = etpSingleScore;
+    }
+
+    /**
+     * Gets etpBrandList
+     *
+     * @return value of etpBrandList
+     */
+    public List<EtpBrand> getEtpBrandList() {
+        return etpBrandList;
+    }
+
+    /**
+     * @param etpBrandList
+     */
+    public void setEtpBrandList(List<EtpBrand> etpBrandList) {
+        this.etpBrandList = etpBrandList;
     }
 }

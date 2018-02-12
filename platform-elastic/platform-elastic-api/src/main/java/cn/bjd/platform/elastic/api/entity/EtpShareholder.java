@@ -1,11 +1,14 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 股东出资信息
  */
-public class EtpShareholder implements EtpBase {
+public class EtpShareholder implements EtpBase, Serializable {
 
     /**
      * id
@@ -55,14 +58,25 @@ public class EtpShareholder implements EtpBase {
     private String address;
 
     /**
-     *认缴额(万元)
+     * 认缴额(万元)
      */
     private Double confusingAmount;
 
     /**
+     * 持股比例
+     */
+    private String rate;
+
+    /**
      * 认缴时间
      */
-    private Date confusingData;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date confusingDate;
+
+    /**
+     * 认缴出资方式
+     */
+    private String confusingType;
 
     /**
      * 实缴额(万元)
@@ -72,7 +86,13 @@ public class EtpShareholder implements EtpBase {
     /**
      * 实缴额时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date paymentDate;
+
+    /**
+     * 实缴出资方式
+     */
+    private String paymentType;
 
     /**
      * 国家名称
@@ -82,12 +102,21 @@ public class EtpShareholder implements EtpBase {
     /**
      * 公示日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date openDate;
 
     /**
      * 外部id
      */
     private String outId;
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
 
     /**
      * Gets id
@@ -251,22 +280,6 @@ public class EtpShareholder implements EtpBase {
     }
 
     /**
-     * Gets confusingData
-     *
-     * @return value of confusingData
-     */
-    public Date getConfusingData() {
-        return confusingData;
-    }
-
-    /**
-     * @param confusingData
-     */
-    public void setConfusingData(Date confusingData) {
-        this.confusingData = confusingData;
-    }
-
-    /**
      * Gets payment
      *
      * @return value of payment
@@ -344,5 +357,53 @@ public class EtpShareholder implements EtpBase {
      */
     public void setOutId(String outId) {
         this.outId = outId;
+    }
+
+    /**
+     * Gets confusingDate
+     *
+     * @return value of confusingDate
+     */
+    public Date getConfusingDate() {
+        return confusingDate;
+    }
+
+    /**
+     * @param confusingDate
+     */
+    public void setConfusingDate(Date confusingDate) {
+        this.confusingDate = confusingDate;
+    }
+
+    /**
+     * Gets confusingType
+     *
+     * @return value of confusingType
+     */
+    public String getConfusingType() {
+        return confusingType;
+    }
+
+    /**
+     * @param confusingType
+     */
+    public void setConfusingType(String confusingType) {
+        this.confusingType = confusingType;
+    }
+
+    /**
+     * Gets paymentType
+     *
+     * @return value of paymentType
+     */
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    /**
+     * @param paymentType
+     */
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
     }
 }

@@ -1,11 +1,14 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 股权出质登记信息
  */
-public class EtpStock implements EtpBase {
+public class EtpStock implements EtpBase,Serializable {
 
     /**
      * id
@@ -81,6 +84,7 @@ public class EtpStock implements EtpBase {
     /**
      * 登记日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date regDate;
 
     /**

@@ -1,11 +1,14 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 行政处罚信息
  */
-public class EtpPunish implements EtpBase {
+public class EtpPunish implements EtpBase,Serializable {
 
     /**
      * id
@@ -50,6 +53,7 @@ public class EtpPunish implements EtpBase {
     /**
      * 判决日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date punishDate;
 
     /**

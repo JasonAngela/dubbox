@@ -143,10 +143,12 @@ public class ElasticService implements IElasticService {
 
         //判断行业字段是否存在
         if (!StringUtils.isEmpty(industry)) {
-            queryBuilder.should(QueryBuilders.termQuery("category", industry));
-            queryBuilder.should(QueryBuilders.termQuery("bigCategory", industry));
-            queryBuilder.should(QueryBuilders.termQuery("middleCategory", industry));
-            queryBuilder.should(QueryBuilders.termQuery("smallCategory", industry));
+            BoolQueryBuilder industryBuilder = QueryBuilders.boolQuery();
+            industryBuilder.should(QueryBuilders.termQuery("category", industry));
+            industryBuilder.should(QueryBuilders.termQuery("bigCategory", industry));
+            industryBuilder.should(QueryBuilders.termQuery("middleCategory", industry));
+            industryBuilder.should(QueryBuilders.termQuery("smallCategory", industry));
+            queryBuilder.must(industryBuilder);
         }
 
         //查询在营业的企业
@@ -231,7 +233,12 @@ public class ElasticService implements IElasticService {
 
         //判断行业字段是否存在
         if (!StringUtils.isEmpty(industry)) {
-            queryBuilder.must(QueryBuilders.termQuery("category", industry));
+            BoolQueryBuilder industryBuilder = QueryBuilders.boolQuery();
+            industryBuilder.should(QueryBuilders.termQuery("category", industry));
+            industryBuilder.should(QueryBuilders.termQuery("bigCategory", industry));
+            industryBuilder.should(QueryBuilders.termQuery("middleCategory", industry));
+            industryBuilder.should(QueryBuilders.termQuery("smallCategory", industry));
+            queryBuilder.must(industryBuilder);
         }
 
         //查询在营业的企业

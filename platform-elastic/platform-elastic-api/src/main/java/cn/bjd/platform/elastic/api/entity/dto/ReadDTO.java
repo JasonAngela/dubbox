@@ -1,5 +1,7 @@
 package cn.bjd.platform.elastic.api.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,9 +9,12 @@ public class ReadDTO implements Serializable {
 
     private String address;
     private String entName;
+    private String legalRep;
     private String nameLike;
     private String regCapital;
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date regDate;
+    private String regState;
 
     private Double legalScore;
     private Double industryScore;
@@ -22,6 +27,22 @@ public class ReadDTO implements Serializable {
     private String accessBasicStandar;
     private String riskIdentify;
     private String riskControlMeasures;
+
+    public String getRegState() {
+        return regState;
+    }
+
+    public void setRegState(String regState) {
+        this.regState = regState;
+    }
+
+    public String getLegalRep() {
+        return legalRep;
+    }
+
+    public void setLegalRep(String legalRep) {
+        this.legalRep = legalRep;
+    }
 
     public String getAddress() {
         return address;

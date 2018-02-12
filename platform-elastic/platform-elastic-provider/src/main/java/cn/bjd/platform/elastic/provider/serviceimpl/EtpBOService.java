@@ -3,42 +3,20 @@ package cn.bjd.platform.elastic.provider.serviceimpl;
 
 import cn.bjd.platform.elastic.api.entity.*;
 import cn.bjd.platform.elastic.api.entity.bo.EtpBO;
-import cn.bjd.platform.elastic.api.entity.dto.EtpDTO;
-import cn.bjd.platform.elastic.api.entity.dto.ReadDTO;
+import cn.bjd.platform.elastic.api.entity.dto.*;
 import cn.bjd.platform.elastic.api.exception.ServiceException;
 import cn.bjd.platform.elastic.api.service.IEtpBOService;
-import cn.bjd.platform.elastic.provider.mapper.CrdBreakfaithMapper;
-import cn.bjd.platform.elastic.provider.mapper.CrdCourtMapper;
-import cn.bjd.platform.elastic.provider.mapper.CrdCourtpubMapper;
-import cn.bjd.platform.elastic.provider.mapper.CrdExecutedMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpAbnormalMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpAlterMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpBranchMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpChattelMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpIllegalMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpLicenceMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpPunishMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpSeniorManagerMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpShareholderMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpSharesFrostMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpSingleScoreMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpStockChangeMapper;
-import cn.bjd.platform.elastic.provider.mapper.EtpStockMapper;
-import cn.bjd.platform.elastic.provider.mapper.SteadyOperationScoreMapper;
-import cn.bjd.platform.elastic.provider.mapper.TaxLegelMapper;
+import cn.bjd.platform.elastic.provider.mapper.*;
 import cn.bjd.platform.elastic.provider.utils.BeanUtils;
+import cn.bjd.platform.elastic.provider.utils.DateUtils;
 import cn.bjd.platform.elastic.provider.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import sun.awt.image.ImageWatched;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Administrator on 2018/1/11.
@@ -76,6 +54,13 @@ public class EtpBOService implements IEtpBOService {
      */
     @Autowired
     private EtpBranchMapper etpBranchMapper;
+
+
+    /**
+     * 商标
+     */
+    @Autowired
+    private EtpBrandMapper etpBrandMapper;
 
     /**
      * 股权出质登记信息
@@ -170,6 +155,15 @@ public class EtpBOService implements IEtpBOService {
     @Autowired
     private IndustryService industryService;
 
+    @Autowired
+    private EtpScoreMapper etpScoreMapper;
+
+    @Autowired
+    private IndustryMapper industryMapper;
+
+    @Autowired
+    private LegalScoreMapper legalScoreMapper;
+
     /**
      * 根据企业名称获取对应的企业BO对象
      *
@@ -209,7 +203,7 @@ public class EtpBOService implements IEtpBOService {
         etpBO.setIndustryBigType(industryService.getBigCategory(etpBO.getIndustryId()));
         etpBO.setIndustryMiddleType(industryService.getMiddleCategory(etpBO.getIndustryId()));
         etpBO.setIndustrySmallType(industryService.getSmallCategory(etpBO.getIndustryId()));
-        /*
+
         etpBO.setEtpShareholderList(etpShareholderMapper.findByEtpId(entName));
         etpBO.setEtpSeniorManagerList(etpSeniorManagerMapper.findByEtpId(entName));
         etpBO.setEtpAlterList(etpAlterMapper.findByEtpId(entName));
@@ -225,10 +219,11 @@ public class EtpBOService implements IEtpBOService {
         etpBO.setCrdBreakfaithList(crdBreakfaithMapper.findByEtpId(entName));
         etpBO.setCrdCourtList(crdCourtMapper.findByEtpId(entName, "defendant"));
         etpBO.setCrdCourtpubList(crdCourtpubMapper.findByEtpId(entName));
-        etpBO.setCrdExecutedList(crdExecutedMapper.findByEtpId(entName));*/
+        etpBO.setCrdExecutedList(crdExecutedMapper.findByEtpId(entName));
         etpBO.setSteadyOperationScore(steadyOperationScoreMapper.findById(etp.getId()));
-        /*etpBO.setTaxLegelList(taxLegelMapper.findByCompanyName(entName));
-        etpBO.setEtpSingleScore(etpSingleScoreMapper.findById(etp.getId()));*/
+        etpBO.setTaxLegelList(taxLegelMapper.findByCompanyName(entName));
+        etpBO.setEtpSingleScore(etpSingleScoreMapper.findById(etp.getId()));
+        etpBO.setEtpBrandList(etpBrandMapper.findByEtpId(entName));
         return etpBO;
     }
 
@@ -495,10 +490,10 @@ public class EtpBOService implements IEtpBOService {
 
         //获取税收评级
         SteadyOperationScore steadyOperationScore = etpBO.getSteadyOperationScore();
-        String tax = steadyOperationScore==null?"":steadyOperationScore.getTaxRate();
+        String tax = steadyOperationScore == null ? "" : steadyOperationScore.getTaxRate();
 
         //获取海关评级
-        String customs = steadyOperationScore==null?"":steadyOperationScore.getCustomRate();
+        String customs = steadyOperationScore == null ? "" : steadyOperationScore.getCustomRate();
 
         //获取涉讼数量
         Integer courtCount = crdBreakfaithMapper.findCountByEtpName(etpBO.getEntName())
@@ -527,23 +522,512 @@ public class EtpBOService implements IEtpBOService {
         etpDTO.setTax(tax);
         etpDTO.setCourtCount(courtCount);
         etpDTO.setIllegalCount(illegalCount);
-        etpDTO.setEtpSingleScore(etpBO.getEtpSingleScore() == null?0:etpBO.getEtpSingleScore().getEtpSingleScore());
+        etpDTO.setEtpSingleScore(etpBO.getEtpSingleScore() == null ? 0 : etpBO.getEtpSingleScore().getEtpSingleScore());
         return etpDTO;
+    }
+
+    /**
+     * 通过企业id获取资质能力 返回DTO
+     *
+     * @param id
+     * @return EtpAptitudeDTO
+     */
+    @Override
+    public EtpAptitudeDTO findEtpAptitudeById(String id) {
+        if (StringUtils.isEmpty(id)) {
+            return null;
+        }
+
+        //查询企业基本信息
+        Etp etp = etpMapper.findById(id);
+        if (etp == null) {
+            return null;
+        }
+        EtpBO etpBO = getEtpBOByEtp(etp);
+        if (etpBO == null) {
+            return null;
+        }
+
+        //获取税收评级
+        String tax = etpBO.getSteadyOperationScore().getTaxRate();
+
+        //获取海关评级
+        String customs = etpBO.getSteadyOperationScore().getCustomRate();
+
+        //将BO转为DTO
+        EtpAptitudeDTO etpAptitudeDTO = new EtpAptitudeDTO();
+        etpAptitudeDTO.setId(id);
+        etpAptitudeDTO.setEtpBrandList(etpBO.getEtpBrandList());
+        etpAptitudeDTO.setEtpLicenceList(etpBO.getEtpLicenceList());
+        etpAptitudeDTO.setTaxRate(tax);
+        etpAptitudeDTO.setCustomRate(customs);
+        return etpAptitudeDTO;
     }
 
     @Override
     public ReadDTO findReadByEtpId(String id) {
         Etp etp = etpMapper.findById(id);
         ReadDTO dto = new ReadDTO();
-        if(etp != null){
+        if (etp != null) {
             dto.setAddress(etp.getAddress());
             dto.setEntName(etp.getEntName());
             dto.setNameLike(etp.getNameLike());
             dto.setRegCapital(etp.getRegCapital());
             dto.setRegDate(etp.getRegDate());
+            dto.setLegalRep(etp.getLegalRep());
+            dto.setRegState(etp.getRegStateCN());
+            //通过公司名称去查询相应的评分
+            if (!StringUtils.isEmpty(etp.getEntName())) {
+                EtpScore score = etpScoreMapper.findByEntName(etp.getEntName());
+                if (score != null) {
+                    dto.setLegalScore(score.getTotalLegal());
+                    dto.setIndustryScore(score.getTotalIndustry());
+                    dto.setFinScore(score.getTotalFin());
+                    dto.setEtpScore(score.getTotalEtp());
+                    dto.setAreaScore(score.getTotalArea());
+                    dto.setEtpTotalScore(score.getTotalEtpScore());
+                }
+            }
 
+            //通过行业id去查询投向指引
+            Integer industryId = etp.getIndustryId();
+            if (industryId != null) {
+                Industry industry = industryMapper.selectByPrimaryKey(industryId);
+                if (industry != null) {
+                    dto.setAccessStandar(industry.getCylZrbz());
+                    dto.setAccessBasicStandar(industry.getCylJbzrtj());
+                    dto.setRiskIdentify(industry.getCylFxsb());
+                    dto.setRiskControlMeasures(industry.getCylFxgkcs());
+                }
+            }
         }
 
+        return dto;
+    }
+
+    @Override
+    public EtpBasicDTO findBasicById(String id) {
+        Etp etp = etpMapper.findById(id);
+        EtpBasicDTO basicDTO = new EtpBasicDTO();
+        if (etp != null) {
+            basicDTO.setCreditCode(etp.getUnIsCid());//统一社会信用代码
+            basicDTO.setRegState(etp.getRegStateCN());
+            basicDTO.setIndustry(etp.getIndustry());
+
+            basicDTO.setRegDate(etp.getRegDate());
+            basicDTO.setType(etp.getType());
+
+
+            Date businessStart = etp.getBusinessStart();
+            Date businessFinish = etp.getBusinessFinish();
+
+            StringBuilder businessStartFinish = new StringBuilder("");
+            if (businessStart != null) {
+                businessStartFinish.append(DateUtils.format(businessStart, "yyyy-MM-dd"));
+            }
+
+            if (businessFinish != null) {
+                businessStartFinish.append("-" + DateUtils.format(businessFinish, "yyyy-MM-dd"));
+            } else {
+                businessStartFinish.append("-无固定期限");
+            }
+
+            basicDTO.setBusinessStartFinish(businessStartFinish.toString());
+            basicDTO.setLegalRep(etp.getLegalRep());
+
+            basicDTO.setCheckDate(etp.getCheckDate());
+
+            basicDTO.setRegCapital(etp.getRegCapital());
+            basicDTO.setRegOffice(etp.getRegOffice());
+            basicDTO.setBusinessScope(etp.getBusinessScope());
+            basicDTO.setAddress(etp.getAddress());
+
+            //通过名称查询股东信息
+            List<EtpShareholder> etpShareholder = etpShareholderMapper.findByEtpId(etp.getEntName());
+            String regCapital = etp.getRegCapital();
+            if (StringUtils.isNotBlank(regCapital)) {
+                for (EtpShareholder etpShareholderRate : etpShareholder) {
+                    Double r = (etpShareholderRate.getConfusingAmount() / Double.parseDouble(regCapital)) * 100;
+                    etpShareholderRate.setRate(r.toString() + "%");
+                }
+            }
+
+            basicDTO.setEtpShareholder(etpShareholder);
+
+
+            //成员信息
+            List<EtpSeniorManager> etpSeniorManager = etpSeniorManagerMapper.findByEtpId(etp.getEntName());
+            basicDTO.setEtpSeniorManager(etpSeniorManager);
+
+            //对外投资
+            //本公司对外投资情况
+            List<Outward> outward = new ArrayList<>();
+            List<String> outEtpShareholder = etpShareholderMapper.selectEtpIdByShareholder(etp.getEntName());
+            if (!CollectionUtils.isEmpty(outEtpShareholder)) {
+                for (String etpId : outEtpShareholder) {
+                    Etp etpOutEtpShareholder = etpMapper.findByEntName(etpId);          //EtpShareholder中etpId存储的是entName
+                    Outward outward1 = new Outward();
+                    outward1.setEtpName(etpOutEtpShareholder.getEntName());
+                    outward1.setLegalRep(etpOutEtpShareholder.getLegalRep());
+                    outward1.setRegDate(etpOutEtpShareholder.getRegDate());
+                    outward1.setRegStateCN(etpOutEtpShareholder.getRegStateCN());
+
+                    EtpShareholder e = etpShareholderMapper.findByEtpIdAndShareholder(etpId, etp.getEntName());
+                    if (e != null) {
+                        outward1.setPaymentAmount(e.getPayment());
+                        //出资比例
+                        Etp outEtp = etpMapper.findByEntName(etpId);
+
+                        if (outEtp != null) {
+                            String catipal = outEtp.getRegCapital();
+                            outward1.setRate(String.valueOf(((e.getPayment() / Double.parseDouble(catipal)) * 100)) + "%");
+                        }
+                    }
+
+
+                    outward.add(outward1);
+                }
+            }
+
+
+            basicDTO.setOutward(outward);
+
+            //变更信息
+            List<EtpAlter> etpAlter = etpAlterMapper.findByEtpId(etp.getEntName());
+            basicDTO.setEtpAlter(etpAlter);
+        }
+
+
+        return basicDTO;
+    }
+
+    @Override
+    public RiskDTO findRiskById(String id) {
+
+        //根据名称去查询裁判文书信息
+        Etp etp = etpMapper.findById(id);
+        RiskDTO dto = new RiskDTO();
+        if (etp != null) {
+            String entName = etp.getEntName();
+            List<CrdCourt> crdCourt = crdCourtMapper.findByEtpId(entName, null);
+            dto.setCrdCourt(crdCourt);
+
+            List<CrdCourtpub> crdCourtPub = crdCourtpubMapper.findByEtpId(entName);
+            dto.setCrdCourtPub(crdCourtPub);
+
+            List<CrdExecuted> crdExecuted = crdExecutedMapper.findByEtpId(entName);
+            dto.setCrdExecuted(crdExecuted);
+
+            List<CrdBreakfaith> crdBreakfaith = crdBreakfaithMapper.findByEtpId(entName);
+            dto.setCrdBreakfaith(crdBreakfaith);
+
+            List<EtpAbnormal> etpAbnormal = etpAbnormalMapper.findByEtpId(entName);
+            dto.setEtpAbnormal(etpAbnormal);
+
+            List<EtpPunish> etpPunish = etpPunishMapper.findByEtpId(entName);
+            dto.setEtpPunish(etpPunish);
+
+            List<EtpStock> etpStock = etpStockMapper.findByEtpId(entName);
+            dto.setEtpStock(etpStock);
+
+            List<EtpChattel> etpChattel = etpChattelMapper.findByEtpId(entName);
+            dto.setEtpChattel(etpChattel);
+
+
+            List<String> relate2 = etpShareholderMapper.selectEtpIdByShareholder(entName);
+            List<LegalScore> legalScore = new ArrayList<>();
+
+            List<String> relateName = new ArrayList<>();
+            List<EtpShareholder> relate1 = etpShareholderMapper.findByEtpId(entName);
+            for (EtpShareholder e : relate1) {
+                relateName.add(e.getShareholder());
+                LegalScore l = legalScoreMapper.findByEntName(e.getShareholder());
+                if (l != null) {
+                    legalScore.add(l);
+                }
+            }
+
+            for (String s : relate2) {
+                relateName.add(s);
+                LegalScore l = legalScoreMapper.findByEntName(s);
+                if (l != null) {
+                    legalScore.add(l);
+                }
+            }
+
+
+            dto.setLegalScore(legalScore);
+            List<CrdCourt> relateCrdCourt = crdCourtMapper.findByEtpIdIn(relateName, null);
+            dto.setRelateCrdCourt(relateCrdCourt);
+        }
+
+
+        return dto;
+    }
+
+    @Override
+    public AtlasDTO findAtlasById(String id) {
+        Etp etp = etpMapper.findById(id);
+        AtlasDTO dto = new AtlasDTO();
+
+        if (etp != null) {
+            FamilyDTO family = new FamilyDTO();
+            //先查询公司名称TYPE
+            family.setName(etp.getEntName());
+            family.setType(0);
+            //children
+            //第一层默认是7个
+            List<FamilyDTO> listTypeOne = new ArrayList<>();
+
+            List<LinkDTO> link = new ArrayList<>();
+            List<NodesDTO> nodes = new ArrayList<>();
+
+            String[] strTypeOne = {"股东", "对外投资", "法院公告", "裁判文书", "历史法人", "历史股东", "高管"};
+            List<String> shareholder = etpShareholderMapper.selectShareholderByEtpId(etp.getEntName());
+            List<String> shareholderTwo = etpShareholderMapper.selectEtpIdByShareholder(etp.getEntName());
+            List<String> client = crdCourtpubMapper.findLikeClient(etp.getEntName());
+            List<CrdCourt> court = crdCourtMapper.findByEtpId(etp.getEntName(), null);
+            List<EtpAlter> alter = etpAlterMapper.findByEtpId(etp.getEntName());
+            List<EtpSeniorManager> managerList = etpSeniorManagerMapper.findByEtpId(etp.getEntName());
+            for (int i = 0; i < strTypeOne.length; i++) {
+                FamilyDTO fTypeOne = new FamilyDTO();
+                fTypeOne.setType(i + 1);
+                fTypeOne.setName(strTypeOne[i]);
+                //第二层
+                //股东type为1
+                //查询出公司股东信息
+
+                if (i == 0) {
+                    List<FamilyDTO> shareholderFamily = new ArrayList<>();
+                    for (String str : shareholder) {
+                        FamilyDTO shareholderOne = new FamilyDTO();
+                        shareholderOne.setType(1);
+                        shareholderOne.setName(str);
+                        shareholderFamily.add(shareholderOne);
+
+                        LinkDTO linkDTO = new LinkDTO();
+                        linkDTO.setSource(str);
+                        linkDTO.setTarget(etp.getEntName());
+                        link.add(linkDTO);
+
+
+                        NodesDTO nodesDTO = new NodesDTO();
+                        nodesDTO.setName(str);
+                        nodesDTO.setCategory(0);
+                        nodesDTO.setType(1);
+                        nodes.add(nodesDTO);
+
+
+                    }
+                    fTypeOne.setChildren(shareholderFamily);
+                    listTypeOne.add(fTypeOne);
+                }
+
+                if (i == 1) {
+                    //对外投资情况 type2
+                    List<FamilyDTO> shareholderTwoFamily = new ArrayList<>();
+                    NodesDTO node = new NodesDTO();
+                    node.setName(etp.getEntName());
+                    node.setCategory(null);
+                    node.setType(null);
+                    nodes.add(node);
+
+                    for (String str : shareholderTwo) {
+                        FamilyDTO shareholderTwoF = new FamilyDTO();
+                        shareholderTwoF.setType(2);
+                        shareholderTwoF.setName(str);
+                        shareholderTwoFamily.add(shareholderTwoF);
+
+                        LinkDTO linkDTO = new LinkDTO();
+                        linkDTO.setSource(etp.getEntName());
+                        linkDTO.setTarget(str);
+                        link.add(linkDTO);
+
+
+                        NodesDTO nodesDTO = new NodesDTO();
+                        nodesDTO.setName(str);
+                        nodesDTO.setCategory(0);
+                        nodesDTO.setType(1);
+                        nodes.add(nodesDTO);
+
+                        //根据str查询对应公司
+                        List<String> shareholderStr = etpShareholderMapper.selectEtpIdByShareholder(str);
+                        for (String s : shareholderStr) {
+                            LinkDTO linkStr = new LinkDTO();
+                            linkStr.setSource(str);
+                            linkStr.setTarget(s);
+                            link.add(linkStr);
+
+
+                            NodesDTO nodesStr = new NodesDTO();
+                            nodesStr.setName(s);
+                            nodesStr.setCategory(1);
+                            nodesStr.setType(2);
+                            nodes.add(nodesStr);
+                        }
+
+                    }
+                    fTypeOne.setChildren(shareholderTwoFamily);
+                    listTypeOne.add(fTypeOne);
+                }
+
+                if (i == 2) {
+                    //法院公告  type3
+                    //与本企业相关的法院公告公司显示
+
+                    Set<String> set = new HashSet<>();
+                    for (String str : client) {
+                        //排除自己的公司 用SET保存
+                        String[] strClient = str.split("、");
+                        for (String sClient : strClient) {
+                            if (!sClient.equals(etp.getEntName()) && sClient.contains("公司")) {
+                                set.add(sClient);
+                            }
+                        }
+                    }
+
+                    List<FamilyDTO> pubThreeFamily = new ArrayList<>();
+                    for (String s : set) {
+                        FamilyDTO crdPub = new FamilyDTO();
+                        crdPub.setType(3);
+                        crdPub.setName(s);
+                        pubThreeFamily.add(crdPub);
+                    }
+
+                    fTypeOne.setChildren(pubThreeFamily);
+                    listTypeOne.add(fTypeOne);
+                }
+
+                if (i == 3) {
+                    //裁判文书type4
+
+                    Set<String> set = new HashSet<>();
+                    for (CrdCourt c : court) {
+                        String defendant = c.getDefendant();
+                        String[] de = defendant.split("、");
+                        for (String d : de) {
+                            if (!d.equals(etp.getEntName()) && (d.contains("公司") || d.contains("支行") || d.contains("银行"))) {
+                                set.add(d);
+                            }
+                        }
+
+                        String plaintiff = c.getPlaintiff();
+                        String[] pl = plaintiff.split("、");
+                        for (String p : pl) {
+                            if (!p.equals(etp.getEntName()) && (p.contains("公司") || p.contains("支行") || p.contains("银行"))) {
+                                set.add(p);
+                            }
+                        }
+                    }
+                    List<FamilyDTO> pubFourFamily = new ArrayList<>();
+                    for (String s : set) {
+                        FamilyDTO courtF = new FamilyDTO();
+                        courtF.setType(4);
+                        courtF.setName(s);
+                        pubFourFamily.add(courtF);
+                    }
+
+                    fTypeOne.setChildren(pubFourFamily);
+                    listTypeOne.add(fTypeOne);
+                }
+
+
+                if (i == 4) {
+                    //历史法人
+                    List<FamilyDTO> pubFiveFamily = new ArrayList<>();
+                    Set<String> set = new HashSet<>();
+                    for (EtpAlter eAlter : alter) {
+                        if (eAlter.getChangeEvent().equals("法定代表人变更")) {
+                            String pre = eAlter.getPreChange();
+                            //str.substring
+                            //几区名字
+                            String preName = "";
+                            if (pre.contains(":")) {
+                                preName = pre.substring(pre.lastIndexOf(":") + 1, pre.length()).trim();
+                            }
+                            if (pre.contains("：")) {
+                                preName = pre.substring(pre.lastIndexOf("：") + 1, pre.length()).trim();
+                            }
+
+                            //去掉名词重复
+                            set.add(preName);
+                        }
+                    }
+
+                    for (String s : set) {
+                        FamilyDTO eAlterF = new FamilyDTO();
+                        eAlterF.setType(5);
+                        eAlterF.setName(s);
+                        pubFiveFamily.add(eAlterF);
+                    }
+                    fTypeOne.setChildren(pubFiveFamily);
+                    listTypeOne.add(fTypeOne);
+                }
+
+
+                if (i == 5) {
+                    //历史股东
+                    List<FamilyDTO> hisSixFamily = new ArrayList<>();
+                    Set<String> set = new HashSet<>();
+                    for (EtpAlter eAlter : alter) {
+                        //已经得到现在的股东了 把历史的都取出来 做对比  然后进行判断 得出是历史股东
+                        if (eAlter.getChangeEvent().equals("投资人(股权)变更")) {
+                            String pre = eAlter.getPreChange();
+                            String[] pr = pre.split(";");
+                            for (String p : pr) {
+                                String preName = "";
+                                if (p.contains(":")) {
+                                    preName = p.substring(p.lastIndexOf(":") + 1, p.length()).trim();
+                                }
+                                if (p.contains("：")) {
+                                    preName = p.substring(p.lastIndexOf("：") + 1, p.length()).trim();
+                                }
+                                set.add(preName);
+
+
+                            }
+                        }
+                    }
+                    for (String s : set) {
+                        if (!shareholder.contains(s)) {
+                            FamilyDTO fiveDto = new FamilyDTO();
+                            fiveDto.setName(s);
+                            fiveDto.setType(6);
+                            hisSixFamily.add(fiveDto);
+                        }
+                    }
+
+                    fTypeOne.setChildren(hisSixFamily);
+                    listTypeOne.add(fTypeOne);
+                }
+
+
+                if (i == 6) {
+                    List<FamilyDTO> hisSevenFamily = new ArrayList<>();
+                    for (EtpSeniorManager manager : managerList) {
+                        FamilyDTO f = new FamilyDTO();
+                        f.setType(7);
+                        f.setName(manager.getName());
+                        hisSevenFamily.add(f);
+                    }
+                    fTypeOne.setChildren(hisSevenFamily);
+                    listTypeOne.add(fTypeOne);
+                }
+            }
+
+            family.setChildren(listTypeOne);
+            dto.setFamily(family);
+
+            RelateDTO relate = new RelateDTO();
+
+
+            //公司对外投资
+
+            relate.setLink(link);
+            relate.setNodes(nodes);
+
+            dto.setRelate(relate);
+        }
 
         return dto;
     }

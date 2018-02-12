@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.IndustrySeasonMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.IndustrySeason">
+        <result column="id" property="id"/>
+        <result column="hy_name1" property="hyName1"/>
+        <result column="icodes" property="icodes"/>
+        <result column="hy_name2" property="hyName2"/>
+        <result column="m1" property="m1"/>
+        <result column="m2" property="m2"/>
+        <result column="m3" property="m3"/>
+        <result column="m4" property="m4"/>
+        <result column="m5" property="m5"/>
+        <result column="m6" property="m6"/>
+        <result column="m7" property="m7"/>
+        <result column="m8" property="m8"/>
+        <result column="m9" property="m9"/>
+        <result column="m10" property="m10"/>
+        <result column="m11" property="m11"/>
+        <result column="m12" property="m12"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        id,
+        hy_name1,
+        icodes,
+        hy_name2,
+        m1,
+        m2,
+        m3,
+        m4,
+        m5,
+        m6,
+        m7,
+        m8,
+        m9,
+        m10,
+        m11,
+        m12
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO industry_season (
+            id,
+            hy_name1,
+            icodes,
+            hy_name2,
+            m1,
+            m2,
+            m3,
+            m4,
+            m5,
+            m6,
+            m7,
+            m8,
+            m9,
+            m10,
+            m11,
+            m12
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.hyName1},
+            #{pojo.icodes},
+            #{pojo.hyName2},
+            #{pojo.m1},
+            #{pojo.m2},
+            #{pojo.m3},
+            #{pojo.m4},
+            #{pojo.m5},
+            #{pojo.m6},
+            #{pojo.m7},
+            #{pojo.m8},
+            #{pojo.m9},
+            #{pojo.m10},
+            #{pojo.m11},
+            #{pojo.m12}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO industry_season
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">id,</if>
+            <if test="pojo.hyName1!=null">hy_name1,</if>
+            <if test="pojo.icodes!=null">icodes,</if>
+            <if test="pojo.hyName2!=null">hy_name2,</if>
+            <if test="pojo.m1!=null">m1,</if>
+            <if test="pojo.m2!=null">m2,</if>
+            <if test="pojo.m3!=null">m3,</if>
+            <if test="pojo.m4!=null">m4,</if>
+            <if test="pojo.m5!=null">m5,</if>
+            <if test="pojo.m6!=null">m6,</if>
+            <if test="pojo.m7!=null">m7,</if>
+            <if test="pojo.m8!=null">m8,</if>
+            <if test="pojo.m9!=null">m9,</if>
+            <if test="pojo.m10!=null">m10,</if>
+            <if test="pojo.m11!=null">m11,</if>
+            <if test="pojo.m12!=null">m12,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.hyName1!=null">#{pojo.hyName1},</if>
+            <if test="pojo.icodes!=null">#{pojo.icodes},</if>
+            <if test="pojo.hyName2!=null">#{pojo.hyName2},</if>
+            <if test="pojo.m1!=null">#{pojo.m1},</if>
+            <if test="pojo.m2!=null">#{pojo.m2},</if>
+            <if test="pojo.m3!=null">#{pojo.m3},</if>
+            <if test="pojo.m4!=null">#{pojo.m4},</if>
+            <if test="pojo.m5!=null">#{pojo.m5},</if>
+            <if test="pojo.m6!=null">#{pojo.m6},</if>
+            <if test="pojo.m7!=null">#{pojo.m7},</if>
+            <if test="pojo.m8!=null">#{pojo.m8},</if>
+            <if test="pojo.m9!=null">#{pojo.m9},</if>
+            <if test="pojo.m10!=null">#{pojo.m10},</if>
+            <if test="pojo.m11!=null">#{pojo.m11},</if>
+            <if test="pojo.m12!=null">#{pojo.m12},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO industry_season (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.hyName1},
+            #{pojo.icodes},
+            #{pojo.hyName2},
+            #{pojo.m1},
+            #{pojo.m2},
+            #{pojo.m3},
+            #{pojo.m4},
+            #{pojo.m5},
+            #{pojo.m6},
+            #{pojo.m7},
+            #{pojo.m8},
+            #{pojo.m9},
+            #{pojo.m10},
+            #{pojo.m11},
+            #{pojo.m12}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE industry_season
+        <set>
+            <if test="pojo.id != null">id = #{pojo.id},</if>
+            <if test="pojo.hyName1 != null">hy_name1 = #{pojo.hyName1},</if>
+            <if test="pojo.icodes != null">icodes = #{pojo.icodes},</if>
+            <if test="pojo.hyName2 != null">hy_name2 = #{pojo.hyName2},</if>
+            <if test="pojo.m1 != null">m1 = #{pojo.m1},</if>
+            <if test="pojo.m2 != null">m2 = #{pojo.m2},</if>
+            <if test="pojo.m3 != null">m3 = #{pojo.m3},</if>
+            <if test="pojo.m4 != null">m4 = #{pojo.m4},</if>
+            <if test="pojo.m5 != null">m5 = #{pojo.m5},</if>
+            <if test="pojo.m6 != null">m6 = #{pojo.m6},</if>
+            <if test="pojo.m7 != null">m7 = #{pojo.m7},</if>
+            <if test="pojo.m8 != null">m8 = #{pojo.m8},</if>
+            <if test="pojo.m9 != null">m9 = #{pojo.m9},</if>
+            <if test="pojo.m10 != null">m10 = #{pojo.m10},</if>
+            <if test="pojo.m11 != null">m11 = #{pojo.m11},</if>
+            <if test="pojo.m12 != null">m12 = #{pojo.m12}</if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+    <!--auto generated by codehelper on 2018-02-08 09:31:44-->
+    <select id="findById" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from industry_season
+        where id=#{id}
+    </select>
+
+</mapper>
+

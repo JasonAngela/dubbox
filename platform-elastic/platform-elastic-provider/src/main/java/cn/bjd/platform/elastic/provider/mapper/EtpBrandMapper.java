@@ -15,4 +15,6 @@ public interface EtpBrandMapper {
     int insertList(@Param("pojos") List<EtpBrand> pojo);
 
     int update(@Param("pojo") EtpBrand pojo);
+
+    List<EtpBrand> findByEtpId(@Param("etpId")String etpId);
 }

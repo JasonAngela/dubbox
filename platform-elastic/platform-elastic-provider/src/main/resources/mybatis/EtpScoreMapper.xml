@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.EtpScoreMapper">
+
+    <sql id="selectColumns">
+        SELECT DISTINCT
+        a.id,
+        a.ent_name,
+        a.un_is_cid,
+        a.etp_legal_score,
+        a.area_legal_score,
+        a.industry_credit_score,
+        a.area_fin_score,
+        a.etp_live_score,
+        a.area_dev_score,
+        a.can_be_choose,
+        a.total_legal,
+        a.total_industry,
+        a.total_fin,
+        a.total_etp,
+        a.total_area,
+        a.total_etp_score,
+        a.allert,
+        a.upgrade_datetime
+        FROM etp_score a
+    </sql>
+
+
+    <select id="findByEntName" resultType="cn.bjd.platform.elastic.api.entity.EtpScore">
+        <include refid="selectColumns"/>
+        WHERE a.ent_name = #{entName}
+    </select>
+
+
+
+</mapper>

@@ -491,4 +491,13 @@
     from public.crd_client
     where "name" = #{name};
   </select>
+
+    <select id="findLikeClient" resultType="java.lang.String">
+        select
+        client
+        from public.crd_courtpub
+        where client like concat(concat('%',#{client}),'%')
+    </select>
+
+
 </mapper>

@@ -1,11 +1,12 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 企业商标信息 pd内容 list内容
  */
-public class EtpBrand implements EtpBase {
+public class EtpBrand implements EtpBase,Serializable {
 
     /**
      * 商标Id

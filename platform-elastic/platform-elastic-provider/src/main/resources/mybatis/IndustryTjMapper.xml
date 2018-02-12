@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.IndustryTjMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.IndustryTj">
+        <result column="id" property="id"/>
+        <result column="gb_code" property="gbCode"/>
+        <result column="tj_type" property="tjType"/>
+        <result column="gb_name" property="gbName"/>
+        <result column="type_xxl" property="typeXxl"/>
+        <result column="type_xl" property="typeXl"/>
+        <result column="type_ml" property="typeMl"/>
+        <result column="type_sl" property="typeSl"/>
+        <result column="type_ssl" property="typeSsl"/>
+        <result column="tj_scope" property="tjScope"/>
+        <result column="comp_type" property="compType"/>
+        <result column="zb_name" property="zbName"/>
+        <result column="s_cw_excellent_15" property="sCwExcellent15"/>
+        <result column="s_cw_avg_15" property="sCwAvg15"/>
+        <result column="v_excellent_10" property="vExcellent10"/>
+        <result column="v_well_10" property="vWell10"/>
+        <result column="v_avg_10" property="vAvg10"/>
+        <result column="v_lower_10" property="vLower10"/>
+        <result column="v_bad_10" property="vBad10"/>
+        <result column="v_excellent_11" property="vExcellent11"/>
+        <result column="v_well_11" property="vWell11"/>
+        <result column="v_avg_11" property="vAvg11"/>
+        <result column="v_lower_11" property="vLower11"/>
+        <result column="v_bad_11" property="vBad11"/>
+        <result column="v_excellent_12" property="vExcellent12"/>
+        <result column="v_well_12" property="vWell12"/>
+        <result column="v_avg_12" property="vAvg12"/>
+        <result column="v_lower_12" property="vLower12"/>
+        <result column="v_bad_12" property="vBad12"/>
+        <result column="v_excellent_13" property="vExcellent13"/>
+        <result column="v_well_13" property="vWell13"/>
+        <result column="v_avg_13" property="vAvg13"/>
+        <result column="v_lower_13" property="vLower13"/>
+        <result column="v_bad_13" property="vBad13"/>
+        <result column="v_excellent_14" property="vExcellent14"/>
+        <result column="v_well_14" property="vWell14"/>
+        <result column="v_avg_14" property="vAvg14"/>
+        <result column="v_lower_14" property="vLower14"/>
+        <result column="v_bad_14" property="vBad14"/>
+        <result column="v_excellent_15" property="vExcellent15"/>
+        <result column="v_well_15" property="vWell15"/>
+        <result column="v_avg_15" property="vAvg15"/>
+        <result column="v_lower_15" property="vLower15"/>
+        <result column="v_bad_15" property="vBad15"/>
+        <result column="v_avg_16" property="vAvg16"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        id,
+        gb_code,
+        tj_type,
+        gb_name,
+        type_xxl,
+        type_xl,
+        type_ml,
+        type_sl,
+        type_ssl,
+        tj_scope,
+        comp_type,
+        zb_name,
+        s_cw_excellent_15,
+        s_cw_avg_15,
+        v_excellent_10,
+        v_well_10,
+        v_avg_10,
+        v_lower_10,
+        v_bad_10,
+        v_excellent_11,
+        v_well_11,
+        v_avg_11,
+        v_lower_11,
+        v_bad_11,
+        v_excellent_12,
+        v_well_12,
+        v_avg_12,
+        v_lower_12,
+        v_bad_12,
+        v_excellent_13,
+        v_well_13,
+        v_avg_13,
+        v_lower_13,
+        v_bad_13,
+        v_excellent_14,
+        v_well_14,
+        v_avg_14,
+        v_lower_14,
+        v_bad_14,
+        v_excellent_15,
+        v_well_15,
+        v_avg_15,
+        v_lower_15,
+        v_bad_15,
+        v_avg_16
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO industry_tj (
+            id,
+            gb_code,
+            tj_type,
+            gb_name,
+            type_xxl,
+            type_xl,
+            type_ml,
+            type_sl,
+            type_ssl,
+            tj_scope,
+            comp_type,
+            zb_name,
+            s_cw_excellent_15,
+            s_cw_avg_15,
+            v_excellent_10,
+            v_well_10,
+            v_avg_10,
+            v_lower_10,
+            v_bad_10,
+            v_excellent_11,
+            v_well_11,
+            v_avg_11,
+            v_lower_11,
+            v_bad_11,
+            v_excellent_12,
+            v_well_12,
+            v_avg_12,
+            v_lower_12,
+            v_bad_12,
+            v_excellent_13,
+            v_well_13,
+            v_avg_13,
+            v_lower_13,
+            v_bad_13,
+            v_excellent_14,
+            v_well_14,
+            v_avg_14,
+            v_lower_14,
+            v_bad_14,
+            v_excellent_15,
+            v_well_15,
+            v_avg_15,
+            v_lower_15,
+            v_bad_15,
+            v_avg_16
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.gbCode},
+            #{pojo.tjType},
+            #{pojo.gbName},
+            #{pojo.typeXxl},
+            #{pojo.typeXl},
+            #{pojo.typeMl},
+            #{pojo.typeSl},
+            #{pojo.typeSsl},
+            #{pojo.tjScope},
+            #{pojo.compType},
+            #{pojo.zbName},
+            #{pojo.sCwExcellent15},
+            #{pojo.sCwAvg15},
+            #{pojo.vExcellent10},
+            #{pojo.vWell10},
+            #{pojo.vAvg10},
+            #{pojo.vLower10},
+            #{pojo.vBad10},
+            #{pojo.vExcellent11},
+            #{pojo.vWell11},
+            #{pojo.vAvg11},
+            #{pojo.vLower11},
+            #{pojo.vBad11},
+            #{pojo.vExcellent12},
+            #{pojo.vWell12},
+            #{pojo.vAvg12},
+            #{pojo.vLower12},
+            #{pojo.vBad12},
+            #{pojo.vExcellent13},
+            #{pojo.vWell13},
+            #{pojo.vAvg13},
+            #{pojo.vLower13},
+            #{pojo.vBad13},
+            #{pojo.vExcellent14},
+            #{pojo.vWell14},
+            #{pojo.vAvg14},
+            #{pojo.vLower14},
+            #{pojo.vBad14},
+            #{pojo.vExcellent15},
+            #{pojo.vWell15},
+            #{pojo.vAvg15},
+            #{pojo.vLower15},
+            #{pojo.vBad15},
+            #{pojo.vAvg16}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO industry_tj
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">id,</if>
+            <if test="pojo.gbCode!=null">gb_code,</if>
+            <if test="pojo.tjType!=null">tj_type,</if>
+            <if test="pojo.gbName!=null">gb_name,</if>
+            <if test="pojo.typeXxl!=null">type_xxl,</if>
+            <if test="pojo.typeXl!=null">type_xl,</if>
+            <if test="pojo.typeMl!=null">type_ml,</if>
+            <if test="pojo.typeSl!=null">type_sl,</if>
+            <if test="pojo.typeSsl!=null">type_ssl,</if>
+            <if test="pojo.tjScope!=null">tj_scope,</if>
+            <if test="pojo.compType!=null">comp_type,</if>
+            <if test="pojo.zbName!=null">zb_name,</if>
+            <if test="pojo.sCwExcellent15!=null">s_cw_excellent_15,</if>
+            <if test="pojo.sCwAvg15!=null">s_cw_avg_15,</if>
+            <if test="pojo.vExcellent10!=null">v_excellent_10,</if>
+            <if test="pojo.vWell10!=null">v_well_10,</if>
+            <if test="pojo.vAvg10!=null">v_avg_10,</if>
+            <if test="pojo.vLower10!=null">v_lower_10,</if>
+            <if test="pojo.vBad10!=null">v_bad_10,</if>
+            <if test="pojo.vExcellent11!=null">v_excellent_11,</if>
+            <if test="pojo.vWell11!=null">v_well_11,</if>
+            <if test="pojo.vAvg11!=null">v_avg_11,</if>
+            <if test="pojo.vLower11!=null">v_lower_11,</if>
+            <if test="pojo.vBad11!=null">v_bad_11,</if>
+            <if test="pojo.vExcellent12!=null">v_excellent_12,</if>
+            <if test="pojo.vWell12!=null">v_well_12,</if>
+            <if test="pojo.vAvg12!=null">v_avg_12,</if>
+            <if test="pojo.vLower12!=null">v_lower_12,</if>
+            <if test="pojo.vBad12!=null">v_bad_12,</if>
+            <if test="pojo.vExcellent13!=null">v_excellent_13,</if>
+            <if test="pojo.vWell13!=null">v_well_13,</if>
+            <if test="pojo.vAvg13!=null">v_avg_13,</if>
+            <if test="pojo.vLower13!=null">v_lower_13,</if>
+            <if test="pojo.vBad13!=null">v_bad_13,</if>
+            <if test="pojo.vExcellent14!=null">v_excellent_14,</if>
+            <if test="pojo.vWell14!=null">v_well_14,</if>
+            <if test="pojo.vAvg14!=null">v_avg_14,</if>
+            <if test="pojo.vLower14!=null">v_lower_14,</if>
+            <if test="pojo.vBad14!=null">v_bad_14,</if>
+            <if test="pojo.vExcellent15!=null">v_excellent_15,</if>
+            <if test="pojo.vWell15!=null">v_well_15,</if>
+            <if test="pojo.vAvg15!=null">v_avg_15,</if>
+            <if test="pojo.vLower15!=null">v_lower_15,</if>
+            <if test="pojo.vBad15!=null">v_bad_15,</if>
+            <if test="pojo.vAvg16!=null">v_avg_16,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.gbCode!=null">#{pojo.gbCode},</if>
+            <if test="pojo.tjType!=null">#{pojo.tjType},</if>
+            <if test="pojo.gbName!=null">#{pojo.gbName},</if>
+            <if test="pojo.typeXxl!=null">#{pojo.typeXxl},</if>
+            <if test="pojo.typeXl!=null">#{pojo.typeXl},</if>
+            <if test="pojo.typeMl!=null">#{pojo.typeMl},</if>
+            <if test="pojo.typeSl!=null">#{pojo.typeSl},</if>
+            <if test="pojo.typeSsl!=null">#{pojo.typeSsl},</if>
+            <if test="pojo.tjScope!=null">#{pojo.tjScope},</if>
+            <if test="pojo.compType!=null">#{pojo.compType},</if>
+            <if test="pojo.zbName!=null">#{pojo.zbName},</if>
+            <if test="pojo.sCwExcellent15!=null">#{pojo.sCwExcellent15},</if>
+            <if test="pojo.sCwAvg15!=null">#{pojo.sCwAvg15},</if>
+            <if test="pojo.vExcellent10!=null">#{pojo.vExcellent10},</if>
+            <if test="pojo.vWell10!=null">#{pojo.vWell10},</if>
+            <if test="pojo.vAvg10!=null">#{pojo.vAvg10},</if>
+            <if test="pojo.vLower10!=null">#{pojo.vLower10},</if>
+            <if test="pojo.vBad10!=null">#{pojo.vBad10},</if>
+            <if test="pojo.vExcellent11!=null">#{pojo.vExcellent11},</if>
+            <if test="pojo.vWell11!=null">#{pojo.vWell11},</if>
+            <if test="pojo.vAvg11!=null">#{pojo.vAvg11},</if>
+            <if test="pojo.vLower11!=null">#{pojo.vLower11},</if>
+            <if test="pojo.vBad11!=null">#{pojo.vBad11},</if>
+            <if test="pojo.vExcellent12!=null">#{pojo.vExcellent12},</if>
+            <if test="pojo.vWell12!=null">#{pojo.vWell12},</if>
+            <if test="pojo.vAvg12!=null">#{pojo.vAvg12},</if>
+            <if test="pojo.vLower12!=null">#{pojo.vLower12},</if>
+            <if test="pojo.vBad12!=null">#{pojo.vBad12},</if>
+            <if test="pojo.vExcellent13!=null">#{pojo.vExcellent13},</if>
+            <if test="pojo.vWell13!=null">#{pojo.vWell13},</if>
+            <if test="pojo.vAvg13!=null">#{pojo.vAvg13},</if>
+            <if test="pojo.vLower13!=null">#{pojo.vLower13},</if>
+            <if test="pojo.vBad13!=null">#{pojo.vBad13},</if>
+            <if test="pojo.vExcellent14!=null">#{pojo.vExcellent14},</if>
+            <if test="pojo.vWell14!=null">#{pojo.vWell14},</if>
+            <if test="pojo.vAvg14!=null">#{pojo.vAvg14},</if>
+            <if test="pojo.vLower14!=null">#{pojo.vLower14},</if>
+            <if test="pojo.vBad14!=null">#{pojo.vBad14},</if>
+            <if test="pojo.vExcellent15!=null">#{pojo.vExcellent15},</if>
+            <if test="pojo.vWell15!=null">#{pojo.vWell15},</if>
+            <if test="pojo.vAvg15!=null">#{pojo.vAvg15},</if>
+            <if test="pojo.vLower15!=null">#{pojo.vLower15},</if>
+            <if test="pojo.vBad15!=null">#{pojo.vBad15},</if>
+            <if test="pojo.vAvg16!=null">#{pojo.vAvg16},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO industry_tj (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.gbCode},
+            #{pojo.tjType},
+            #{pojo.gbName},
+            #{pojo.typeXxl},
+            #{pojo.typeXl},
+            #{pojo.typeMl},
+            #{pojo.typeSl},
+            #{pojo.typeSsl},
+            #{pojo.tjScope},
+            #{pojo.compType},
+            #{pojo.zbName},
+            #{pojo.sCwExcellent15},
+            #{pojo.sCwAvg15},
+            #{pojo.vExcellent10},
+            #{pojo.vWell10},
+            #{pojo.vAvg10},
+            #{pojo.vLower10},
+            #{pojo.vBad10},
+            #{pojo.vExcellent11},
+            #{pojo.vWell11},
+            #{pojo.vAvg11},
+            #{pojo.vLower11},
+            #{pojo.vBad11},
+            #{pojo.vExcellent12},
+            #{pojo.vWell12},
+            #{pojo.vAvg12},
+            #{pojo.vLower12},
+            #{pojo.vBad12},
+            #{pojo.vExcellent13},
+            #{pojo.vWell13},
+            #{pojo.vAvg13},
+            #{pojo.vLower13},
+            #{pojo.vBad13},
+            #{pojo.vExcellent14},
+            #{pojo.vWell14},
+            #{pojo.vAvg14},
+            #{pojo.vLower14},
+            #{pojo.vBad14},
+            #{pojo.vExcellent15},
+            #{pojo.vWell15},
+            #{pojo.vAvg15},
+            #{pojo.vLower15},
+            #{pojo.vBad15},
+            #{pojo.vAvg16}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE industry_tj
+        <set>
+            <if test="pojo.id != null">id = #{pojo.id},</if>
+            <if test="pojo.gbCode != null">gb_code = #{pojo.gbCode},</if>
+            <if test="pojo.tjType != null">tj_type = #{pojo.tjType},</if>
+            <if test="pojo.gbName != null">gb_name = #{pojo.gbName},</if>
+            <if test="pojo.typeXxl != null">type_xxl = #{pojo.typeXxl},</if>
+            <if test="pojo.typeXl != null">type_xl = #{pojo.typeXl},</if>
+            <if test="pojo.typeMl != null">type_ml = #{pojo.typeMl},</if>
+            <if test="pojo.typeSl != null">type_sl = #{pojo.typeSl},</if>
+            <if test="pojo.typeSsl != null">type_ssl = #{pojo.typeSsl},</if>
+            <if test="pojo.tjScope != null">tj_scope = #{pojo.tjScope},</if>
+            <if test="pojo.compType != null">comp_type = #{pojo.compType},</if>
+            <if test="pojo.zbName != null">zb_name = #{pojo.zbName},</if>
+            <if test="pojo.sCwExcellent15 != null">s_cw_excellent_15 = #{pojo.sCwExcellent15},</if>
+            <if test="pojo.sCwAvg15 != null">s_cw_avg_15 = #{pojo.sCwAvg15},</if>
+            <if test="pojo.vExcellent10 != null">v_excellent_10 = #{pojo.vExcellent10},</if>
+            <if test="pojo.vWell10 != null">v_well_10 = #{pojo.vWell10},</if>
+            <if test="pojo.vAvg10 != null">v_avg_10 = #{pojo.vAvg10},</if>
+            <if test="pojo.vLower10 != null">v_lower_10 = #{pojo.vLower10},</if>
+            <if test="pojo.vBad10 != null">v_bad_10 = #{pojo.vBad10},</if>
+            <if test="pojo.vExcellent11 != null">v_excellent_11 = #{pojo.vExcellent11},</if>
+            <if test="pojo.vWell11 != null">v_well_11 = #{pojo.vWell11},</if>
+            <if test="pojo.vAvg11 != null">v_avg_11 = #{pojo.vAvg11},</if>
+            <if test="pojo.vLower11 != null">v_lower_11 = #{pojo.vLower11},</if>
+            <if test="pojo.vBad11 != null">v_bad_11 = #{pojo.vBad11},</if>
+            <if test="pojo.vExcellent12 != null">v_excellent_12 = #{pojo.vExcellent12},</if>
+            <if test="pojo.vWell12 != null">v_well_12 = #{pojo.vWell12},</if>
+            <if test="pojo.vAvg12 != null">v_avg_12 = #{pojo.vAvg12},</if>
+            <if test="pojo.vLower12 != null">v_lower_12 = #{pojo.vLower12},</if>
+            <if test="pojo.vBad12 != null">v_bad_12 = #{pojo.vBad12},</if>
+            <if test="pojo.vExcellent13 != null">v_excellent_13 = #{pojo.vExcellent13},</if>
+            <if test="pojo.vWell13 != null">v_well_13 = #{pojo.vWell13},</if>
+            <if test="pojo.vAvg13 != null">v_avg_13 = #{pojo.vAvg13},</if>
+            <if test="pojo.vLower13 != null">v_lower_13 = #{pojo.vLower13},</if>
+            <if test="pojo.vBad13 != null">v_bad_13 = #{pojo.vBad13},</if>
+            <if test="pojo.vExcellent14 != null">v_excellent_14 = #{pojo.vExcellent14},</if>
+            <if test="pojo.vWell14 != null">v_well_14 = #{pojo.vWell14},</if>
+            <if test="pojo.vAvg14 != null">v_avg_14 = #{pojo.vAvg14},</if>
+            <if test="pojo.vLower14 != null">v_lower_14 = #{pojo.vLower14},</if>
+            <if test="pojo.vBad14 != null">v_bad_14 = #{pojo.vBad14},</if>
+            <if test="pojo.vExcellent15 != null">v_excellent_15 = #{pojo.vExcellent15},</if>
+            <if test="pojo.vWell15 != null">v_well_15 = #{pojo.vWell15},</if>
+            <if test="pojo.vAvg15 != null">v_avg_15 = #{pojo.vAvg15},</if>
+            <if test="pojo.vLower15 != null">v_lower_15 = #{pojo.vLower15},</if>
+            <if test="pojo.vBad15 != null">v_bad_15 = #{pojo.vBad15},</if>
+            <if test="pojo.vAvg16 != null">v_avg_16 = #{pojo.vAvg16}</if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+    <!--auto generated by codehelper on 2018-02-08 10:52:25-->
+    <select id="findByTypeXxl" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from industry_tj
+        where type_xxl=#{typeXxl} and type_ml is null and type_sl is null and type_ssl is null and type_xl is null AND (
+        zb_name = '净资产收益率（％）'
+        OR zb_name = '应收账款周转率（次）'
+        OR zb_name = '流动资产周转率（次）'
+        OR zb_name = '销售（营业）利润增长率（％）'
+        OR zb_name = '已获利息倍数'
+        OR zb_name = '速动比率（％）'
+        OR zb_name = '资产负债率（％）'
+        OR zb_name = '销售（营业）增长率（％）'
+        OR zb_name = '存货周转率（次）'
+        OR zb_name = '销售（营业）利润率（％）'
+        )
+    </select>
+
+<!--auto generated by codehelper on 2018-02-08 11:27:22-->
+    <select id="findById" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from industry_tj
+        where id=#{id}
+    </select>
+
+<!--auto generated by codehelper on 2018-02-08 14:27:23-->
+    <select id="findModel" resultMap="AllColumnMap">
+        SELECT
+        *
+        FROM
+        industry_tj
+        WHERE
+        tj_type IN (#{tjType})
+        AND gb_code IN (
+        SELECT
+        MAX (gb_code)
+        FROM
+        industry_relation
+        WHERE
+        industry_id = #{industryId})
+    </select>
+</mapper>
+

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bjd.platform.elastic.provider.mapper.IndustryTjTypeMapper">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="cn.bjd.platform.elastic.api.entity.IndustryTjType">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="seq" property="seq"/>
+        <result column="is_active" property="isActive"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        id,
+        name,
+        seq,
+        is_active
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO industry_tj_type (
+            id,
+            name,
+            seq,
+            is_active
+        ) VALUES (
+            #{pojo.id},
+            #{pojo.name},
+            #{pojo.seq},
+            #{pojo.isActive}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO industry_tj_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">id,</if>
+            <if test="pojo.name!=null">name,</if>
+            <if test="pojo.seq!=null">seq,</if>
+            <if test="pojo.isActive!=null">is_active,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.id!=null">#{pojo.id},</if>
+            <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.seq!=null">#{pojo.seq},</if>
+            <if test="pojo.isActive!=null">#{pojo.isActive},</if>
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="insertList">
+        INSERT INTO industry_tj_type (
+        <include refid="all_column"/>
+        )VALUES
+        <foreach collection="pojos" item="pojo" index="index" separator=",">
+            (
+            #{pojo.id},
+            #{pojo.name},
+            #{pojo.seq},
+            #{pojo.isActive}
+            )
+        </foreach>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE industry_tj_type
+        <set>
+            <if test="pojo.id != null">id = #{pojo.id},</if>
+            <if test="pojo.name != null">name = #{pojo.name},</if>
+            <if test="pojo.seq != null">seq = #{pojo.seq},</if>
+            <if test="pojo.isActive != null">is_active = #{pojo.isActive}</if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+    <select id="findIdByName" resultMap="AllColumnMap">
+        select
+        <include refid="all_column"/>
+        from industry_tj_type
+        where name=#{name}
+    </select>
+</mapper>
+

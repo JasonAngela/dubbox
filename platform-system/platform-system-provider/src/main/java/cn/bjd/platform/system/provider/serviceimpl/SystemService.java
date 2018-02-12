@@ -546,9 +546,11 @@ public class SystemService implements ISystemService {
     }
 
 
-
-
-
+    /**
+     * 添加或者修改子部门
+     * @param dept
+     * @return
+     */
     @Override
     @Transactional(readOnly = false)
     public SysDepartment saveDept(SysDepartment dept) {
@@ -558,6 +560,7 @@ public class SystemService implements ISystemService {
         // 设置新的父节点串
         dept.setParentIds(parentIds + dept.getParentId() + ",");
         if(StringUtils.isEmpty(dept.getId())) {
+            //添加子部门的话
             dept.preInsert();
             sysDepartmentMapper.insert(dept);
         }else{

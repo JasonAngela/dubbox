@@ -68,4 +68,10 @@ public interface CrdCourtMapper {
      * @return int
      */
     int findCountByEtpName(@Param("name") String name, @Param("type") String type);
+
+    /**
+     * 与公司有关的裁判文书信息
+     * @return
+     */
+    List<CrdCourt> findByEntName(@Param("entName") String entName);
 }
