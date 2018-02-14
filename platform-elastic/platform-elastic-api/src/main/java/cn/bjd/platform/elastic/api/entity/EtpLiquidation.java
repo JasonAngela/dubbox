@@ -1,10 +1,12 @@
 package cn.bjd.platform.elastic.api.entity;
 
 
+import java.io.Serializable;
+
 /**
  * 清算信息
  */
-public class EtpLiquidation implements EtpBase {
+public class EtpLiquidation implements EtpBase,Serializable {
 
     /**
      * id

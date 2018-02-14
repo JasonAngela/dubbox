@@ -1,11 +1,12 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 列入严重违法失信企业名单（黑名单）信息
  */
-public class EtpIllegal implements EtpBase {
+public class EtpIllegal implements EtpBase,Serializable {
 
     /**
      * id

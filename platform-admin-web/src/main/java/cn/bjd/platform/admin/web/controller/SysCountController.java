@@ -27,11 +27,12 @@ public class SysCountController extends BaseController {
 
     /**
      * 企业数据
+     *
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/number")
-    public Integer getDataForCompany(){
+    public Integer getDataForCompany() {
         List<String> list = new ArrayList<String>();
         list.add("ETPCOUNT");
         list.add("CANCELLETP");
@@ -41,11 +42,12 @@ public class SysCountController extends BaseController {
 
     /**
      * 法律数据
+     *
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/law")
-    public Integer getDataForLaw(){
+    public Integer getDataForLaw() {
         List<String> list = new ArrayList<String>();
         list.add("COURTPUB");
         list.add("EXECUTED");
@@ -56,16 +58,17 @@ public class SysCountController extends BaseController {
 
     /**
      * 企业数量分区域统计
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/countByArea")
-    public List<SysCount> getCountForCompanyArea(SysCount count){
+    public List<SysCount> getCountForCompanyArea(SysCount count) {
 
         //其余省市在页面传入
         List<SysCount> list = null;
-        if(count == null){
+        if (count == null) {
             count = new SysCount();
         }
 
@@ -76,57 +79,83 @@ public class SysCountController extends BaseController {
 
     /**
      * 增长 消亡曲线
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/riseAndDiea")
-    public Map<String,List<SysCount>> getCurveRiseAndDie(SysCount count){
-        Map<String,List<SysCount>> map = new HashMap<>();
-        if(count == null){
+    public Map<String, List<SysCount>> getCurveRiseAndDie(SysCount count) {
+        Map<String, List<SysCount>> map = new HashMap<>();
+        if (count == null) {
             count = new SysCount();
         }
 
         //增长
-        count.setCategory("ENTYEAR");
+        count.setCategory("ETPADD");
         //查询出增长曲线
         List<SysCount> riseList = systemService.countCompanyCommon(count);
-        map.put("rise",riseList);
-        count.setCategory("CANCELLETP");
+        map.put("rise", riseList);
+        count.setCategory("ENTCANCEL");
         List<SysCount> dieList = systemService.countCompanyCommon(count);
-        map.put("die",dieList);
+        map.put("die", dieList);
         return map;
     }
 
 
     /**
      * 企业历史数量分区域变化
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/hisChangeData")
-    public Map<String,List<SysCount>> getCompanyHistoricalChangeData(SysCount count){
-        Map<String,List<SysCount>> map = null;
-        if(count == null){
+    public Map<String, List<SysCount>> getCompanyHistoricalChangeData(SysCount count) {
+        Map<String, List<SysCount>> map = null;
+        if (count == null) {
             count = new SysCount();
         }
-        count.setCategory("ENTYEAR");
+        count.setCategory("ETPLIVE");
 
         map = systemService.mapGroupByPlace(count);
         return map;
     }
 
+
+    /**
+     * 企业平均
+     *
+     * @param count
+     * @return
+     */
+    @PreAuthorize("hasAuthority('sys:count:view')")
+    @GetMapping(value = "/avg")
+    public Map<String, String> avg(SysCount count) {
+        Map<String, String> map = new HashMap<>();
+        if (count == null) {
+            count = new SysCount();
+        }
+        count.setCategory("REGCAPITAL");//平均注册资本
+        List<SysCount> capital = systemService.getCount(count);
+
+
+
+        return map;
+    }
+
+
     /**
      * 行业分类统计
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/industryClassify")
-    public List<SysCount> getCountIndustryClassify(SysCount count){
+    public List<SysCount> getCountIndustryClassify(SysCount count) {
         List<SysCount> list = null;
-        if(count == null){
+        if (count == null) {
             count = new SysCount();
         }
         count.setCategory("INDUSTRY");
@@ -136,14 +165,15 @@ public class SysCountController extends BaseController {
 
     /**
      * top10
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/top10")
-    public List<SysCount> getCountTop10(SysCount count){
+    public List<SysCount> getCountTop10(SysCount count) {
         List<SysCount> list = null;
-        if(count == null){
+        if (count == null) {
             count = new SysCount();
         }
         count.setCategory("INDUSTRY");
@@ -154,14 +184,15 @@ public class SysCountController extends BaseController {
 
     /**
      * 行业历史数据变化
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/industryHistoryClassify")
-    public List<SysCount> getCountIndustryHistoryClassify(SysCount count){
+    public List<SysCount> getCountIndustryHistoryClassify(SysCount count) {
         List<SysCount> list = null;
-        if(count == null){
+        if (count == null) {
             count = new SysCount();
         }
         count.setCategory("INDUSTRY");
@@ -170,112 +201,117 @@ public class SysCountController extends BaseController {
     }
 
     /**
-     *涉诉信息统计
+     * 涉诉信息统计
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/involveAppeal")
-    public Map<String,List<SysCount>> getCountInvolvedInAppeal(SysCount count){
-        Map<String,List<SysCount>> map = new HashMap<>();
-        if(count == null){
+    public Map<String, List<SysCount>> getCountInvolvedInAppeal(SysCount count) {
+        Map<String, List<SysCount>> map = new HashMap<>();
+        if (count == null) {
             count = new SysCount();
         }
         count.setCategory("COURTPUB");
         List<SysCount> list1 = systemService.countDSelect(count);
-        map.put("COURTPUB",list1);
+        map.put("COURTPUB", list1);
         count.setCategory("EXECUTED");
         List<SysCount> list2 = systemService.countDSelect(count);
-        map.put("EXECUTED",list2);
+        map.put("EXECUTED", list2);
         count.setCategory("BREAKFAITH");
         List<SysCount> list3 = systemService.countDSelect(count);
-        map.put("BREAKFAITH",list3);
+        map.put("BREAKFAITH", list3);
         count.setCategory("COURT");
         List<SysCount> list4 = systemService.countDSelect(count);
-        map.put("COURT",list4);
+        map.put("COURT", list4);
         return map;
     }
 
     /**
      * 违法统计
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/countIllegal")
-    public Map<String,List<SysCount>> getCountIllegalStatistics(SysCount count){
-        Map<String,List<SysCount>> map = new HashMap<>();
-        if(count == null){
+    public Map<String, List<SysCount>> getCountIllegalStatistics(SysCount count) {
+        Map<String, List<SysCount>> map = new HashMap<>();
+        if (count == null) {
             count = new SysCount();
         }
         count.setType("D");
         count.setCategory("CUSTOMS");
         List<SysCount> list1 = systemService.countDSelect(count);
-        map.put("CUSTOMS",list1);
+        map.put("CUSTOMS", list1);
         count.setCategory("TAX");
         List<SysCount> list2 = systemService.countDSelect(count);
-        map.put("TAX",list2);
+        map.put("TAX", list2);
         return map;
     }
 
     /**
-     *涉诉信息历史变化
+     * 涉诉信息历史变化
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/involveAppealHistory")
-    public Map<String,List<SysCount>> getCountInvolvedInAppealHistory(SysCount count){
-        Map<String,List<SysCount>> map = new HashMap<>();
-        if(count == null){
+    public Map<String, List<SysCount>> getCountInvolvedInAppealHistory(SysCount count) {
+        Map<String, List<SysCount>> map = new HashMap<>();
+        if (count == null) {
             count = new SysCount();
         }
-        count.setCategory("COURTPUB");
+        count.setCategory("COURTPUBYEAR");
         List<SysCount> list1 = systemService.countCompanyCommon(count);
-        map.put("COURTPUB",list1);
-        count.setCategory("EXECUTED");
+        map.put("COURTPUB", list1);
+        count.setCategory("EXECUTEDYEAR");
         List<SysCount> list2 = systemService.countCompanyCommon(count);
-        map.put("EXECUTED",list2);
-        count.setCategory("BREAKFAITH");
+        map.put("EXECUTED", list2);
+        count.setCategory("BREAKFAITHYEAR");
         List<SysCount> list3 = systemService.countCompanyCommon(count);
-        map.put("BREAKFAITH",list3);
-        count.setCategory("COURT");
+        map.put("BREAKFAITH", list3);
+        count.setCategory("COURTYEAR");
         List<SysCount> list4 = systemService.countCompanyCommon(count);
-        map.put("COURT",list4);
+        map.put("COURT", list4);
         return map;
     }
 
     /**
      * 违法信息历史变化
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/countIllegalHistory")
-    public Map<String,List<SysCount>> getCountIllegalStatisticsHistory(SysCount count){
-        Map<String,List<SysCount>> map = new HashMap<>();
-        if(count == null){
+    public Map<String, List<SysCount>> getCountIllegalStatisticsHistory(SysCount count) {
+        Map<String, List<SysCount>> map = new HashMap<>();
+        if (count == null) {
             count = new SysCount();
         }
         count.setType("D");
         count.setCategory("CUSTOMS");
         List<SysCount> list1 = systemService.countCompanyCommon(count);
-        map.put("CUSTOMS",list1);
+        map.put("CUSTOMS", list1);
         count.setCategory("TAX");
         List<SysCount> list2 = systemService.countCompanyCommon(count);
-        map.put("TAX",list2);
+        map.put("TAX", list2);
         return map;
     }
 
     /**
      * 海关企业评级
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/customsLevel")
-    public List<SysCount> getCountCUSTOMSLevel(SysCount count){
-        if(count == null){
+    public List<SysCount> getCountCUSTOMSLevel(SysCount count) {
+        if (count == null) {
             count = new SysCount();
         }
         count.setCategory("CUSTOMS");
@@ -285,13 +321,14 @@ public class SysCountController extends BaseController {
 
     /**
      * 税务统计评级
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/taxLevel")
-    public List<SysCount> getCountTAXLevel(SysCount count){
-        if(count == null){
+    public List<SysCount> getCountTAXLevel(SysCount count) {
+        if (count == null) {
             count = new SysCount();
         }
         count.setCategory("TAX");
@@ -302,13 +339,14 @@ public class SysCountController extends BaseController {
 
     /**
      * 海关历史评级
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/customsHistoryLevel")
-    public List<SysCount> getCountCUSTOMSHistoryLevel(SysCount count){
-        if(count == null){
+    public List<SysCount> getCountCUSTOMSHistoryLevel(SysCount count) {
+        if (count == null) {
             count = new SysCount();
         }
         count.setCategory("CUSTOMS");
@@ -317,14 +355,15 @@ public class SysCountController extends BaseController {
     }
 
     /**
-     *税务历史变化
+     * 税务历史变化
+     *
      * @param count
      * @return
      */
     @PreAuthorize("hasAuthority('sys:count:view')")
     @GetMapping(value = "/taxHistoryLevel")
-    public List<SysCount> getCountTAXHistoryLevel(SysCount count){
-        if(count == null){
+    public List<SysCount> getCountTAXHistoryLevel(SysCount count) {
+        if (count == null) {
             count = new SysCount();
         }
         count.setCategory("TAX");

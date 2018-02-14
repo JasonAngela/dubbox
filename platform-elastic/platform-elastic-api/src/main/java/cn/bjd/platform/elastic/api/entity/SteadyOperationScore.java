@@ -1,8 +1,11 @@
 package cn.bjd.platform.elastic.api.entity;
+
+import java.io.Serializable;
+
 /**
  * 税收、海关评级信息
  */
-public class SteadyOperationScore {
+public class SteadyOperationScore implements Serializable {
 
     /**
      * id

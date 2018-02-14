@@ -48,7 +48,7 @@
   </sql>
 
     <sql id="all_column_etpId">
-    crd."id",
+    DISTINCT crd."id",
     crd."title",
     crd."case_cause",
     crd."approval_reslut",
@@ -702,6 +702,7 @@
         </if>
 
     </select>
+
 
     <select id="findCountByEtpName" resultType="java.lang.Integer">
     select

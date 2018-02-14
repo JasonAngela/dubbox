@@ -1,11 +1,12 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 股权变更信息
  */
-public class EtpStockChange implements EtpBase {
+public class EtpStockChange implements EtpBase,Serializable {
 
     /**
      * id

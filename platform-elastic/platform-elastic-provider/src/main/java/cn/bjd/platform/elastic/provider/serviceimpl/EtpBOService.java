@@ -675,12 +675,13 @@ public class EtpBOService implements IEtpBOService {
                     EtpShareholder e = etpShareholderMapper.findByEtpIdAndShareholder(etpId, etp.getEntName());
                     if (e != null) {
                         outward1.setPaymentAmount(e.getPayment());
+                        outward1.setConfusingAmount(e.getConfusingAmount());
                         //出资比例
                         Etp outEtp = etpMapper.findByEntName(etpId);
 
                         if (outEtp != null) {
                             String catipal = outEtp.getRegCapital();
-                            outward1.setRate(String.valueOf(((e.getPayment() / Double.parseDouble(catipal)) * 100)) + "%");
+                            outward1.setRate(String.valueOf(((e.getConfusingAmount() / Double.parseDouble(catipal)) * 100)) + "%");
                         }
                     }
 
@@ -737,7 +738,7 @@ public class EtpBOService implements IEtpBOService {
             List<String> relate2 = etpShareholderMapper.selectEtpIdByShareholder(entName);
             List<LegalScore> legalScore = new ArrayList<>();
 
-            List<String> relateName = new ArrayList<>();
+            Set<String> relateName = new HashSet<>();
             List<EtpShareholder> relate1 = etpShareholderMapper.findByEtpId(entName);
             for (EtpShareholder e : relate1) {
                 relateName.add(e.getShareholder());
@@ -757,7 +758,7 @@ public class EtpBOService implements IEtpBOService {
 
 
             dto.setLegalScore(legalScore);
-            List<CrdCourt> relateCrdCourt = crdCourtMapper.findByEtpIdIn(relateName, null);
+            List<CrdCourt> relateCrdCourt = crdCourtMapper.findByEtpIdIn(new ArrayList<>(relateName), null);
             dto.setRelateCrdCourt(relateCrdCourt);
         }
 

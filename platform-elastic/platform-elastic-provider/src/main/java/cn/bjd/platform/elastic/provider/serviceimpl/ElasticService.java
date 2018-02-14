@@ -7,8 +7,15 @@ import cn.bjd.platform.elastic.api.entity.dto.EtpEsDataDTO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDTO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDataDTO;
 import cn.bjd.platform.elastic.api.service.IElasticService;
+import cn.bjd.platform.elastic.provider.utils.JacksonUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.nio.entity.NStringEntity;
+import org.apache.http.util.EntityUtils;
 import org.elasticsearch.action.search.*;
+import org.elasticsearch.client.Response;
+import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -19,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
@@ -31,6 +39,9 @@ public class ElasticService implements IElasticService {
 
     @Resource
     private TransportClient client;
+
+    @Resource
+    private RestClient restClient;
 
     /**
      * 关键字查询返回的字段
@@ -57,7 +68,7 @@ public class ElasticService implements IElasticService {
      * @return
      */
     @Override
-    public EtpEsDataDTO findByKeyword(String keyword, Integer page, Integer pageNum) throws ParseException {
+    public EtpEsDataDTO findByKeyword(String keyword, Integer page, Integer pageNum) throws ParseException, IOException {
 
         EtpEsDataDTO etpEsDataDTO = new EtpEsDataDTO();
 
@@ -72,25 +83,29 @@ public class ElasticService implements IElasticService {
         Integer from = page == 1?0:page*pageNum;
 
         //名称查询
-        SearchResponse response = searchRequestBuilder.setFrom(from).setSize(pageNum).
+        searchRequestBuilder.setFrom(from).setSize(pageNum).
                 setQuery(QueryBuilders
-                        .matchQuery("entName", keyword)).get();
+                        .matchQuery("entName", keyword));
+        HttpEntity entity = new NStringEntity(searchRequestBuilder.toString(), ContentType.APPLICATION_JSON);
+        Response response = restClient.performRequest("GET","/company-etp/etp/_search", Collections.<String, String>emptyMap(),entity);
 
         //返回空即返回
         if (null == response) {
             return null;
         }
 
+        String entityStr = EntityUtils.toString(response.getEntity());
+        Map<String,Object> entityMap = (Map<String, Object>) JacksonUtils.readValue(entityStr,Map.class).get("hits");
+
         //取总数
-        etpEsDataDTO.setTotal(response.getHits().totalHits);
+        etpEsDataDTO.setTotal(Integer.toUnsignedLong((Integer) entityMap.get("total")));
 
         //取source中的数据
-        Iterator<SearchHit> searchHitsIterator = response.getHits().iterator();
-
-        //包装
-        while (searchHitsIterator.hasNext()) {
-            etpEsDataDTO.getCompanyList().add(new EtpEsDTO(searchHitsIterator.next().getSource()));
+        List<Map<String,Object>> source = (List<Map<String, Object>>) entityMap.get("hits");
+        for(Map<String,Object> sourceMap:source){
+            etpEsDataDTO.getCompanyList().add(new EtpEsDTO((Map<String, Object>) sourceMap.get("_source")));
         }
+
         return etpEsDataDTO;
     }
 
@@ -108,7 +123,7 @@ public class ElasticService implements IElasticService {
      * @return
      */
     @Override
-    public EtpWhiteDataDTO findWhiteList(String regionCode, Integer startScore, Integer endScore, String industry, Integer startReg, Integer endReg, Integer startCap, Integer endCap, String count) throws ParseException {
+    public EtpWhiteDataDTO findWhiteList(String regionCode, Integer startScore, Integer endScore, String industry, Integer startReg, Integer endReg, Integer startCap, Integer endCap, String count) throws ParseException, IOException {
 
         EtpWhiteDataDTO etpWhiteDataDTO = new EtpWhiteDataDTO();
 
@@ -118,7 +133,6 @@ public class ElasticService implements IElasticService {
 
         //bool查询
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
-
 
 
         //all查询所有
@@ -133,13 +147,14 @@ public class ElasticService implements IElasticService {
         }else if("all".equals(count)){
             //设置白名单查询字段
             searchRequestBuilder.setFetchSource(whiteList, null);
-            searchRequestBuilder.setFrom(5000).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
+            searchRequestBuilder.setFrom(0).setSize(getCount(regionCode,startScore,endScore,industry,startReg,endReg,startCap,endCap));
         }
 
         //区域代码
         if (!StringUtils.isEmpty(regionCode)) {
             queryBuilder.must(QueryBuilders.termQuery("countryCode", regionCode));
         }
+
 
         //判断行业字段是否存在
         if (!StringUtils.isEmpty(industry)) {
@@ -178,23 +193,26 @@ public class ElasticService implements IElasticService {
             queryBuilder.must(builderRange(QueryBuilders.rangeQuery("regDate"),start,end));
         }
 
-        //返回数据
-        SearchResponse response = searchRequestBuilder.setQuery(queryBuilder).get();
+        searchRequestBuilder.setQuery(queryBuilder);
 
-        //迭代数据
-        Iterator<SearchHit> searchHitsIterator = response.getHits().iterator();
+        HttpEntity entity = new NStringEntity(searchRequestBuilder.toString(), ContentType.APPLICATION_JSON);
+        Response response = restClient.performRequest("POST","/company-etp/etp/_search", Collections.<String, String>emptyMap(),entity);
 
         //返回空即返回
         if (null == response) {
             return null;
         }
+        String entityStr = EntityUtils.toString(response.getEntity());
+        Map<String,Object> entityMap = (Map<String, Object>) JacksonUtils.readValue(entityStr,Map.class).get("hits");
 
-        etpWhiteDataDTO.setTotal(response.getHits().totalHits);
-        //取数据
-        while (searchHitsIterator.hasNext()) {
-            etpWhiteDataDTO.getWhileList().add(new EtpWhiteDTO(searchHitsIterator.next().getSource()));
+        //取总数
+        etpWhiteDataDTO.setTotal(Integer.toUnsignedLong((Integer) entityMap.get("total")));
+
+        //取source中的数据
+        List<Map<String,Object>> source = (List<Map<String, Object>>) entityMap.get("hits");
+        for(Map<String,Object> sourceMap:source){
+            etpWhiteDataDTO.getWhileList().add(new EtpWhiteDTO((Map<String, Object>) sourceMap.get("_source")));
         }
-
         return etpWhiteDataDTO;
     }
 
@@ -213,7 +231,7 @@ public class ElasticService implements IElasticService {
     }
 
 
-    public int getCount(String regionCode, Integer startScore, Integer endScore, String industry, Integer startReg, Integer endReg, Integer startCap, Integer endCap) {
+    public int getCount(String regionCode, Integer startScore, Integer endScore, String industry, Integer startReg, Integer endReg, Integer startCap, Integer endCap) throws IOException {
 
 
         //获取查询
@@ -268,8 +286,16 @@ public class ElasticService implements IElasticService {
             queryBuilder.must(builderRange(QueryBuilders.rangeQuery("regDate"),start,end));
         }
 
-        //返回数据
-        SearchResponse response = searchRequestBuilder.setQuery(queryBuilder).get();
+        searchRequestBuilder.setQuery(queryBuilder);
+
+        HttpEntity entity = new NStringEntity(searchRequestBuilder.toString(), ContentType.APPLICATION_JSON);
+        Response response = restClient.performRequest("GET","/company-etp/etp/_search", Collections.<String, String>emptyMap(),entity);
+
+
+
+        String entityStr = EntityUtils.toString(response.getEntity());
+        Map<String,Object> entityMap = (Map<String, Object>) JacksonUtils.readValue(entityStr,Map.class).get("hits");
+
 
         //返回空即返回
         if (null == response) {
@@ -277,7 +303,7 @@ public class ElasticService implements IElasticService {
         }
 
         //总数
-        return (int)response.getHits().totalHits;
+        return (Integer) entityMap.get("total");
     }
 
     /**
@@ -287,12 +313,12 @@ public class ElasticService implements IElasticService {
      * @param end
      * @return
      */
-    private RangeQueryBuilder builderRange(RangeQueryBuilder rangeQueryBuilder,Object start,Object end){
+    private RangeQueryBuilder builderRange(RangeQueryBuilder rangeQueryBuilder, Object start, Object end){
         if(null != start){
             rangeQueryBuilder.gte(start);
         }
         if(null != end){
-            rangeQueryBuilder.lt(end);
+            rangeQueryBuilder.lte(end);
         }
         return rangeQueryBuilder;
     }

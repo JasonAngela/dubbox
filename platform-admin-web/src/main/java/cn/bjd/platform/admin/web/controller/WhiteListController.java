@@ -183,7 +183,7 @@ public class WhiteListController extends BaseController {
      * @return
      */
     @GetMapping(value = "/region/{regionCode}/whiteList")
-    public ApiResponse getWhiteList(@PathVariable("regionCode") String regionCode, String count) throws ParseException {
+    public ApiResponse getWhiteList(@PathVariable("regionCode") String regionCode, String count) throws ParseException,IOException {
         ApiResponse response = ApiResponse.getInstances();
         if (!NumberUtils.isNumber(regionCode)) {
             return response.error("405").setReason("参数无效");

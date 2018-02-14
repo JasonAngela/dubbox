@@ -67,7 +67,6 @@ public class SystemService implements ISystemService {
     private SysScoreMapper sysScoreMapper;
 
 
-
     @Autowired
     private SysIndustryMapper sysIndustryMapper;
 
@@ -84,17 +83,18 @@ public class SystemService implements ISystemService {
     public Integer countForCompany(List<String> list) {
         return sysCountMapper.countForCompany(list);
     }
+
     @Override
-    public List<SysCount> countGroupByProvinceAndCity(SysCount count){
+    public List<SysCount> countGroupByProvinceAndCity(SysCount count) {
         List<SysCount> list = null;
-        if(StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())){
+        if (StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity())) {
             list = sysCountMapper.countGroupByProvinceAndCityN(count);
         }
-        if(!StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())){
+        if (!StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity())) {
             list = sysCountMapper.countGroupByProvinceAndCityP(count);
         }
 
-        if(!StringUtils.isEmpty(count.getProvince())&&!StringUtils.isEmpty(count.getCity())){
+        if (!StringUtils.isEmpty(count.getProvince()) && !StringUtils.isEmpty(count.getCity())) {
             list = sysCountMapper.countGroupByProvinceAndCityC(count);
         }
 
@@ -102,24 +102,24 @@ public class SystemService implements ISystemService {
     }
 
     @Override
-    public List<SysCount> countGroupByPlace(SysCount count){
+    public List<SysCount> countGroupByPlace(SysCount count) {
 
         //分省市区
         List<SysCount> list = null;
-        if(StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())&&StringUtils.isEmpty(count.getArea())) {
+        if (StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity()) && StringUtils.isEmpty(count.getArea())) {
             // 不选择 以省份显示
             list = sysCountMapper.countAreaOnlySelectNothing(count);
         }
 
-        if(!StringUtils.isEmpty(count.getProvince())&&StringUtils.isEmpty(count.getCity())&&StringUtils.isEmpty(count.getArea())){
+        if (!StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity()) && StringUtils.isEmpty(count.getArea())) {
             list = sysCountMapper.countAreaOnlySelectProvince(count);
         }
 
-        if(!StringUtils.isEmpty(count.getProvince())&&!StringUtils.isEmpty(count.getCity())&&StringUtils.isEmpty(count.getArea())){
+        if (!StringUtils.isEmpty(count.getProvince()) && !StringUtils.isEmpty(count.getCity()) && StringUtils.isEmpty(count.getArea())) {
             list = sysCountMapper.countAreaOnlySelectCity(count);
         }
 
-        if(!StringUtils.isEmpty(count.getProvince())&&!StringUtils.isEmpty(count.getCity())&&!StringUtils.isEmpty(count.getArea())){
+        if (!StringUtils.isEmpty(count.getProvince()) && !StringUtils.isEmpty(count.getCity()) && !StringUtils.isEmpty(count.getArea())) {
             list = sysCountMapper.countAreaOnlySelectArea(count);
         }
 
@@ -128,51 +128,50 @@ public class SystemService implements ISystemService {
 
     @Override
     public Map<String, List<SysCount>> mapGroupByPlace(SysCount count) {
-        Map<String,List<SysCount>> map = new HashMap<>();
+        Map<String, List<SysCount>> map = new HashMap<>();
         List<SysCount> list = countGroupByPlace(count);
 
         //找到相同name,年份,数量
-        for(SysCount c : list){
+        for (SysCount c : list) {
             List<SysCount> value = new ArrayList<>();
-                if(map.containsKey(c.getName())){
-                    List<SysCount> valueCount = map.get(c.getName());
-                    valueCount.add(c);
-                    map.put(c.getName(),valueCount);
-                }else{
-                    value.add(c);
-                    map.put(c.getName(),value);
-                }
+            if (map.containsKey(c.getName())) {
+                List<SysCount> valueCount = map.get(c.getName());
+                valueCount.add(c);
+                map.put(c.getName(), valueCount);
+            } else {
+                value.add(c);
+                map.put(c.getName(), value);
+            }
         }
         return map;
     }
 
     @Override
-    public List<SysCount> countIndustryCustomsTaxTop(SysCount count){
+    public List<SysCount> countIndustryCustomsTaxTop(SysCount count) {
         return sysCountMapper.countIndustryCustomsTaxTop(count);
     }
 
 
-
     @Override
-    public List<SysCount> industryHistoryByYear(SysCount count){
+    public List<SysCount> industryHistoryByYear(SysCount count) {
         return sysCountMapper.industryHistoryByYear(count);
     }
 
 
     @Override
-    public List<SysCount> countDSelect(SysCount count){
+    public List<SysCount> countDSelect(SysCount count) {
         return sysCountMapper.countDSelect(count);
     }
 
 
     @Override
-    public List<SysCount> countCompanyCommon(SysCount count){
+    public List<SysCount> countCompanyCommon(SysCount count) {
         return sysCountMapper.countCompanyCommon(count);
     }
 
 
     @Override
-    public List<SysCount> countCustomsTaxGradeHistory(SysCount count){
+    public List<SysCount> countCustomsTaxGradeHistory(SysCount count) {
         return sysCountMapper.countCustomsTaxGradeHistory(count);
     }
 
@@ -210,7 +209,7 @@ public class SystemService implements ISystemService {
         // 执行分页查询
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
         List<SysUser> list = sysUserMapper.findList(user);
-        for(SysUser sysUser:list){
+        for (SysUser sysUser : list) {
             sysUser.setDepts(sysDepartmentMapper.findListByUserId(sysUser.getId()));
         }
         return new PageInfo<>(list);
@@ -249,11 +248,11 @@ public class SystemService implements ISystemService {
         }
 
         //更新用户与部门关联
-        if(!CollectionUtils.isEmpty(user.getDepts())){
+        if (!CollectionUtils.isEmpty(user.getDepts())) {
             sysUserMapper.insertUserDept(user);
         }
 
-        if(!CollectionUtils.isEmpty(user.getRegions())){
+        if (!CollectionUtils.isEmpty(user.getRegions())) {
             sysUserMapper.insertUserRegion(user);
         }
 
@@ -324,6 +323,7 @@ public class SystemService implements ISystemService {
 
     /**
      * 加载行业树
+     *
      * @return
      */
     @Override
@@ -331,7 +331,7 @@ public class SystemService implements ISystemService {
         SysRegion region = sysRegionMapper.get(regionCode);
         List<SysIndustry> result = new ArrayList<>();
 
-        if(null!=region){
+        if (null != region) {
             SysIndustry industry = new SysIndustry();
             industry.setArea(region.getName());
             List<SysIndustry> originals = sysIndustryMapper.getIndustryTree(industry);
@@ -347,8 +347,8 @@ public class SystemService implements ISystemService {
                 String parent = node.getPId();
                 if (dtoMap.get(parent) == null) {
                     result.add(node);
-                }else {
-                // 如果不是顶层节点，有父节点，然后添加到父节点的子节点中
+                } else {
+                    // 如果不是顶层节点，有父节点，然后添加到父节点的子节点中
                     SysIndustry parentRegion = dtoMap.get(parent);
                     parentRegion.addChild(node);
                 }
@@ -356,8 +356,6 @@ public class SystemService implements ISystemService {
         }
         return result;
     }
-
-
 
 
     @Override
@@ -377,15 +375,15 @@ public class SystemService implements ISystemService {
      */
     private void sortList(List<SysMenu> list, List<SysMenu> sourceList, String parentId) {
         sourceList.stream()
-            .filter(menu -> menu.getParentId() != null && menu.getParentId().equals(parentId))
-            .forEach(menu -> {
-                list.add(menu);
-                // 判断是否还有子节点, 有则继续获取子节点
-                sourceList.stream()
-                    .filter(child -> child.getParentId() != null && child.getParentId().equals(menu.getId()))
-                    .peek(child -> sortList(list, sourceList, menu.getId()))
-                    .findFirst();
-            });
+                .filter(menu -> menu.getParentId() != null && menu.getParentId().equals(parentId))
+                .forEach(menu -> {
+                    list.add(menu);
+                    // 判断是否还有子节点, 有则继续获取子节点
+                    sourceList.stream()
+                            .filter(child -> child.getParentId() != null && child.getParentId().equals(menu.getId()))
+                            .peek(child -> sortList(list, sourceList, menu.getId()))
+                            .findFirst();
+                });
     }
 
     /**
@@ -443,20 +441,19 @@ public class SystemService implements ISystemService {
     }
 
     /**
-     *
      * @param menuId 菜单ID
      */
     @Override
     @Transactional(readOnly = false)
     public void deleteMenuById(String menuId) {
         SysMenu menu = getMenuById(menuId);
-        if(menu == null){
+        if (menu == null) {
             throw new SystemException("权限不存在,删除失败!");
         }
 
         //has son leaf can not delete
         List<SysMenu> list = sysMenuMapper.findByParentId(menuId);
-        if(!CollectionUtils.isEmpty(list)){
+        if (!CollectionUtils.isEmpty(list)) {
             throw new SystemException("存在未删除的子权限，删除失败!");
         }
 
@@ -508,6 +505,7 @@ public class SystemService implements ISystemService {
 
     /**
      * 查询所有部门
+     *
      * @return
      */
     @Override
@@ -516,7 +514,7 @@ public class SystemService implements ISystemService {
         return revoseDept(originals);
     }
 
-    private List<SysDepartment> revoseDept(List<SysDepartment> originals){
+    private List<SysDepartment> revoseDept(List<SysDepartment> originals) {
         Map<String, SysDepartment> dtoMap = new HashMap<>();
         for (SysDepartment node : originals) {
             // 原始数据对象为Node，放入dtoMap中。
@@ -535,7 +533,7 @@ public class SystemService implements ISystemService {
                 SysDepartment parent = dtoMap.get(parentId);
                 parent.addChild(node);
             }
-         }
+        }
         return result;
     }
 
@@ -548,6 +546,7 @@ public class SystemService implements ISystemService {
 
     /**
      * 添加或者修改子部门
+     *
      * @param dept
      * @return
      */
@@ -559,11 +558,15 @@ public class SystemService implements ISystemService {
         String oldParentIds = dept.getParentIds();
         // 设置新的父节点串
         dept.setParentIds(parentIds + dept.getParentId() + ",");
-        if(StringUtils.isEmpty(dept.getId())) {
-            //添加子部门的话
+        if (StringUtils.isEmpty(dept.getId())) {
+            //禁用部门不能添加子部门！
+            if (parentDept != null && parentDept.getEnabled() == Boolean.FALSE) {
+                throw new SystemException("禁用部门不能添加子部门");
+            }
             dept.preInsert();
             sysDepartmentMapper.insert(dept);
-        }else{
+        } else {
+            //
             dept.preUpdate();
             sysDepartmentMapper.update(dept);
         }
@@ -571,8 +574,8 @@ public class SystemService implements ISystemService {
         SysDepartment d = new SysDepartment();
         d.setParentIds("%," + dept.getId() + ",%");
         List<SysDepartment> list = sysDepartmentMapper.findByParentIdsLike(d);
-        for(SysDepartment s : list){
-            s.setParentIds(s.getParentIds().replace(oldParentIds,dept.getParentIds()));
+        for (SysDepartment s : list) {
+            s.setParentIds(s.getParentIds().replace(oldParentIds, dept.getParentIds()));
             sysDepartmentMapper.updateParentIds(s);
         }
 
@@ -595,11 +598,11 @@ public class SystemService implements ISystemService {
     @Transactional(readOnly = false)
     public void deleteDeptById(String deptId) {
         SysDepartment dept = getByDeptId(deptId);
-        if(dept == null){
+        if (dept == null) {
             throw new SystemException("部门不存在，删除失败!");
         }
         List<SysDepartment> list = sysDepartmentMapper.findByParentId(deptId);
-        if(!CollectionUtils.isEmpty(list)){
+        if (!CollectionUtils.isEmpty(list)) {
             throw new SystemException("存在未删除的子部门，删除失败!");
         }
         sysDepartmentMapper.deleteById(deptId);
@@ -671,14 +674,14 @@ public class SystemService implements ISystemService {
         SysRegionDetail regionDetail = sysRegionDetailMapper.selectRegionDetailByCode(code);
         SysScore sysScore = sysScoreMapper.selectScoreByCode(code);
         SysRegion region = sysRegionMapper.get(code);
-        if(null == region){
+        if (null == region) {
             //区域找不到 其余的白搭
             return null;
         }
         String name = region.getName();
         SysCount pCount = new SysCount();
         pCount.setArea(name);
-        if(regionDetail != null){
+        if (regionDetail != null) {
             RegionDto dto = new RegionDto();
 
             Development development = new Development();
@@ -704,7 +707,7 @@ public class SystemService implements ISystemService {
             riskCulture.setLoanRatio(regionDetail.getLoanRatio());
             riskCulture.setCrimeIndex(regionDetail.getCrimeIndex());
 
-            if(sysScore != null){
+            if (sysScore != null) {
                 development.setScore(sysScore.getDevScore());
                 stable.setScore(sysScore.getStableScore());
                 financialSupply.setScore(sysScore.getFinScore());
@@ -718,45 +721,45 @@ public class SystemService implements ISystemService {
             dto.setRiskCulture(riskCulture);
             dataForRegion.setRegion(dto);
         }
-            //cityName by Code
+        //cityName by Code
 
-            Risk risk = new Risk();
-            List<SysCount> countList = sysCountMapper.countDQueryV2(pCount);
-            if(!CollectionUtils.isEmpty(countList)){
-                Integer totalValue = 0;
-                for(SysCount count : countList){
-                    totalValue += Integer.parseInt(StringUtils.isEmpty(count.getValue())?"0":count.getValue());
-                }
-                    risk.setCourtCount(totalValue);
-                }
-
-                List<SysCount> countDList = sysCountMapper.countDTypeQueryV2(pCount);
-                if(!CollectionUtils.isEmpty(countList)){
-                    Integer totalTypeValue = 0;
-                    for(SysCount count : countDList){
-                        totalTypeValue += Integer.parseInt(StringUtils.isEmpty(count.getValue())?"0":count.getValue());
-                    }
-                    risk.setIllegalCount(totalTypeValue);
-                }
-
-                List<SysCount> top5List = sysCountMapper.countIndustryTop5(pCount);
-                if(!CollectionUtils.isEmpty(top5List)){
-                    List<Industry> topIndustry = new ArrayList<>();
-                    for(SysCount count: top5List){
-                        Industry industry = new Industry();
-                        industry.setCategory(count.getType());
-                        industry.setCount(count.getValue());
-                        topIndustry.add(industry);
-                    }
-                    dataForRegion.setTopIndustry(topIndustry);
-                }
-                dataForRegion.setRisk(risk);
-
-            //区域企业总数
-            SysCount totalCompany = sysCountMapper.countSumCompany(pCount);
-            if(totalCompany != null){
-                dataForRegion.setCount(totalCompany.getValue());
+        Risk risk = new Risk();
+        List<SysCount> countList = sysCountMapper.countDQueryV2(pCount);
+        if (!CollectionUtils.isEmpty(countList)) {
+            Integer totalValue = 0;
+            for (SysCount count : countList) {
+                totalValue += Integer.parseInt(StringUtils.isEmpty(count.getValue()) ? "0" : count.getValue());
             }
+            risk.setCourtCount(totalValue);
+        }
+
+        List<SysCount> countDList = sysCountMapper.countDTypeQueryV2(pCount);
+        if (!CollectionUtils.isEmpty(countList)) {
+            Integer totalTypeValue = 0;
+            for (SysCount count : countDList) {
+                totalTypeValue += Integer.parseInt(StringUtils.isEmpty(count.getValue()) ? "0" : count.getValue());
+            }
+            risk.setIllegalCount(totalTypeValue);
+        }
+
+        List<SysCount> top5List = sysCountMapper.countIndustryTop5(pCount);
+        if (!CollectionUtils.isEmpty(top5List)) {
+            List<Industry> topIndustry = new ArrayList<>();
+            for (SysCount count : top5List) {
+                Industry industry = new Industry();
+                industry.setCategory(count.getType());
+                industry.setCount(count.getValue());
+                topIndustry.add(industry);
+            }
+            dataForRegion.setTopIndustry(topIndustry);
+        }
+        dataForRegion.setRisk(risk);
+
+        //区域企业总数
+        SysCount totalCompany = sysCountMapper.countSumCompany(pCount);
+        if (totalCompany != null) {
+            dataForRegion.setCount(totalCompany.getValue());
+        }
 
 
         return dataForRegion;
@@ -766,7 +769,7 @@ public class SystemService implements ISystemService {
     public List<SysRegion> getRegionAndChild(String regionCode) {
         SysRegion region = sysRegionMapper.get(regionCode);
         List<SysRegion> list = new ArrayList<>();
-        if(region != null){
+        if (region != null) {
             //查询子区域
             String code = region.getCode();
             Integer level = region.getLevel() + 1;//下一层
@@ -795,12 +798,12 @@ public class SystemService implements ISystemService {
     }
 
     @Override
-    public Boolean findUserRegion(String userId,String code) {
+    public Boolean findUserRegion(String userId, String code) {
         SysUserRegion userRegion = new SysUserRegion();
         userRegion.setUserId(userId);
         userRegion.setCode(code);
         SysUserRegion userRegionDto = sysUserRegionMapper.findByUserId(userRegion);
-        if(userRegionDto != null){
+        if (userRegionDto != null) {
             return true;
         }
         return false;

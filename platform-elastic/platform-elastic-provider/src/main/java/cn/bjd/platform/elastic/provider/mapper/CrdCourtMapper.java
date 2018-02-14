@@ -60,6 +60,8 @@ public interface CrdCourtMapper {
 
     List<CrdCourt> findByEtpIdIn(@Param("etpIdList") List<String> etpIdList, @Param("type") String type);
 
+
+
     /**
      * 根据企业名获取裁判文书中为被告的数量
      *

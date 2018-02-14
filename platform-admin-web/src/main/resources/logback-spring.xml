@@ -52,14 +52,14 @@
 
     <springProfile name="dev">
         <logger name="cn.bjd.platform" level="DEBUG"/>
-        <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
+        <root level="ERROR">
+            <appender-ref ref="FILE"/>
         </root>
     </springProfile>
 
     <springProfile name="prod">
-        <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
+        <root level="ERROR">
+            <appender-ref ref="FILE"/>
         </root>
     </springProfile>
 

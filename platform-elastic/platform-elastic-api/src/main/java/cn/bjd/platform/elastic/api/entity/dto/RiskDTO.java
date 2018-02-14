@@ -4,6 +4,7 @@ import cn.bjd.platform.elastic.api.entity.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class RiskDTO implements Serializable {

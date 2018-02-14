@@ -1,11 +1,12 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 企业简易注销公告信息
  */
-public class EtpCancellation implements EtpBase {
+public class EtpCancellation implements EtpBase,Serializable {
 
     /**
      * id

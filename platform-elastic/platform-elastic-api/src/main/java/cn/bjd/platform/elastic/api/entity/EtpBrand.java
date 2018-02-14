@@ -1,5 +1,7 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -31,6 +33,7 @@ public class EtpBrand implements EtpBase,Serializable {
     /**
      * 注册公告时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date regNoticeDate;
 
     /**

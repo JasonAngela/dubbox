@@ -1,85 +1,85 @@
 Manifest-Version: 1.0
-Class-Path: lib\bson-3.4.2.jar lib\spring-boot-starter-amqp-1.5.2.RELE
- ASE.jar lib\hibernate-validator-5.2.4.Final.jar lib\lucene-suggest-6.
- 6.0.jar lib\javase-3.2.0.jar lib\commons-pool2-2.4.2.jar lib\javassis
- t-3.21.0-GA.jar lib\tomcat-embed-el-8.5.11.jar lib\lucene-spatial-6.6
- .0.jar lib\curator-framework-2.5.0.jar lib\resteasy-jackson-provider-
- 3.0.7.Final.jar lib\okio-1.9.0.jar lib\securesm-1.1.jar lib\commons-l
- ang3-3.3.2.jar lib\lucene-grouping-6.6.0.jar lib\amqp-client-4.0.2.ja
- r lib\jackson-xc-1.9.12.jar lib\xsoup-0.3.1.jar lib\javax.mail-1.5.6.
- jar lib\spring-context-support-4.3.7.RELEASE.jar lib\spring-boot-star
- ter-mail-1.5.2.RELEASE.jar lib\jackson-databind-2.8.9.jar lib\commons
- -collections-3.2.2.jar lib\netty-codec-http-4.1.13.Final.jar lib\jbos
- s-annotations-api_1.2_spec-1.0.0.Final.jar lib\aspectjweaver-1.8.9.ja
- r lib\dubbo-2.8.4.jar lib\spring-expression-4.3.7.RELEASE.jar lib\zoo
- keeper-3.4.8.jar lib\jackson-core-2.8.9.jar lib\aopalliance-1.0.jar l
- ib\transport-netty3-client-5.6.0.jar lib\spring-jdbc-4.3.7.RELEASE.ja
- r lib\jul-to-slf4j-1.7.24.jar lib\spring-amqp-1.7.1.RELEASE.jar lib\m
- ybatis-spring-1.3.0.jar lib\resteasy-jaxrs-services-3.1.4.Final.jar l
- ib\mybatis-3.4.0.jar lib\jline-0.9.94.jar lib\spring-data-redis-1.8.1
- .RELEASE.jar lib\jopt-simple-5.0.2.jar lib\logback-access-1.1.11.jar 
- lib\pinyin4j-2.5.1.jar lib\percolator-client-5.6.0.jar lib\log4j-over
- -slf4j-1.7.24.jar lib\javax.servlet-api-3.1.0.jar lib\httpclient-4.5.
- jar lib\spring-data-commons-1.13.1.RELEASE.jar lib\jackson-jaxrs-1.9.
- 12.jar lib\spring-data-keyvalue-1.2.1.RELEASE.jar lib\slf4j-log4j12-1
- .7.24.jar lib\json-smart-2.2.1.jar lib\android-json-0.0.20131108.vaad
- in1.jar lib\httpcore-nio-4.4.5.jar lib\tomcat-juli-8.5.11.jar lib\spr
- ing-retry-1.2.0.RELEASE.jar lib\assertj-core-2.6.0.jar lib\netty-reso
- lver-4.1.13.Final.jar lib\log4j-1.2.16.jar lib\fastjson-1.2.10.jar li
- b\spring-web-4.3.7.RELEASE.jar lib\jackson-dataformat-cbor-2.8.6.jar 
- lib\spring-boot-starter-data-redis-1.5.2.RELEASE.jar lib\classmate-1.
- 3.3.jar lib\spring-webmvc-4.3.7.RELEASE.jar lib\spring-messaging-4.3.
- 7.RELEASE.jar lib\lang-mustache-client-5.6.0.jar lib\netty-codec-4.1.
- 13.Final.jar lib\resteasy-client-3.1.4.Final.jar lib\jna-4.4.0-1.jar 
- lib\accessors-smart-1.1.jar lib\druid-1.0.24.jar lib\jsqlparser-0.9.5
- .jar lib\jedis-2.9.0.jar lib\spring-tx-4.3.7.RELEASE.jar lib\joda-tim
- e-2.9.7.jar lib\transport-5.6.0.jar lib\reindex-client-5.6.0.jar lib\
- transport-netty4-client-5.6.0.jar lib\spring-context-4.3.7.RELEASE.ja
- r lib\httpasyncclient-4.1.3.jar lib\lucene-memory-6.6.0.jar lib\jcl-o
- ver-slf4j-1.7.24.jar lib\curator-framework-1.3.3.jar lib\lucene-query
- parser-6.6.0.jar lib\curator-client-1.3.3.jar lib\gson-2.8.0.jar lib\
- elasticsearch-rest-client-5.6.0.jar lib\logback-classic-1.1.11.jar li
- b\zkclient-0.1.jar lib\jboss-jaxrs-api_2.0_spec-1.0.1.Beta1.jar lib\H
- drHistogram-2.1.9.jar lib\commons-beanutils-1.9.1.jar lib\spring-boot
- -configuration-processor-1.5.2.RELEASE.jar lib\snakeyaml-1.17.jar lib
- \lucene-join-6.6.0.jar lib\httpcore-4.4.6.jar lib\spring-data-mongodb
- -1.10.1.RELEASE.jar lib\json-path-2.2.0.jar lib\ognl-3.0.8.jar lib\co
- mmons-io-2.4.jar lib\http-client-1.1.1.RELEASE.jar lib\lucene-sandbox
- -6.6.0.jar lib\spring-core-4.3.7.RELEASE.jar lib\lucene-analyzers-com
- mon-6.6.0.jar lib\mongodb-driver-3.4.2.jar lib\commons-logging-1.1.1.
- jar lib\spring-boot-autoconfigure-1.5.2.RELEASE.jar lib\jackson-annot
- ations-2.8.0.jar lib\webmagic-extension-0.6.1.jar lib\tomcat-embed-we
- bsocket-8.5.11.jar lib\netty-3.7.0.Final.jar lib\thymeleaf-2.1.5.RELE
- ASE.jar lib\lucene-misc-6.6.0.jar lib\commons-codec-1.10.jar lib\comp
- iler-0.9.3.jar lib\lucene-highlighter-6.6.0.jar lib\spring-boot-start
- er-cache-1.5.2.RELEASE.jar lib\mongodb-driver-core-3.4.2.jar lib\jsou
- p-1.8.3.jar lib\lucene-core-6.6.0.jar lib\curator-client-2.5.0.jar li
- b\pagehelper-4.1.6.jar lib\mysql-connector-java-5.1.41.jar lib\jackso
- n-dataformat-yaml-2.8.6.jar lib\lucene-spatial-extras-6.6.0.jar lib\r
- esteasy-jaxrs-3.1.4.Final.jar lib\tomcat-embed-core-8.5.11.jar lib\un
- bescape-1.1.0.RELEASE.jar lib\mybatis-spring-boot-autoconfigure-1.1.1
- .jar lib\core-3.2.0.jar lib\spring-rabbit-1.7.1.RELEASE.jar lib\mybat
- is-spring-boot-starter-1.1.1.jar lib\jboss-logging-3.3.0.Final.jar li
- b\spring-boot-starter-1.5.2.RELEASE.jar lib\spring-boot-starter-tomca
- t-1.5.2.RELEASE.jar lib\parent-join-client-5.6.0.jar lib\guava-19.0.j
- ar lib\spring-oxm-4.3.7.RELEASE.jar lib\netty-transport-4.1.13.Final.
- jar lib\groovy-2.4.9.jar lib\jackson-dataformat-smile-2.8.6.jar lib\l
- ucene-backward-codecs-6.6.0.jar lib\lucene-queries-6.6.0.jar lib\thym
- eleaf-layout-dialect-1.4.0.jar lib\spring-boot-starter-logging-1.5.2.
- RELEASE.jar lib\postgresql-9.4.1212.jre7.jar lib\slf4j-api-1.7.24.jar
-  lib\asm-5.0.3.jar lib\tomcat-jdbc-8.5.11.jar lib\netty-common-4.1.13
- .Final.jar lib\jackson-core-asl-1.9.12.jar lib\netty-buffer-4.1.13.Fi
- nal.jar lib\okhttp-3.4.1.jar lib\jackson-mapper-asl-1.9.12.jar lib\hp
- pc-0.7.1.jar lib\spring-boot-starter-thymeleaf-1.5.2.RELEASE.jar lib\
- lucene-spatial3d-6.6.0.jar lib\webmagic-core-0.6.1.jar lib\spring-boo
- t-1.5.2.RELEASE.jar lib\spring-beans-4.3.7.RELEASE.jar lib\spring-aop
- -4.3.7.RELEASE.jar lib\t-digest-3.0.jar lib\logback-core-1.1.11.jar l
- ib\netty-handler-4.1.13.Final.jar lib\elasticsearch-5.6.0.jar lib\spr
- ing-boot-starter-web-1.5.2.RELEASE.jar lib\validation-api-1.1.0.Final
- .jar lib\tools.jar lib\commons-fileupload-1.3.1.jar lib\jcip-annotati
- ons-1.0.jar lib\thymeleaf-spring4-2.1.5.RELEASE.jar lib\activation-1.
- 1.1.jar lib\log4j-api-2.7.jar lib\spring-boot-starter-jdbc-1.5.2.RELE
- ASE.jar lib\commons-pool-1.6.jar
+Class-Path: lib/bson-3.4.2.jar lib/spring-boot-starter-amqp-1.5.2.RELE
+ ASE.jar lib/hibernate-validator-5.2.4.Final.jar lib/lucene-suggest-6.
+ 6.0.jar lib/javase-3.2.0.jar lib/commons-pool2-2.4.2.jar lib/javassis
+ t-3.21.0-GA.jar lib/tomcat-embed-el-8.5.11.jar lib/lucene-spatial-6.6
+ .0.jar lib/curator-framework-2.5.0.jar lib/resteasy-jackson-provider-
+ 3.0.7.Final.jar lib/okio-1.9.0.jar lib/securesm-1.1.jar lib/commons-l
+ ang3-3.3.2.jar lib/lucene-grouping-6.6.0.jar lib/amqp-client-4.0.2.ja
+ r lib/jackson-xc-1.9.12.jar lib/xsoup-0.3.1.jar lib/javax.mail-1.5.6.
+ jar lib/spring-context-support-4.3.7.RELEASE.jar lib/spring-boot-star
+ ter-mail-1.5.2.RELEASE.jar lib/jackson-databind-2.8.9.jar lib/commons
+ -collections-3.2.2.jar lib/netty-codec-http-4.1.13.Final.jar lib/jbos
+ s-annotations-api_1.2_spec-1.0.0.Final.jar lib/aspectjweaver-1.8.9.ja
+ r lib/dubbo-2.8.4.jar lib/spring-expression-4.3.7.RELEASE.jar lib/zoo
+ keeper-3.4.8.jar lib/jackson-core-2.8.9.jar lib/aopalliance-1.0.jar l
+ ib/transport-netty3-client-5.6.0.jar lib/spring-jdbc-4.3.7.RELEASE.ja
+ r lib/jul-to-slf4j-1.7.24.jar lib/spring-amqp-1.7.1.RELEASE.jar lib/m
+ ybatis-spring-1.3.0.jar lib/resteasy-jaxrs-services-3.1.4.Final.jar l
+ ib/mybatis-3.4.0.jar lib/jline-0.9.94.jar lib/spring-data-redis-1.8.1
+ .RELEASE.jar lib/jopt-simple-5.0.2.jar lib/logback-access-1.1.11.jar 
+ lib/pinyin4j-2.5.1.jar lib/percolator-client-5.6.0.jar lib/log4j-over
+ -slf4j-1.7.24.jar lib/javax.servlet-api-3.1.0.jar lib/httpclient-4.5.
+ jar lib/spring-data-commons-1.13.1.RELEASE.jar lib/jackson-jaxrs-1.9.
+ 12.jar lib/spring-data-keyvalue-1.2.1.RELEASE.jar lib/slf4j-log4j12-1
+ .7.24.jar lib/json-smart-2.2.1.jar lib/android-json-0.0.20131108.vaad
+ in1.jar lib/httpcore-nio-4.4.5.jar lib/tomcat-juli-8.5.11.jar lib/spr
+ ing-retry-1.2.0.RELEASE.jar lib/assertj-core-2.6.0.jar lib/netty-reso
+ lver-4.1.13.Final.jar lib/log4j-1.2.16.jar lib/fastjson-1.2.10.jar li
+ b/spring-web-4.3.7.RELEASE.jar lib/jackson-dataformat-cbor-2.8.6.jar 
+ lib/spring-boot-starter-data-redis-1.5.2.RELEASE.jar lib/classmate-1.
+ 3.3.jar lib/spring-webmvc-4.3.7.RELEASE.jar lib/spring-messaging-4.3.
+ 7.RELEASE.jar lib/lang-mustache-client-5.6.0.jar lib/netty-codec-4.1.
+ 13.Final.jar lib/resteasy-client-3.1.4.Final.jar lib/jna-4.4.0-1.jar 
+ lib/accessors-smart-1.1.jar lib/druid-1.0.24.jar lib/jsqlparser-0.9.5
+ .jar lib/jedis-2.9.0.jar lib/spring-tx-4.3.7.RELEASE.jar lib/joda-tim
+ e-2.9.7.jar lib/transport-5.6.0.jar lib/reindex-client-5.6.0.jar lib/
+ transport-netty4-client-5.6.0.jar lib/spring-context-4.3.7.RELEASE.ja
+ r lib/httpasyncclient-4.1.3.jar lib/lucene-memory-6.6.0.jar lib/jcl-o
+ ver-slf4j-1.7.24.jar lib/curator-framework-1.3.3.jar lib/lucene-query
+ parser-6.6.0.jar lib/curator-client-1.3.3.jar lib/gson-2.8.0.jar lib/
+ elasticsearch-rest-client-5.6.0.jar lib/logback-classic-1.1.11.jar li
+ b/zkclient-0.1.jar lib/jboss-jaxrs-api_2.0_spec-1.0.1.Beta1.jar lib/H
+ drHistogram-2.1.9.jar lib/commons-beanutils-1.9.1.jar lib/spring-boot
+ -configuration-processor-1.5.2.RELEASE.jar lib/snakeyaml-1.17.jar lib
+ /lucene-join-6.6.0.jar lib/httpcore-4.4.6.jar lib/spring-data-mongodb
+ -1.10.1.RELEASE.jar lib/json-path-2.2.0.jar lib/ognl-3.0.8.jar lib/co
+ mmons-io-2.4.jar lib/http-client-1.1.1.RELEASE.jar lib/lucene-sandbox
+ -6.6.0.jar lib/spring-core-4.3.7.RELEASE.jar lib/lucene-analyzers-com
+ mon-6.6.0.jar lib/mongodb-driver-3.4.2.jar lib/commons-logging-1.1.1.
+ jar lib/spring-boot-autoconfigure-1.5.2.RELEASE.jar lib/jackson-annot
+ ations-2.8.0.jar lib/webmagic-extension-0.6.1.jar lib/tomcat-embed-we
+ bsocket-8.5.11.jar lib/netty-3.7.0.Final.jar lib/thymeleaf-2.1.5.RELE
+ ASE.jar lib/lucene-misc-6.6.0.jar lib/commons-codec-1.10.jar lib/comp
+ iler-0.9.3.jar lib/lucene-highlighter-6.6.0.jar lib/spring-boot-start
+ er-cache-1.5.2.RELEASE.jar lib/mongodb-driver-core-3.4.2.jar lib/jsou
+ p-1.8.3.jar lib/lucene-core-6.6.0.jar lib/curator-client-2.5.0.jar li
+ b/pagehelper-4.1.6.jar lib/mysql-connector-java-5.1.41.jar lib/jackso
+ n-dataformat-yaml-2.8.6.jar lib/lucene-spatial-extras-6.6.0.jar lib/r
+ esteasy-jaxrs-3.1.4.Final.jar lib/tomcat-embed-core-8.5.11.jar lib/un
+ bescape-1.1.0.RELEASE.jar lib/mybatis-spring-boot-autoconfigure-1.1.1
+ .jar lib/core-3.2.0.jar lib/spring-rabbit-1.7.1.RELEASE.jar lib/mybat
+ is-spring-boot-starter-1.1.1.jar lib/jboss-logging-3.3.0.Final.jar li
+ b/spring-boot-starter-1.5.2.RELEASE.jar lib/spring-boot-starter-tomca
+ t-1.5.2.RELEASE.jar lib/parent-join-client-5.6.0.jar lib/guava-19.0.j
+ ar lib/spring-oxm-4.3.7.RELEASE.jar lib/netty-transport-4.1.13.Final.
+ jar lib/groovy-2.4.9.jar lib/jackson-dataformat-smile-2.8.6.jar lib/l
+ ucene-backward-codecs-6.6.0.jar lib/lucene-queries-6.6.0.jar lib/thym
+ eleaf-layout-dialect-1.4.0.jar lib/spring-boot-starter-logging-1.5.2.
+ RELEASE.jar lib/postgresql-9.4.1212.jre7.jar lib/slf4j-api-1.7.24.jar
+  lib/asm-5.0.3.jar lib/tomcat-jdbc-8.5.11.jar lib/netty-common-4.1.13
+ .Final.jar lib/jackson-core-asl-1.9.12.jar lib/netty-buffer-4.1.13.Fi
+ nal.jar lib/okhttp-3.4.1.jar lib/jackson-mapper-asl-1.9.12.jar lib/hp
+ pc-0.7.1.jar lib/spring-boot-starter-thymeleaf-1.5.2.RELEASE.jar lib/
+ lucene-spatial3d-6.6.0.jar lib/webmagic-core-0.6.1.jar lib/spring-boo
+ t-1.5.2.RELEASE.jar lib/spring-beans-4.3.7.RELEASE.jar lib/spring-aop
+ -4.3.7.RELEASE.jar lib/t-digest-3.0.jar lib/logback-core-1.1.11.jar l
+ ib/netty-handler-4.1.13.Final.jar lib/elasticsearch-5.6.0.jar lib/spr
+ ing-boot-starter-web-1.5.2.RELEASE.jar lib/validation-api-1.1.0.Final
+ .jar lib/tools.jar lib/commons-fileupload-1.3.1.jar lib/jcip-annotati
+ ons-1.0.jar lib/thymeleaf-spring4-2.1.5.RELEASE.jar lib/activation-1.
+ 1.1.jar lib/log4j-api-2.7.jar lib/spring-boot-starter-jdbc-1.5.2.RELE
+ ASE.jar lib/commons-pool-1.6.jar
 Main-Class: cn.bjd.platform.elastic.provider.PlatformElasticProviderAp
  plication
 

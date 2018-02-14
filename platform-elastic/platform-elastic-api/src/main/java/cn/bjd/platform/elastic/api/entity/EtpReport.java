@@ -1,11 +1,12 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 企业年报信息
  */
-public class EtpReport implements EtpBase {
+public class EtpReport implements EtpBase,Serializable {
 
     /**
      * id

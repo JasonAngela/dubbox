@@ -2,9 +2,9 @@ spring:
   # DataSource Config
   datasource:
     write:
-      url: jdbc:postgresql://192.168.111.210:5432/original?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+      url: jdbc:postgresql://117.41.185.57:5432/original?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
       username: postgres
-      password: 123456
+      password: bjd@risk2017qaz
       driver-class-name: org.postgresql.Driver
       max-active: 20
       initial-size: 1
@@ -23,9 +23,9 @@ spring:
       # 合并多个DruidDataSource的监控数据
       #spring.datasource.useGlobalDataSourceStat=true
     read:
-      url: jdbc:postgresql://192.168.111.210:5432/original?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+      url: jdbc:postgresql://117.41.185.57:5432/original?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
       username: postgres
-      password: 123456
+      password: bjd@risk2017qaz
       driver-class-name: org.postgresql.Driver
       max-active: 20
       initial-size: 1
@@ -55,8 +55,10 @@ spring:
       max-wait: -1 #最大等待时间
       min-idle: 0 #初始化连接数
   elasticsearch:
-    host: 192.168.111.190
-    port: 9300
+    host: search.bjdcloud.com
+    port: 8080
+    username: bjddsj2018
+    password: bjddsj@2018qwe
   data:
     mongodb:
       uri: mongodb://192.168.111.212:27017/test
@@ -73,4 +75,4 @@ spring:
    # password: xxx
    # testConnection: false
 server:
-  port: 8085
+  port: 8086

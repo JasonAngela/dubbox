@@ -1,9 +1,11 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
+
 /**
  * 税收违法信息
  */
-public class TaxLegel {
+public class TaxLegel implements Serializable {
 
     /**
      * id

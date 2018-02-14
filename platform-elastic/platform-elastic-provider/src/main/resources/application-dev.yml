@@ -55,8 +55,10 @@ spring:
       max-wait: -1 #最大等待时间
       min-idle: 0 #初始化连接数
   elasticsearch:
-    host: 192.168.111.213
-    port: 9300
+    host: search.bjdcloud.com
+    port: 8080
+    username: ttlsa
+    password: 123456
   data:
     mongodb:
       uri: mongodb://192.168.111.212:27017/test

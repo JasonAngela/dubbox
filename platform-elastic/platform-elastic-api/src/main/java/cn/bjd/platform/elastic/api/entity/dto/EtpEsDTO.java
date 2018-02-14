@@ -3,10 +3,6 @@ package cn.bjd.platform.elastic.api.entity.dto;
 /**
  * Created by admin on 2018/1/25 0025.
  */
-
-
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.io.Serializable;
@@ -57,7 +53,7 @@ public class EtpEsDTO implements Serializable {
     public EtpEsDTO() {
     }
 
-    public EtpEsDTO(Map<String,Object> map) throws ParseException {
+    /*public EtpEsDTO(Map<String,Object> map) throws ParseException {
         this.setId(map.get("id") == null?null:(String) map.get("id"));
         this.setEntName(map.get("entName") == null?null:(String) map.get("entName"));
         this.setRegCapital(map.get("regCapital") == null?null:(Double) map.get("regCapital"));
@@ -65,8 +61,29 @@ public class EtpEsDTO implements Serializable {
         this.setLng(map.get("lng") == null?null:Double.parseDouble((String) map.get("lng")));
         this.setLat(map.get("lat") == null?null:Double.parseDouble((String) map.get("lat")));
         this.setCategory(map.get("category") == null?null:(String) map.get("category"));
+    }*/
+
+    public EtpEsDTO(Map<String,Object> map) throws ParseException {
+        this.setId(map.get("id") == null?null:(String) map.get("id"));
+        this.setEntName(map.get("entName") == null?null:(String) map.get("entName"));
+        this.setRegCapital(change(map.get("regCapital")));
+        this.setRegDate(map.get("regDate") == null?null:DateUtils.parseDate(((String)map.get("regDate")).replace("Z", " UTC"),"yyyy-MM-dd'T'HH:mm:ss.SSS Z"));
+        this.setLng(map.get("lng") == null?null:Double.parseDouble((String) map.get("lng")));
+        this.setLat(map.get("lat") == null?null:Double.parseDouble((String) map.get("lat")));
+        this.setCategory(map.get("category") == null?null:(String) map.get("category"));
     }
 
+    public Double change(Object regCapital){
+        if(regCapital == null){
+            return null;
+        }
+        if(regCapital instanceof Double){
+            return (Double) regCapital;
+        }else if(regCapital instanceof Integer){
+            return Double.parseDouble(regCapital+"");
+        }
+        return null;
+    }
     /**
      * Gets id
      *

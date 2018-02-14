@@ -116,8 +116,7 @@
         </where>
         group by a.year,a.province ORDER BY a.province,a.year
     </select>
-    
-    
+
     <select id="countAreaOnlySelectProvince" resultType="cn.bjd.platform.system.api.entity.SysCount">
         SELECT a.city as name,a.year,sum(a.sum) as value from sys_count a
         <where>
@@ -215,7 +214,7 @@
                 </if>
             </trim>
         </where>
-        group by a.type limit 5
+        group by a.type order by sum(a.sum) DESC limit 5
     </select>
 
     

@@ -1,10 +1,12 @@
 package cn.bjd.platform.elastic.api.entity;
 
 
+import java.io.Serializable;
+
 /**
  * 分支机构
  */
-public class EtpBranch implements EtpBase {
+public class EtpBranch implements EtpBase,Serializable {
 
     /**
      * id

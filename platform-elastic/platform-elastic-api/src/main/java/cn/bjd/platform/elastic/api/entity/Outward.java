@@ -12,6 +12,7 @@ public class Outward extends DataEntity {
     private String etpName;
     private String legalRep;
     private Double paymentAmount;
+    private Double confusingAmount;
 
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date regDate;
@@ -21,6 +22,14 @@ public class Outward extends DataEntity {
      * 出资比例
      */
     private String rate;
+
+    public Double getConfusingAmount() {
+        return confusingAmount;
+    }
+
+    public void setConfusingAmount(Double confusingAmount) {
+        this.confusingAmount = confusingAmount;
+    }
 
     public String getRate() {
         return rate;

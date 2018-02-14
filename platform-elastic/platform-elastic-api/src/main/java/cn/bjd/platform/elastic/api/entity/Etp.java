@@ -1,12 +1,13 @@
 package cn.bjd.platform.elastic.api.entity;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 工商企业表
  */
-public class Etp {
+public class Etp implements Serializable {
     /**
      * 企业id
      */

@@ -1,12 +1,13 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Administrator on 2017/12/31.
  * 股权冻结历史信息
  */
-public class EtpSharesFrost implements EtpBase {
+public class EtpSharesFrost implements EtpBase,Serializable {
 
     /**
      * 主键

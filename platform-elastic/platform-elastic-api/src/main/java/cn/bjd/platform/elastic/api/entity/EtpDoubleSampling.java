@@ -1,11 +1,12 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 双随机抽查结果信息
  */
-public class EtpDoubleSampling implements EtpBase {
+public class EtpDoubleSampling implements EtpBase,Serializable {
 
     /**
      * id

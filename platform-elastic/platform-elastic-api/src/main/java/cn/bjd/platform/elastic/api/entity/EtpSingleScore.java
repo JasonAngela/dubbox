@@ -1,9 +1,11 @@
 package cn.bjd.platform.elastic.api.entity;
 
+import java.io.Serializable;
+
 /**
  * 企业评分
  */
-public class EtpSingleScore {
+public class EtpSingleScore implements Serializable {
 
     /**
      * id
