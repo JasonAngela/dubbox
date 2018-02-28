@@ -44,6 +44,7 @@ public class EtpAbnormal implements EtpBase, Serializable {
     /**
      * 移除日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date removeDate;
 
     /**
