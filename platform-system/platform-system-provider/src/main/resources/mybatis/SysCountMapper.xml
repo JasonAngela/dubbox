@@ -222,7 +222,7 @@
          select sum(a.sum) as value,a.category FROM sys_count a
          <where>
              <trim prefixOverrides="AND">
-                 AND a.category = 'ETPCOUNT'
+                 AND a.category = 'ETPSUM'
                  <if test="area != null and area !='' ">
                      AND (a.province = #{area} OR a.city = #{area} OR a.area = #{area})
                  </if>
