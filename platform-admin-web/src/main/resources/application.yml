@@ -2,7 +2,7 @@ spring:
   application:
     name: Platform Web Admin
   profiles:
-    active: prod
+    active: local
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
