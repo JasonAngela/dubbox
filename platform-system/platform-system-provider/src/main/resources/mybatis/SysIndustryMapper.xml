@@ -18,7 +18,17 @@
 
     <select id="getIndustryTree" resultType="cn.bjd.platform.system.api.entity.SysIndustry">
         <include refid="selectColumns"/> left join sys_count b on b.type = a.i_name
-        WHERE a.i_level != 4 and (b.area = #{area} or b.province = #{area} or b.city = #{area})
+        <where>
+        <trim prefixOverrides="AND">
+            <if test="type != null and type != ''">
+               AND a.i_level != 4
+            </if>
+
+            <if test="area != null and area != ''">
+                and (b.area = #{area} or b.province = #{area} or b.city = #{area})
+            </if>
+        </trim>
+        </where>
     </select>
 
     <select id="findIndustry" resultType="cn.bjd.platform.system.api.entity.SysIndustry">
@@ -28,7 +38,7 @@
         a.i_path,
         a.i_level,
         a.i_name
-        FROM sys_industry a WHERE a.i_level != 4
+        FROM sys_industry a
     </select>
 
 
@@ -42,5 +52,46 @@
         FROM sys_industry a WHERE a.id = #{id}
     </select>
 
+
+    <select id="industryCount" resultType="java.lang.Integer">
+      SELECT sum(c.count) from (
+          SELECT DISTINCT a.id,
+		  a.type_xl,
+		  a.type_ml,
+		  a.type_sl,
+          b.sum as count
+          FROM sys_industry a left join sys_count b on b.type = a.i_name
+          <where>
+            <trim prefixOverrides="AND">
+                <if test="area != null and area != ''">
+                    AND (b.area = #{area} or b.province = #{area} or b.city = #{area})
+                </if>
+
+                <if test="limitList != null and limitList != ''">
+                    AND (
+                          a.type_xl not in
+                          <foreach item="item" index="index" collection="limitList"
+                                   open="(" separator="," close=")">
+                              #{item}
+                          </foreach>
+                          OR
+                          a.type_ml not in
+                          <foreach item="item" index="index" collection="limitList"
+                             open="(" separator="," close=")">
+                              #{item}
+                          </foreach>
+                          OR
+                          a.type_sl not in
+                          <foreach item="item" index="index" collection="limitList"
+                             open="(" separator="," close=")">
+                            #{item}
+                          </foreach>
+                        )
+                </if>
+            </trim>
+          </where>
+
+      ) c
+    </select>
 
 </mapper>

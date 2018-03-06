@@ -57,8 +57,8 @@ spring:
   elasticsearch:
     host: search.bjdcloud.com
     port: 8080
-    username: ttlsa
-    password: 123456
+    username: bjddsj2018
+    password: bjddsj@2018qwe
   data:
     mongodb:
       uri: mongodb://192.168.111.212:27017/test

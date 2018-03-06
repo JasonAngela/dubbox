@@ -327,13 +327,14 @@ public class SystemService implements ISystemService {
      * @return
      */
     @Override
-    public List<SysIndustry> getIndustryTree(String regionCode) {
+    public List<SysIndustry> getIndustryTree(String regionCode,String type) {
         SysRegion region = sysRegionMapper.get(regionCode);
         List<SysIndustry> result = new ArrayList<>();
 
         if (null != region) {
             SysIndustry industry = new SysIndustry();
             industry.setArea(region.getName());
+            industry.setType(type);
             List<SysIndustry> originals = sysIndustryMapper.getIndustryTree(industry);
             Map<String, SysIndustry> dtoMap = new HashMap<>();
             for (SysIndustry node : originals) {
@@ -812,5 +813,10 @@ public class SystemService implements ISystemService {
     @Override
     public List<SysUser> findUserDeptList(SysUser user) {
         return sysUserMapper.findUserDeptList(user);
+    }
+
+    @Override
+    public Integer industryCount(SysIndustry industry) {
+        return sysIndustryMapper.industryCount(industry);
     }
 }

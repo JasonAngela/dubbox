@@ -279,7 +279,7 @@ public interface ISystemService {
 
     List<SysRegion> getRegionAndChild(String regionCode);
 
-    List<SysIndustry> getIndustryTree(String regionCode);
+    List<SysIndustry> getIndustryTree(String regionCode,String type);
 
     List<SysIndustry> findIndustry();
 
@@ -290,4 +290,6 @@ public interface ISystemService {
     Boolean findUserRegion(String userId,String code);
 
     List<SysUser> findUserDeptList(SysUser user);
+
+    Integer industryCount(SysIndustry industry);
 }

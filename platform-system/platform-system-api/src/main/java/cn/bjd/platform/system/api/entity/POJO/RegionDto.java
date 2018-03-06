@@ -9,7 +9,16 @@ public class RegionDto extends DataEntity {
     private Stable stable = new Stable();
     private FinancialSupply financialSupply = new FinancialSupply();
     private RiskCulture riskCulture = new RiskCulture();
+    private Limit limit = new Limit();
     private Integer score = 0;
+
+    public Limit getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Limit limit) {
+        this.limit = limit;
+    }
 
     public Development getDevelopment() {
         return development;

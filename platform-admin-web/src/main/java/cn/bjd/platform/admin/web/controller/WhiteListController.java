@@ -15,6 +15,9 @@ import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDTO;
 import cn.bjd.platform.elastic.api.entity.dto.EtpWhiteDataDTO;
 import cn.bjd.platform.elastic.api.service.IElasticService;
 import cn.bjd.platform.elastic.api.service.IEtpBOService;
+import cn.bjd.platform.system.api.entity.DataForRegion;
+import cn.bjd.platform.system.api.entity.POJO.*;
+import cn.bjd.platform.system.api.entity.SysCount;
 import cn.bjd.platform.system.api.entity.SysIndustry;
 import cn.bjd.platform.system.api.entity.SysRegion;
 import cn.bjd.platform.system.api.service.ISystemService;
@@ -31,15 +34,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 白名单Controller
@@ -82,14 +83,127 @@ public class WhiteListController extends BaseController {
             return response.error("404").setResult("code对应省市区不存在");
         }
 
-        /* AuthUser user = WebUtils.getCurrentUser();*/
-        /*Boolean b = systemService.findUserRegion(user.getId(),regionCode);
-        if(b.booleanValue() == false){
-            return response.error("404").setResult("无访问此区域权限");
-        }*/
-
         return response.success().setResult(systemService.getDataForRegionByCode(regionCode));
     }
+
+
+    /**
+     * @param regionCode
+     * @return
+     */
+    @GetMapping(value = "/region/{regionCode}/report")
+    public ApiResponse getRegionReport(@PathVariable("regionCode") String regionCode) throws ParseException, IOException {
+        ApiResponse response = ApiResponse.getInstances();
+
+        SysRegion region = systemService.getRegionByCode(regionCode);
+        if (null == region) {
+            return response.error("404").setResult("code对应省市区不存在");
+        }
+
+        DataForRegion data = systemService.getDataForRegionByCode(regionCode);
+
+        //显然行业百分比计算
+
+        SysIndustry industry = new SysIndustry();
+        industry.setArea(region.getName());
+        industry.setLimitList(RegionDto.getLimitIndustryList());
+        Integer count = systemService.industryCount(industry);
+
+
+        Limit limit = new Limit();
+        limit.setCount(count);
+
+        industry.setLimitList(null);
+        Integer allCount = systemService.industryCount(industry);
+        limit.setAllCount(allCount);
+        data.getRegion().setLimit(limit);
+
+        //调用白名单方法查询个数即可
+        //2000万以上
+        Register register = new Register();
+        RegisterCapital capital = new RegisterCapital();
+        Long totalCount = elasticService.findWhiteCount(regionCode, null, null, null, null, null, null, null, "downLoad");
+
+        capital.setMore20Millon(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, 2000, null, "downLoad") / totalCount) * 100 + "%");
+        capital.setBetween10And20Millon(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, 1000, 2000, "downLoad") / totalCount) * 100 + "%");
+        capital.setBetween8And10Millon(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, 801, 1000, "downLoad") / totalCount) * 100 + "%");
+        capital.setBetween6And8Millon(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, 601, 800, "downLoad") / totalCount) * 100 + "%");
+        capital.setBetween5And6Millon(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, 501, 600, "downLoad") / totalCount) * 100 + "%");
+        capital.setBetween3And5Millon(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, 301, 500, "downLoad") / totalCount) * 100 + "%");
+        capital.setBetween2And3Millon(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, 201, 300, "downLoad") / totalCount) * 100 + "%");
+        capital.setBetween1And2Millon(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, 101, 200, "downLoad") / totalCount) * 100 + "%");
+        capital.setBetween500And1000Thousand(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, 50, 100, "downLoad") / totalCount) * 100 + "%");
+        capital.setLessThan500Thousand(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, null, null, 50, "downLoad") / totalCount) * 100 + "%");
+        register.setRegisterCapital(capital);
+
+        RegisterTime time = new RegisterTime();
+        time.setMore10Year(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, 10, null, null, null, "downLoad") / totalCount) * 100 + "%");
+        time.setBetween9And10Year(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, 9, 10, null, null, "downLoad") / totalCount) * 100 + "%");
+        time.setBetween7And8Year(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, 7, 8, null, null, "downLoad") / totalCount) * 100 + "%");
+        time.setBetween5And6Year(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, 5, 6, null, null, "downLoad") / totalCount) * 100 + "%");
+        time.setBetween3And4Year(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, 3, 4, null, null, "downLoad") / totalCount) * 100 + "%");
+        time.setBetween1And2Year(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, 1, 2, null, null, "downLoad") / totalCount) * 100 + "%");
+        time.setLessThanOneYear(totalCount == 0L ? "0%" : (elasticService.findWhiteCount(regionCode, null, null, null, null, 1, null, null, "downLoad") / totalCount) * 100 + "%");
+
+        register.setRegisterTime(time);
+        data.setRegister(register);
+
+        GrowthAndDie growthAndDie = new GrowthAndDie();
+        List<BasicModel> growthCurve = new ArrayList<>();
+
+        SysCount sysCount = new SysCount();
+        sysCount.setArea(region.getName());
+        //增长
+        sysCount.setCategory("ETPADD");
+        sysCount.setYear(10);
+        //查询出增长曲线
+        List<SysCount> riseList = systemService.countCompanyCommon(sysCount);
+        growthAndDie.setGrowthCurve(basicModelList(riseList));
+
+        List<BasicModel> dieCurve = new ArrayList<>();
+        sysCount.setCategory("ENTCANCEL");
+        List<SysCount> dieList = systemService.countCompanyCommon(sysCount);
+        growthAndDie.setDieCurve(basicModelList(dieList));
+
+        data.setGrowthAndDie(growthAndDie);
+
+
+        Illegal illegal = new Illegal();
+
+        sysCount.setCategory("COURTPUBYEAR");
+        List<SysCount> list1 = systemService.countCompanyCommon(sysCount);
+        illegal.setCourtPub(basicModelList(list1));
+
+        sysCount.setCategory("EXECUTEDYEAR");
+        List<SysCount> list2 = systemService.countCompanyCommon(sysCount);
+        illegal.setExecuted(basicModelList(list2));
+
+        sysCount.setCategory("BREAKFAITHYEAR");
+        List<SysCount> list3 = systemService.countCompanyCommon(sysCount);
+        illegal.setBreakFaith(basicModelList(list3));
+
+        sysCount.setCategory("COURTYEAR");
+        List<SysCount> list4 = systemService.countCompanyCommon(sysCount);
+        illegal.setCourt(basicModelList(list4));
+
+
+        data.setIllegal(illegal);
+
+        return response.success().setResult(data);
+    }
+
+
+    List<BasicModel> basicModelList(List<SysCount> list) {
+        List<BasicModel> modelList = new ArrayList<>();
+        for (SysCount c : list) {
+            BasicModel model = new BasicModel();
+            model.setValue(c.getValue());
+            model.setYear(c.getYear());
+            modelList.add(model);
+        }
+        return modelList;
+    }
+
 
     /**
      * 企业查询接口
@@ -170,9 +284,9 @@ public class WhiteListController extends BaseController {
      * @return
      */
     @GetMapping(value = "/industry/{regionCode}/tree")
-    public ApiResponse getIndustryTree(@PathVariable("regionCode") String regionCode) {
+    public ApiResponse getIndustryTree(@PathVariable("regionCode") String regionCode, String type) {
         ApiResponse response = ApiResponse.getInstances();
-        return response.success().setResult(systemService.getIndustryTree(regionCode));
+        return response.success().setResult(systemService.getIndustryTree(regionCode, type));
     }
 
     /**
@@ -183,7 +297,7 @@ public class WhiteListController extends BaseController {
      * @return
      */
     @GetMapping(value = "/region/{regionCode}/whiteList")
-    public ApiResponse getWhiteList(@PathVariable("regionCode") String regionCode, String count) throws ParseException,IOException {
+    public ApiResponse getWhiteList(@PathVariable("regionCode") String regionCode, String count) throws ParseException, IOException {
         ApiResponse response = ApiResponse.getInstances();
         if (!NumberUtils.isNumber(regionCode)) {
             return response.error("405").setReason("参数无效");
@@ -202,6 +316,68 @@ public class WhiteListController extends BaseController {
         }
         return response.success().setResult(elasticService.findWhiteList(regionCode, null, null, null, null, null, null, null, count));
     }
+
+
+    @PostMapping(value = "/region/{regionCode}/highRank")
+    public ApiResponse getHighRank(@PathVariable("regionCode") String regionCode, @Valid @RequestBody RegionDto dto) throws ParseException, IOException {
+        ApiResponse response = ApiResponse.getInstances();
+        if (!NumberUtils.isNumber(regionCode)) {
+            return response.error("405").setReason("参数无效");
+        }
+
+        if (!NumberUtils.isNumber(dto.getCount()) && !"all".equals(dto.getCount()) && "downLoad".equals(dto.getCount())) {
+            return response.error("405").setReason("参数无效");
+        }
+
+        SysRegion region = systemService.getRegionByCode(regionCode);
+        if (null == region) {
+            return response.error("404").setResult("code对应省市区不存在");
+        }
+
+        AuthUser user = WebUtils.getCurrentUser();
+        Boolean b = systemService.findUserRegion(user.getId(), regionCode);
+        if (b.booleanValue() == false) {
+            return response.error("404").setResult("无访问此区域权限");
+        }
+
+        List<String> industryIds = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(dto.getIndustrys())) {
+            Map<String, String> map = getIndustryIdIpathMap();
+            for (String str : dto.getIndustrys()) {
+                industryIds.add(map.isEmpty() ? "" : map.get(str));
+            }
+        }
+
+        return response.success().setResult(elasticService.findWhiteList(regionCode, null, null, industryIds, null, null, null, null, dto.getCount()));
+    }
+
+    Map<String, String> getIndustryIdIpathMap() {
+        Map<String, String> map = jwtTokenUtil.getIndustryIdIpathMap();
+        if (map == null || map.isEmpty()) {
+            map = new HashMap<>();
+            List<SysIndustry> industryList = systemService.findIndustry();
+            for (SysIndustry industry : industryList) {
+                map.put(industry.getId(), industry.getIPath());
+            }
+            jwtTokenUtil.putIndustryIdIpathMap(industryList);
+        }
+        return map;
+    }
+
+
+    Map<String, String> getIndustryMap() {
+        Map<String, String> map = jwtTokenUtil.getIndustryDetails();
+        if (map == null || map.isEmpty()) {
+            map = new HashMap<>();
+            List<SysIndustry> industryList = systemService.findIndustry();
+            for (SysIndustry industry : industryList) {
+                map.put(industry.getIPath(), industry.getName());
+            }
+            jwtTokenUtil.putIndustryList(industryList);
+        }
+        return map;
+    }
+
 
     /**
      * 导出接口
@@ -232,16 +408,18 @@ public class WhiteListController extends BaseController {
         }
 
         //根据industryId查询行业code
+        List<String> industryIds = new ArrayList<>();
         if (!StringUtils.isEmpty(industryId)) {
             SysIndustry industry = systemService.getIndustry(industryId);
             if (industry != null) {
                 String iPath = industry.getIPath();
                 String[] res = iPath.split("/");
                 industryId = res[res.length - 1];
+                industryIds.add(industryId);
             }
         }
 
-        EtpWhiteDataDTO dto = elasticService.findWhiteList(regionCode, minScore, maxScore, industryId, startReg, endReg, startCap, endCap, "downLoad");
+        EtpWhiteDataDTO dto = elasticService.findWhiteList(regionCode, minScore, maxScore, industryIds, startReg, endReg, startCap, endCap, "downLoad");
         if (null == dto) {
             return apiResponse.error("404").setReason("查询无企业");
         }
@@ -268,15 +446,7 @@ public class WhiteListController extends BaseController {
             //行业名称从缓存中去查询
             //加载行业list去缓存
 
-            Map<String, String> map = jwtTokenUtil.getIndustryDetails();
-            if (map == null || map.isEmpty()) {
-                map = new HashMap<>();
-                List<SysIndustry> industryList = systemService.findIndustry();
-                for (SysIndustry industry : industryList) {
-                    map.put(industry.getIPath(), industry.getName());
-                }
-                jwtTokenUtil.putIndustryList(industryList);
-            }
+            Map<String, String> map = getIndustryMap();
 
             for (int i = 0; i < list.size(); i++) {
                 sheet.addCell(new Label(0, i + 1, list.get(i).getEntName()));
@@ -313,9 +483,27 @@ public class WhiteListController extends BaseController {
             }
 
         }
+        return null;
+    }
+
+    /**
+     * 下载区域报表
+     *
+     * @param regionCode
+     * @return
+     */
+    @GetMapping(value = "/region/{regionCode}/report/dowload")
+    public ApiResponse downLoadRegionReport(@PathVariable("regionCode") String regionCode) {
+        ApiResponse response = ApiResponse.getInstances();
+
+        SysRegion region = systemService.getRegionByCode(regionCode);
+        if (null == region) {
+            return response.error("404").setResult("code对应省市区不存在");
+        }
+
 
         return null;
-
     }
+
 
 }

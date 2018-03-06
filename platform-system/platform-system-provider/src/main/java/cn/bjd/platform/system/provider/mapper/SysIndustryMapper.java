@@ -11,4 +11,6 @@ public interface SysIndustryMapper  extends CrudDao<SysIndustry> {
     List<SysIndustry> getIndustryTree(SysIndustry industry);
 
     List<SysIndustry> findIndustry();
+
+    Integer industryCount(SysIndustry industry);
 }

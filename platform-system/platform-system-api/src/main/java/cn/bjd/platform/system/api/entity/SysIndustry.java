@@ -28,7 +28,27 @@ public class SysIndustry extends DataEntity {
 
     private String area;
 
+    private String type;
+
+    private List<String> limitList;
+
     private List<SysIndustry> children = new ArrayList<>();
+
+    public List<String> getLimitList() {
+        return limitList;
+    }
+
+    public void setLimitList(List<String> limitList) {
+        this.limitList = limitList;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getIPath() {
         return iPath;

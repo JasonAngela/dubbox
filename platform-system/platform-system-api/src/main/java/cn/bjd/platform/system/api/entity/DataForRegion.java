@@ -1,9 +1,7 @@
 package cn.bjd.platform.system.api.entity;
 
 import cn.bjd.platform.common.api.DataEntity;
-import cn.bjd.platform.system.api.entity.POJO.Industry;
-import cn.bjd.platform.system.api.entity.POJO.RegionDto;
-import cn.bjd.platform.system.api.entity.POJO.Risk;
+import cn.bjd.platform.system.api.entity.POJO.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +13,39 @@ public class DataForRegion extends DataEntity {
 
     private Risk risk = new Risk();
 
+    private Register register = new Register();
+
+    private GrowthAndDie growthAndDie = new GrowthAndDie();
+
+    private Illegal illegal = new Illegal();
+
     private List<Industry> topIndustry = new ArrayList<>();
 
     private String count = "0";
+
+    public Illegal getIllegal() {
+        return illegal;
+    }
+
+    public void setIllegal(Illegal illegal) {
+        this.illegal = illegal;
+    }
+
+    public GrowthAndDie getGrowthAndDie() {
+        return growthAndDie;
+    }
+
+    public void setGrowthAndDie(GrowthAndDie growthAndDie) {
+        this.growthAndDie = growthAndDie;
+    }
+
+    public Register getRegister() {
+        return register;
+    }
+
+    public void setRegister(Register register) {
+        this.register = register;
+    }
 
     public String getCount() {
         return count;

@@ -56,6 +56,8 @@ public abstract class AbstractTokenUtil {
 
     private static final String REDIS_PREFIX_INDUSTRY_LIST = "industry-list:";
 
+    private static final String REDIS_PREFIX_INDUSTRY_ID_IPATH_MAP = "industry-id-ipath-map:";
+
     /**
      * redis repository
      */
@@ -225,6 +227,27 @@ public abstract class AbstractTokenUtil {
         String value = redisRepository.get(key);
         if(!StringUtils.isEmpty(value)){
             return new Gson().fromJson(value,List.class);
+        }
+        return null;
+    }
+
+
+    public void putIndustryIdIpathMap(Collection<SysIndustry> list){
+        //转化为Map
+        Map<String,String> map = new HashMap<>();
+        for(SysIndustry industry : list){
+            map.put(industry.getId(),industry.getIPath());
+        }
+        String key = REDIS_PREFIX_INDUSTRY_ID_IPATH_MAP + "map";
+        redisRepository.setExpire(key,new Gson().toJson(map),expiration);
+    }
+
+
+    public Map<String,String> getIndustryIdIpathMap(){
+        String key = REDIS_PREFIX_INDUSTRY_ID_IPATH_MAP + "map";
+        String value = redisRepository.get(key);
+        if(!StringUtils.isEmpty(value)){
+            return new Gson().fromJson(value,Map.class);
         }
         return null;
     }
