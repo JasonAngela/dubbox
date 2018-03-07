@@ -68,6 +68,10 @@
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<webmagic.version>0.6.1</webmagic.version>
+		<freemarker.version>2.3.20</freemarker.version>
+        <xmlworker.version>5.5.1</xmlworker.version>
+		<itext-asian.version>5.2.0</itext-asian.version>
+
 
 	</properties>
 
@@ -230,6 +234,7 @@
 
 
 
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -259,7 +264,7 @@
 		<developer>
 			<name>bjd</name>
 			<id>bjd</id>
-			<email>bjd_2011sz@163.com</email>
+			<email>bjd_2018sz@163.com</email>
 			<roles>
 				<role>Developer</role>
 			</roles>

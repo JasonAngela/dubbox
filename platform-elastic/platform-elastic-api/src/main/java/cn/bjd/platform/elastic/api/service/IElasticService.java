@@ -15,5 +15,5 @@ public interface IElasticService {
 
     EtpWhiteDataDTO findWhiteList(String regionCode, Integer startScore, Integer endScore, List<String> industrys, Integer startReg, Integer endReg, Integer startCap, Integer endCap, String count) throws ParseException, IOException;
 
-    Long findWhiteCount(String regionCode, Integer startScore, Integer endScore, List<String> industrys, Integer startReg, Integer endReg, Integer startCap, Integer endCap, String count) throws ParseException, IOException;
+    Long findWhiteCount(String regionCode, Integer startScore, Integer endScore, List<String> industrys, Integer startReg, Integer endReg, Integer startCap, Integer endCap) throws ParseException, IOException;
 }

@@ -23,6 +23,16 @@ public class DataForRegion extends DataEntity {
 
     private String count = "0";
 
+    private String area = "";
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
     public Illegal getIllegal() {
         return illegal;
     }

@@ -67,27 +67,28 @@
                     AND (b.area = #{area} or b.province = #{area} or b.city = #{area})
                 </if>
 
-                <if test="limitList != null and limitList != ''">
+                <if test="limitList != null">
                     AND (
-                          a.type_xl not in
-                          <foreach item="item" index="index" collection="limitList"
-                                   open="(" separator="," close=")">
-                              #{item}
-                          </foreach>
-                          OR
-                          a.type_ml not in
-                          <foreach item="item" index="index" collection="limitList"
-                             open="(" separator="," close=")">
-                              #{item}
-                          </foreach>
-                          OR
-                          a.type_sl not in
-                          <foreach item="item" index="index" collection="limitList"
-                             open="(" separator="," close=")">
-                            #{item}
-                          </foreach>
-                        )
+                    (
+                    a.type_xl not in
+                      <foreach item="item" index="index" collection="limitList"
+                             open="(" separator="," close=")">#{item}
+                      </foreach>)
+                    AND
+                    (
+                      a.type_ml not in
+                        <foreach item="item" index="index" collection="limitList"
+                             open="(" separator="," close=")">#{item}
+                        </foreach>)
+                    AND
+                    (
+                    a.type_sl not in
+                      <foreach item="item" index="index" collection="limitList"
+                             open="(" separator="," close=")">#{item}
+                      </foreach>)
+                      )
                 </if>
+
             </trim>
           </where>
 

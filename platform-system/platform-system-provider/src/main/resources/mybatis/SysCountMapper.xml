@@ -330,11 +330,15 @@
                     AND a.type like '%D%'
                 </if>
                 <if test="year !=null and year !=''">
-                    AND (extract(year from now())-a.year) &lt;= 10
+                    AND (
+                          (extract(year from now())-a.year) &lt;10
+                          AND (extract(year from now())-a.year)&gt;=0
+                        )
                 </if>
             </trim>
         </where>
         group by a.year
+        ORDER BY a.year
     </select>
 
 

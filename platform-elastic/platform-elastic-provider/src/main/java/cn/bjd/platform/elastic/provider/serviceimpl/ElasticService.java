@@ -247,15 +247,14 @@ public class ElasticService implements IElasticService {
      * @param endReg
      * @param startCap
      * @param endCap
-     * @param count
      * @return
      * @throws ParseException
      * @throws IOException
      */
     @Override
-    public Long findWhiteCount(String regionCode, Integer startScore, Integer endScore, List<String> industrys, Integer startReg, Integer endReg, Integer startCap, Integer endCap, String count) throws ParseException, IOException {
-        Map<String, Object> entityMap = getResultMap(regionCode, startScore, endScore, industrys, startReg, endReg, startCap, endCap, count);
-        return Integer.toUnsignedLong((Integer) entityMap.get("total"));
+    public Long findWhiteCount(String regionCode, Integer startScore, Integer endScore, List<String> industrys, Integer startReg, Integer endReg, Integer startCap, Integer endCap) throws IOException {
+        Integer total =  getCount(regionCode, startScore, endScore, industrys, startReg, endReg, startCap, endCap);
+        return Integer.toUnsignedLong(total);
     }
 
     /**
