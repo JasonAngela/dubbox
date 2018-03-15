@@ -1,0 +1,27 @@
+*{
+    margin: 0;padding: 0;
+}
+
+html,body{
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: pingfang sc light;
+}
+
+
+.center{
+    text-align: center;
+    width: 100%;
+}
+
+
+.com_report_table{width: 100%;}
+.com_report_table table{border: none;border-spacing:10px;border-collapse: separate;}
+.com_report_table thead,.com_report_table tbody{border: none;}
+.com_report_table thead td,.com_report_table thead th{background-color: #c2c2c2;line-height: 36px;}
+.com_report_table td{padding: 0;line-height: 36px;white-space: normal;border: 1px solid #c2c2c2;text-align: center;color: #333;word-break: break-all}
+.com_report_table tr>td:last-of-type{border-right: 1px solid #c2c2c2;}
+.com_report_table tbody td{padding:0 10px;}

@@ -6,13 +6,13 @@ public class Stable extends DataEntity {
 
     private static final long serialVersionUID = 1L;
 
-    private Integer score;
+    private Integer score = 0;
 
-    private Double gdpGrowthRate;
+    private Double gdpGrowthRate = 0D;
 
-    private Double expenditureGrowthRate;
+    private Double expenditureGrowthRate = 0D;
 
-    private Double companyGrowthCount;
+    private Double companyGrowthCount = 0D;
 
     public Integer getScore() {
         return score;

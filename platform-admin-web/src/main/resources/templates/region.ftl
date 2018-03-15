@@ -1,10 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="Content-Style-Type" content="text/css"/>
     <title></title>
 	<style type="text/css">
+
+        *{
+            margin: 0;padding: 0;
+        }
+
+        html,body {
+            width: 100%;
+            height: 100%;
+        }
 
         body {
             font-family: pingfang sc light;
@@ -18,6 +27,22 @@
 
 
 
+
+        .center {
+            text-align: center;
+            width: 100%;
+        }
+
+
+        .com_report_table{width: 100%;}
+        .com_report_table table{border: none;border-spacing:10px;border-collapse: separate;}
+        .com_report_table thead,.com_report_table tbody{border: none;}
+        .com_report_table thead td,.com_report_table thead th{background-color: #c2c2c2;line-height: 36px;}
+        .com_report_table td{padding: 0;line-height: 36px;white-space: normal;border: 1px solid #c2c2c2;text-align: center;color: #333;word-break: break-all}
+        .com_report_table tr>td:last-of-type{border-right: 1px solid #c2c2c2;}
+        .com_report_table tbody td{padding:0 10px;}
+
+
 </style> 
 	</head>
 	
@@ -29,9 +54,9 @@
 		<div class="center">
 				区域信息
 		</div>
-		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
 					<td style="width: 320px">当前评估区域:</td>
 					<td style="width: 320px">${area!''}</td>
@@ -47,11 +72,11 @@
 				<tr>
 					<td >投放建议:</td>
 					<td>
-						<#if region.score lt 40>
+						<#if region.score lt 20>
 							禁入
-						<#elseif region.score lt 60>
+						<#elseif region.score lt 30>
 							谨慎进入
-						<#elseif region.score lt 80>
+						<#elseif region.score lt 50>
 							适度投放
 						<#else>
 							优先投放
@@ -60,17 +85,14 @@
 				</tr>
 			</table>
 		</div>
-		<BR/><BR/><BR/><BR/><BR/><BR/>
+
 		<div class="center">
 				区域概况
 		</div>
-		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
-				<tr>
-					<td style="width: 320px">限入行业:</td>
-					<td style="width: 320px"></td>
-				</tr>
+
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
+
 				<tr>
 					<td >发展水平:</td>
 					<td>${region.development.score!''}</td>
@@ -94,61 +116,62 @@
 			</table>
 		</div>
 		
-		<BR/><BR/><BR/><BR/><BR/><BR/><BR/><BR/>
-		
+
 		<div class="center">
 				发展水平
 		</div>
-		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
-					<th style="width:125px">GDP总量</th>
-					<th style="width:125px">人均GDP</th>
-					<th style="width:125px">税收总量</th>
+					<th style="width:125px">GDP总量(万元)</th>
+					<th style="width:125px">人均GDP(万元)</th>
+					<th style="width:125px">税收总量(万元)</th>
 					<th style="width:140px">人均贷款偏离度</th>
-					<th style="width:125px">财政支出</th>
+					<th style="width:125px">财政支出(万元)</th>
 				</tr>
 				
 				<tr>
 					<td>${region.development.gDPtotal!''}</td>
 					<td>${region.development.gDPAvg!''}</td>
 					<td>${region.development.taxTotal!''}</td>
-					<td>${region.development.avgLoanDeviation!''}</td>
+					<td>${region.development.avgLoanDeviation*100!''}%</td>
 					<td>${region.development.expenditure!''}</td>
 				</tr>
 			</table>
 		</div>
-		<BR/><BR/><BR/><BR/>
+
+
 		<div class="center">
 				稳定程度
 		</div>
-		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+
+
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
 					<th style="width:213px">GDP增长率</th>
-					<th style="width:213px">财政收入增长率</th>
+					<th style="width:213px">财政收入(万元)</th>
 					<th style="width:213px">本地新注册法人增长水平</th>
 					
 				</tr>
 				
 				<tr>
-					<td>${region.stable.gdpGrowthRate!''}</td>
+					<td>${region.stable.gdpGrowthRate*100!''}%</td>
 					<td>${region.stable.expenditureGrowthRate!''}</td>
-					<td>${region.stable.companyGrowthCount!''}</td>
+					<td>${region.stable.companyGrowthCount*100!''}%</td>
 				
 				</tr>
 			</table>
 		</div>
-		<BR/><BR/><BR/><BR/>
+
 		<div class="center">
 				注册资本占比统计
 		</div>
-		<BR/><BR/>
+
 		
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
 					<th style="width: 55px">50万以下</th>
 					<th style="width: 65px">50-100万</th>
@@ -183,22 +206,22 @@
 			</table>
 		</div>
 		
-		<BR/><BR/><BR/><BR/>
+
 		<div class="center">
 				注册时间占比统计
 		</div>
-		<BR/><BR/>
+
 		
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
 					<th style="width:100px">1年以下</th>
 					<th style="width:100px">1-2年</th>
-					<th style="width:100px">3-4年</th>
+					<th style="width:100px">2-4年</th>
 					
-					<th style="width:100px">5-6年</th>
-					<th style="width:100px">7-8年</th>
-					<th style="width:100px">9-10年</th>
+					<th style="width:100px">4-6年</th>
+					<th style="width:100px">6-8年</th>
+					<th style="width:100px">8-10年</th>
 					<th style="width:100px">10年以上</th>
 				</tr>
 				
@@ -216,13 +239,13 @@
 				</tr>
 			</table>
 		</div>
-		<BR/><BR/><BR/><BR/>
+
 		<div class="center">
 				近十年企业增长消亡数
 		</div>
-		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
 					<th style="width:58px"></th>
 
@@ -236,28 +259,36 @@
 				<tr>
 					<td>增长率</td>
 					<#list growthAndDie.growthCurve as item>
-					    <td>${item.value!''}</td>
-					</#list>
+					    <td>
 
+							<#if item.rate??>
+								${item.rate}
+							</#if>
+						</td>
+					</#list>
 				</tr>
 
                 <tr>
                     <td>消亡率</td>
-
                     <#list growthAndDie.dieCurve as item>
-					    <td>${item.value!''}</td>
+					    <td>
+							<#if item.rate??>
+								${item.rate}
+							</#if>
+						</td>
 					</#list>
-
                 </tr>
+
+
 			</table>
 		</div>
-		<BR/><BR/><BR/><BR/>
+
 		<div class="center">
 				金融供给
 		</div>
-		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
 					<th style="width:213px">企业户均贷款额度平均偏离度</th>
 					<th style="width:213px">民间金融活跃度</th>
@@ -273,13 +304,13 @@
 			</table>
 			
 		</div>
-		<BR/><BR/><BR/><BR/>
+
 		<div class="center">
-				近十年区域涉诉及违法数
+				近三年区域涉诉及违法数
 		</div>
-		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
 					<th style="width:58px"></th>
 					<#list illegal.breakFaith as item>
@@ -318,14 +349,13 @@
 			</table>
 		</div>
 		
-		<BR/><BR/><BR/><BR/><BR/><BR/>
-		
+
 		<div class="center">
 				风险文化
 		</div>
 		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
 					<th style="width:213px">企业户均涉金融债数量</th>
 					<th style="width:213px">贷存比</th>
@@ -339,13 +369,12 @@
 			</table>
 		</div>
 
-		<BR/><BR/><BR/><BR/>
 		<div class="center">
 				限入行业
 		</div>
-		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
+
+		<div class="com_report_table">
+			<table width="100%" cellspacing="10">
 				<tr>
 					<th style="width:320px">限入行业占比:</th>
 					<th style="width:320px">${region.limit.index!''}</th>

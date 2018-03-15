@@ -5,6 +5,7 @@ import cn.bjd.platform.elastic.api.entity.IndustryTj;
 import cn.bjd.platform.elastic.api.entity.IndustryTz;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class IndustryDTO implements Serializable {
     /**
      * 行业季节性波动
      */
-    private IndustrySeason industrySeason;
+    private IndustrySeason industrySeason = new IndustrySeason();
 
     /**
      * 产业链图片
@@ -50,12 +51,12 @@ public class IndustryDTO implements Serializable {
     /**
      * 产业链内部关联特征
      */
-    private List<IndustryTz> industryTzList;
+    private List<IndustryTz> industryTzList = new ArrayList<>();
 
     /**
      * 产业各项经济指标
      */
-    private List<IndustryTj> industryTjList;
+    private List<IndustryTj> industryTjList = new ArrayList<>();
 
     /**
      * Gets id

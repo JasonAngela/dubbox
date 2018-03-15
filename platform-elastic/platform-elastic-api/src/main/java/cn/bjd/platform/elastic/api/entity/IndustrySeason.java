@@ -32,62 +32,62 @@ public class IndustrySeason implements Serializable {
     /**
      * 1月
      */
-    private Double m1;
+    private Double m1 = 0D;
 
     /**
      * 2月
      */
-    private Double m2;
+    private Double m2 = 0D;
 
     /**
      * 3月
      */
-    private Double m3;
+    private Double m3 = 0D;
 
     /**
      * 4月
      */
-    private Double m4;
+    private Double m4 = 0D;
 
     /**
      * 5月
      */
-    private Double m5;
+    private Double m5 = 0D;
 
     /**
      * 6月
      */
-    private Double m6;
+    private Double m6 = 0D;
 
     /**
      * 7月
      */
-    private Double m7;
+    private Double m7 = 0D;
 
     /**
      * 8月
      */
-    private Double m8;
+    private Double m8 = 0D;
 
     /**
      * 9月
      */
-    private Double m9;
+    private Double m9 = 0D;
 
     /**
      * 10月
      */
-    private Double m10;
+    private Double m10 = 0D;
 
     /**
      * 11月
      */
-    private Double m11;
+    private Double m11 = 0D;
 
     /**
      * 12月
      */
-    private Double m12;
+    private Double m12 = 0D;
 
     /**
      * Gets id

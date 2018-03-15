@@ -197,7 +197,7 @@ public class SysCountController extends BaseController {
         }
         count = getLevel(count);
         count.setCategory("INDUSTRY");
-        count.setTop("10");
+        count.setTop(10);
         list = systemService.countIndustryCustomsTaxTop(count);
         return list;
     }

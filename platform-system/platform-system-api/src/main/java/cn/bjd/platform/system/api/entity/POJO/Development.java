@@ -8,17 +8,17 @@ import cn.bjd.platform.common.api.DataEntity;
 public class Development extends DataEntity {
     private static final long serialVersionUID = 1L;
 
-    private Integer score;
+    private Integer score = 0;
 
-    private Double gDPtotal;
+    private Double gDPtotal = 0D;
 
-    private Double gDPAvg;
+    private Double gDPAvg = 0D;
 
-    private Double taxTotal;
+    private Double taxTotal = 0D;
 
-    private Double avgLoanDeviation;
+    private Double avgLoanDeviation = 0D;
 
-    private Double expenditure;
+    private Double expenditure = 0D;
 
     public Integer getScore() {
         return score;

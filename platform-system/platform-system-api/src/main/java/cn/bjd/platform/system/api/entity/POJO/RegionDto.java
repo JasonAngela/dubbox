@@ -10,7 +10,7 @@ public class RegionDto extends DataEntity {
     private FinancialSupply financialSupply = new FinancialSupply();
     private RiskCulture riskCulture = new RiskCulture();
     private Limit limit = new Limit();
-    private Integer score = 0;
+    private Float score = 0F;
 
     public Limit getLimit() {
         return limit;
@@ -52,11 +52,11 @@ public class RegionDto extends DataEntity {
         this.riskCulture = riskCulture;
     }
 
-    public Integer getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 }

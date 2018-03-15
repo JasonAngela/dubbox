@@ -403,7 +403,7 @@
         group by a.year
         ORDER BY a.year DESC
         <if test="top != null and top != ''">
-            limit 11
+            limit #{top}
         </if>
     </select>
 

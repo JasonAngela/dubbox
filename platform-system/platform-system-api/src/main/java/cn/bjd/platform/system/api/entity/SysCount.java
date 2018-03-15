@@ -21,7 +21,7 @@ public class SysCount extends DataEntity {
 
     private String type;
 
-    private String top;
+    private Integer top;
 
     private Integer totalSum;
 
@@ -53,11 +53,11 @@ public class SysCount extends DataEntity {
         this.totalSum = totalSum;
     }
 
-    public String getTop() {
+    public Integer getTop() {
         return top;
     }
 
-    public void setTop(String top) {
+    public void setTop(Integer top) {
         this.top = top;
     }
 

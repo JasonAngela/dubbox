@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,7 +127,6 @@ public class SystemService implements ISystemService {
         }
 
         if (!StringUtils.isEmpty(count.getProvince()) && !StringUtils.isEmpty(count.getCity()) && !StringUtils.isEmpty(count.getArea())) {
-            count.setLevel(3);
             list = sysCountMapper.countAreaOnlySelectArea(count);
         }
 
@@ -714,11 +714,11 @@ public class SystemService implements ISystemService {
         String name = region.getName();
         SysCount pCount = new SysCount();
         //分别放省市区即可
-        if (code.substring(code.length()-4).equals("0000")) {
+        if (code.substring(code.length() - 4).equals("0000")) {
             //选择的是省
             pCount.setProvince(name);
             pCount.setLevel(1);
-        } else if (code.substring(code.length()-2).equals("00")) {
+        } else if (code.substring(code.length() - 2).equals("00")) {
             pCount.setCity(name);
             pCount.setLevel(2);
         } else {
@@ -757,7 +757,9 @@ public class SystemService implements ISystemService {
                 stable.setScore(sysScore.getStableScore());
                 financialSupply.setScore(sysScore.getFinScore());
                 riskCulture.setScore(sysScore.getRiskScore());
-                dto.setScore(sysScore.getScore());
+                Double d = sysScore.getScore() * 1.2;
+                BigDecimal df = new BigDecimal(String.valueOf(d));
+                dto.setScore(df.floatValue());
             }
 
             dto.setDevelopment(development);

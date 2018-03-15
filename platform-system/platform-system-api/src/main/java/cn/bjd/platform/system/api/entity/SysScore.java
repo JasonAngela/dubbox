@@ -16,7 +16,7 @@ public class SysScore extends DataEntity {
 
     private String explain;
 
-    private Integer score;
+    private Float score;
 
     private Integer devScore;
 
@@ -66,11 +66,11 @@ public class SysScore extends DataEntity {
         this.explain = explain;
     }
 
-    public Integer getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 

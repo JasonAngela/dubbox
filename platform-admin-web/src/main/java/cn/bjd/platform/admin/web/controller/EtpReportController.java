@@ -103,8 +103,8 @@ public class EtpReportController extends BaseController {
 
         //dto包含就可以了
         PDFKit kit = new PDFKit();
-        kit.setSaveFilePath(System.getProperty("java.io.tmpdir") + File.separator + "etpD.pdf");
-        String saveFilePath = kit.exportToFile("etpD.pdf", etpDto);
+        kit.setSaveFilePath(System.getProperty("java.io.tmpdir") + File.separator + "etp2.pdf");
+        String saveFilePath = kit.exportToFile("etp2.pdf", etpDto);
         //模板接受
         File f = new File(saveFilePath);
         if (f.exists()) {

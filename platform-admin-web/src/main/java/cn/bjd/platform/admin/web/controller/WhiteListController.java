@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.*;
 
@@ -103,6 +104,7 @@ public class WhiteListController extends BaseController {
         }
 
         DataForRegion data = systemService.getDataForRegionByCode(regionCode);
+        DecimalFormat df = new DecimalFormat("0.00");//格式化小数
 
         //显然行业百分比计算
 
@@ -111,6 +113,16 @@ public class WhiteListController extends BaseController {
         SysIndustry industry = new SysIndustry();
         industry.setArea(region.getName());
         industry.setLimitList(RegionDto.getLimitIndustryList());
+
+
+        if (regionCode.substring(regionCode.length() - 4).equals("0000")) {
+            //选择的是省
+            industry.setLevel(1);
+        } else if (regionCode.substring(regionCode.length() - 2).equals("00")) {
+            industry.setLevel(2);
+        } else {
+            industry.setLevel(3);
+        }
         Integer count = systemService.industryCount(industry);
 
 
@@ -118,11 +130,11 @@ public class WhiteListController extends BaseController {
         limit.setCount(count);
 
         industry.setLimitList(null);
-        Integer allCount = systemService.industryCount(industry);
+        Integer allCount = Integer.parseInt(data.getCount()) - count;
         limit.setAllCount(allCount);
 
         if (allCount != null && allCount.compareTo(0) != 0) {
-            limit.setIndex((float) count / allCount * 100 + "%");
+            limit.setIndex(df.format((float) count / Integer.parseInt(data.getCount()) * 100) + "%");
         }
 
         data.getRegion().setLimit(limit);
@@ -144,26 +156,26 @@ public class WhiteListController extends BaseController {
         Long lessThan500Thousand = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, null, 50);
 
 
-        capital.setMore20Millon(totalCount == 0L ? "0%" : ((float) more20Millon / totalCount) * 100 + "%");
-        capital.setBetween10And20Millon(totalCount == 0L ? "0%" : ((float) between10And20Millon / totalCount) * 100 + "%");
-        capital.setBetween8And10Millon(totalCount == 0L ? "0%" : ((float) between8And10Millon / totalCount) * 100 + "%");
-        capital.setBetween6And8Millon(totalCount == 0L ? "0%" : ((float) between6And8Millon / totalCount) * 100 + "%");
-        capital.setBetween5And6Millon(totalCount == 0L ? "0%" : ((float) between5And6Millon / totalCount) * 100 + "%");
-        capital.setBetween3And5Millon(totalCount == 0L ? "0%" : ((float) between3And5Millon / totalCount) * 100 + "%");
-        capital.setBetween2And3Millon(totalCount == 0L ? "0%" : ((float) between2And3Millon / totalCount) * 100 + "%");
-        capital.setBetween1And2Millon(totalCount == 0L ? "0%" : ((float) between1And2Millon / totalCount) * 100 + "%");
-        capital.setBetween500And1000Thousand(totalCount == 0L ? "0%" : ((float) between500And1000Thousand / totalCount) * 100 + "%");
-        capital.setLessThan500Thousand(totalCount == 0L ? "0%" : ((float) lessThan500Thousand / totalCount) * 100 + "%");
+        capital.setMore20Millon(totalCount == 0L ? "0%" : df.format(((float) more20Millon / totalCount) * 100) + "%");
+        capital.setBetween10And20Millon(totalCount == 0L ? "0%" : df.format(((float) between10And20Millon / totalCount) * 100) + "%");
+        capital.setBetween8And10Millon(totalCount == 0L ? "0%" : df.format(((float) between8And10Millon / totalCount) * 100) + "%");
+        capital.setBetween6And8Millon(totalCount == 0L ? "0%" : df.format(((float) between6And8Millon / totalCount) * 100) + "%");
+        capital.setBetween5And6Millon(totalCount == 0L ? "0%" : df.format(((float) between5And6Millon / totalCount) * 100) + "%");
+        capital.setBetween3And5Millon(totalCount == 0L ? "0%" : df.format(((float) between3And5Millon / totalCount) * 100) + "%");
+        capital.setBetween2And3Millon(totalCount == 0L ? "0%" : df.format(((float) between2And3Millon / totalCount) * 100) + "%");
+        capital.setBetween1And2Millon(totalCount == 0L ? "0%" : df.format(((float) between1And2Millon / totalCount) * 100) + "%");
+        capital.setBetween500And1000Thousand(totalCount == 0L ? "0%" : df.format(((float) between500And1000Thousand / totalCount) * 100) + "%");
+        capital.setLessThan500Thousand(totalCount == 0L ? "0%" : df.format(((float) lessThan500Thousand / totalCount) * 100) + "%");
         register.setRegisterCapital(capital);
 
         RegisterTime time = new RegisterTime();
-        time.setMore10Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 10, null, null, null) / totalCount) * 100 + "%");
-        time.setBetween9And10Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 8, 10, null, null) / totalCount) * 100 + "%");
-        time.setBetween7And8Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 6, 8, null, null) / totalCount) * 100 + "%");
-        time.setBetween5And6Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 4, 6, null, null) / totalCount) * 100 + "%");
-        time.setBetween3And4Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 2, 4, null, null) / totalCount) * 100 + "%");
-        time.setBetween1And2Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 1, 2, null, null) / totalCount) * 100 + "%");
-        time.setLessThanOneYear(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, null, 1, null, null) / totalCount) * 100 + "%");
+        time.setMore10Year(totalCount == 0L ? "0%" : df.format(((float) elasticService.findWhiteCount(region.getName(), null, null, null, 10, null, null, null) / totalCount) * 100) + "%");
+        time.setBetween9And10Year(totalCount == 0L ? "0%" : df.format(((float) elasticService.findWhiteCount(region.getName(), null, null, null, 8, 10, null, null) / totalCount) * 100) + "%");
+        time.setBetween7And8Year(totalCount == 0L ? "0%" : df.format(((float) elasticService.findWhiteCount(region.getName(), null, null, null, 6, 8, null, null) / totalCount) * 100) + "%");
+        time.setBetween5And6Year(totalCount == 0L ? "0%" : df.format(((float) elasticService.findWhiteCount(region.getName(), null, null, null, 4, 6, null, null) / totalCount) * 100) + "%");
+        time.setBetween3And4Year(totalCount == 0L ? "0%" : df.format(((float) elasticService.findWhiteCount(region.getName(), null, null, null, 2, 4, null, null) / totalCount) * 100) + "%");
+        time.setBetween1And2Year(totalCount == 0L ? "0%" : df.format(((float) elasticService.findWhiteCount(region.getName(), null, null, null, 1, 2, null, null) / totalCount) * 100) + "%");
+        time.setLessThanOneYear(totalCount == 0L ? "0%" : df.format(((float) elasticService.findWhiteCount(region.getName(), null, null, null, null, 1, null, null) / totalCount) * 100) + "%");
 
         register.setRegisterTime(time);
         data.setRegister(register);
@@ -189,7 +201,7 @@ public class WhiteListController extends BaseController {
         //增长
         sysCount.setCategory("ETPADD");
         sysCount.setYear(11);
-        sysCount.setTop("0");
+        sysCount.setTop(11);
         //查询出增长曲线
         List<SysCount> riseList = systemService.countCompanyCommon(sysCount);
         growthAndDie.setGrowthCurve(basicModelList(riseList));
@@ -204,7 +216,7 @@ public class WhiteListController extends BaseController {
         Illegal illegal = new Illegal();
 
         //查询出11年的 因为需要得到增长率  必须查询出上一年的数据即可
-
+        sysCount.setTop(4);
         sysCount.setCategory("COURTPUBYEAR");
         List<SysCount> list1 = systemService.countCompanyCommon(sysCount);
         illegal.setCourtPub(basicModelList(list1));
@@ -229,17 +241,19 @@ public class WhiteListController extends BaseController {
 
 
     List<BasicModel> basicModelList(List<SysCount> list) {
+        DecimalFormat df = new DecimalFormat("0.00");//格式化小数
         List<BasicModel> modelList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(list)) {
             for (int i = 0; i < list.size() - 1; i++) {
                 BasicModel model = new BasicModel();
                 model.setValue(list.get(i).getValue());
+                model.setRate(df.format(Double.parseDouble(list.get(i).getValue()) / 100) + "%");
                 model.setYear(list.get(i).getYear());
                 SysCount bCount = list.get(i + 1);
                 if (bCount != null && !bCount.getValue().equals("0")) {
                     Integer aCount = Integer.parseInt(list.get(i).getValue());
                     Integer beCount = Integer.parseInt(bCount.getValue());
-                    model.setRate(((float) (aCount - beCount) / beCount) * 100 + "");
+                    //model.setRate(df.format(((float) (aCount - beCount)  / beCount) * 100) + "%");
                 }
                 modelList.add(model);
             }

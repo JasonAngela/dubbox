@@ -67,6 +67,10 @@
                     AND (b.area = #{area} or b.province = #{area} or b.city = #{area})
                 </if>
 
+                <if test="level != null and level != ''">
+                    AND b.level = #{level}
+                </if>
+
                 <if test="limitList != null">
                     AND (
                     (

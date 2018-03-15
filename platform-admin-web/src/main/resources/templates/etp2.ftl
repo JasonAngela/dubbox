@@ -1,9 +1,18 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title></title>
     <style type="text/css">
+
+        *{
+            margin: 0;padding: 0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
 
         body {
             font-family: pingfang sc light;
@@ -15,11 +24,11 @@
             width: 100%;
         }
 
-
+        .com_report_table{width: 100%;}
         .com_report_table table{border: none;border-spacing:10px;border-collapse: separate;}
         .com_report_table thead,.com_report_table tbody{border: none;}
-        .com_report_table thead td{background-color: #c2c2c2;}
-        .com_report_table td{padding: 0;line-height: 36px;white-space: normal;border: 1px solid #c2c2c2;text-align: center;color: #333;}
+        .com_report_table thead td,.com_report_table thead th{background-color: #c2c2c2;line-height: 36px;}
+        .com_report_table td{padding: 0;line-height: 36px;white-space: normal;border: 1px solid #c2c2c2;text-align: center;color: #333;word-break: break-all}
         .com_report_table tr>td:last-of-type{border-right: 1px solid #c2c2c2;}
         .com_report_table tbody td{padding:0 10px;}
 
@@ -28,15 +37,15 @@
 </head>
 
 <body>
-<div style="text-align: center;">
+<div style="text-align: center;width: 100%;">
     企业评估报告
 </div>
 
-<div  style="text-align: center;">
-    ${read.entName}
+<div  style="text-align: center;width: 100%;">
+${read.entName}
 </div>
 
-<div >
+<div style="text-align: center;width: 100%;">
     非财务风险数字解读
 </div>
 
@@ -57,13 +66,13 @@
         <tr>
             <td >企业能力:</td>
             <td>
-                ${read.etpScore!''}
+            ${read.etpScore!''}
             </td>
         </tr>
         <tr>
             <td >区域经济:</td>
             <td>
-                ${read.areaScore!''}
+            ${read.areaScore!''}
             </td>
         </tr>
     </table>
@@ -73,8 +82,8 @@
     工商信息
 </div>
 
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
         <tr>
             <td style="width:160px">统一社会信用代码:</td>
             <td style="width:160px">${basic.creditCode!''}</td>
@@ -118,7 +127,7 @@
         <tr>
             <td >注册资本:</td>
             <td >
-                ${basic.regCapital!''}万（人民币）</td>
+            ${basic.regCapital!''}万（人民币）</td>
             <td >登记机关:</td>
             <td >${basic.regOffice!''}</td>
         </tr>
@@ -142,9 +151,10 @@
     股东信息
 </div>
 
-<div class="center">
+<div class="com_report_table">
 
-    <table border="1" style="border-collapse:collapse;">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width:128px">股东</th>
             <th style="width:128px">持股比例</th>
@@ -152,6 +162,7 @@
             <th style="width:128px">认缴出资日期</th>
             <th style="width:128px">股东类型</th>
         </tr>
+        </thead>
 
         <#list basic.etpShareholder as item>
             <tr>
@@ -179,12 +190,14 @@
 <div class="center">
     成员信息
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width:320px">姓名</th>
             <th style="width:320px">职位</th>
         </tr>
+        </thead>
         <#list basic.etpSeniorManager as item>
             <tr>
                 <td >${item.name!''}</td>
@@ -200,23 +213,25 @@
 <div class="center">
     对外投资
 </div>
-<div class="center">
+<div class="com_report_table">
 
-    <table border="1" style="border-collapse:collapse;">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width:105px">被投资企业名称</th>
             <th style="width:105px">被投资企业法定代表人</th>
             <th style="width:105px">认缴出资资本</th>
-            <th style="width:105px">认缴出资比例</th>
+            <th style="width:105px">出资比例</th>
             <th style="width:105px">成立日期</th>
             <th style="width:105px">状态</th>
         </tr>
 
+        </thead>
         <#list basic.outward as item>
             <tr>
                 <td >${item.etpName!''}</td>
                 <td >${item.legalRep!''}</td>
-                <td >${item.confusingAmount!''}</td>
+                <td >${item.confusingAmount!''}万</td>
                 <td >${item.rate!''}</td>
                 <td >
                      <#if item.regDate??>
@@ -237,14 +252,16 @@
 <div class="center">
     变更信息
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width:160px">变更时间</th>
             <th style="width:160px">变更事项</th>
             <th style="width:160px">变更前</th>
             <th style="width:160px">变更后</th>
         </tr>
+        </thead>
 
         <#list basic.etpAlter as item>
             <tr>
@@ -270,8 +287,9 @@
 </div>
 
 
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 180px">裁判文书/判决结果</th>
             <th style="width: 120px">案由</th>
@@ -279,6 +297,7 @@
             <th style="width: 120px">案件号</th>
             <th style="width: 110px">审结时间</th>
         </tr>
+        </thead>
 
 
          <#list risk.crdCourt as item>
@@ -287,7 +306,7 @@
                 <td >${item.caseCause!''}</td>
                 <td >
                     <#if item.text=='defendant'>
-							被告
+                        被告
                     <#elseif item.text=='plaintiff'>
 							原告
                     <#else>
@@ -306,13 +325,15 @@
 <div class="center">
     法院公告
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 210px">发布时间</th>
             <th style="width: 210px">公告类型</th>
             <th style="width: 210px">公告内容</th>
         </tr>
+        </thead>
         <#list risk.crdCourtPub as item>
             <tr>
                 <td >
@@ -333,8 +354,9 @@
 <div class="center">
     被执行人
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 140px">被执行人或组织机构</th>
             <th style="width: 120px">案号</th>
@@ -342,6 +364,7 @@
             <th style="width: 140px">执行法院</th>
             <th style="width: 120px">立案时间</th>
         </tr>
+        </thead>
         <#list risk.crdExecuted as item>
             <tr>
                 <td >${item.executed!''}</td>
@@ -366,8 +389,9 @@
 <div class="center">
     失信记录（失信被执行人）
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 120px">被执行人或组织机构</th>
             <th style="width: 100px">执行依据文号</th>
@@ -376,9 +400,10 @@
             <th style="width: 100px">立案时间</th>
             <th style="width: 120px">做出执行依据单位</th>
         </tr>
+        </thead>
         <#list risk.crdBreakfaith as item>
             <tr>
-                <td >${item.company!''}</td>
+                <td >${item.personName!''}</td>
                 <td >${item.executeNum!''}</td>
                 <td >${item.caseNum!''}</td>
                 <td >${item.courtName!''}</td>
@@ -399,8 +424,9 @@
 <div class="center">
     经营异常
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 100px">列入时间</th>
             <th style="width: 100px">作出决定机关（列入）</th>
@@ -409,6 +435,7 @@
             <th style="width: 100px">作出决定机关（移出）</th>
             <th style="width: 120px">移出经营异常名录原因</th>
         </tr>
+        </thead>
         <#list risk.etpAbnormal as item>
             <tr>
                 <td >
@@ -439,8 +466,9 @@
 <div class="center">
     行政处罚
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 120px">处罚决定日期</th>
             <th style="width: 120px">决定文书号</th>
@@ -448,6 +476,7 @@
             <th style="width: 120px">决定机关名称</th>
             <th style="width: 160px">行政处罚内容</th>
         </tr>
+        </thead>
         <#list risk.etpPunish as item>
             <tr>
                 <td >
@@ -471,8 +500,9 @@
     股权出质
 </div>
 
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 100px">登记日期</th>
             <th style="width: 100px">登记编号</th>
@@ -481,6 +511,7 @@
             <th style="width: 100px">质权人</th>
             <th style="width: 100px">状态</th>
         </tr>
+        </thead>
 
         <#list risk.etpStock as item>
             <tr>
@@ -509,8 +540,9 @@
     动产抵押
 </div>
 
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 120px">登记日期</th>
             <th style="width: 160px">登记机关</th>
@@ -518,6 +550,7 @@
             <th style="width: 120px">公式日期</th>
             <th style="width: 100px">状态</th>
         </tr>
+        </thead>
 
 
         <#list risk.etpChattel as item>
@@ -550,8 +583,9 @@
     关联企业风险矩阵
 </div>
 
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 120px">企业名称</th>
             <th style="width: 100px">失信</th>
@@ -560,6 +594,7 @@
             <th style="width: 100px">被执行人</th>
             <th style="width: 100px">涉税</th>
         </tr>
+        </thead>
 
          <#list risk.legalScore as item>
             <tr>
@@ -579,8 +614,9 @@
     关联事件判定
 </div>
 
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 160px">裁判结果</th>
             <th style="width: 120px">案由</th>
@@ -588,6 +624,7 @@
             <th style="width: 120px">案件身份</th>
             <th style="width: 100px">审结时间</th>
         </tr>
+        </thead>
 
         <#list risk.relateCrdCourt as item>
             <tr>
@@ -608,8 +645,9 @@
     行业表现
 </div>
 
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 160px">应收款账期</th>
             <th style="width: 160px">存货周转时长</th>
@@ -617,14 +655,15 @@
             <th style="width: 160px">行业成本/营业收入</th>
 
         </tr>
+        </thead>
 
 
-            <tr>
-                <td >${industry.yszk!''}</td>
-                <td >${industry.chzz!''}</td>
-                <td >${industry.addedTax!''}%</td>
-                <td >${industry.rgcb!''}</td>
-            </tr>
+        <tr>
+            <td >${industry.yszk!''}</td>
+            <td >${industry.chzz!''}</td>
+            <td >${industry.addedTax!''}%</td>
+            <td >${industry.rgcb!''}</td>
+        </tr>
 
     </table>
 </div>
@@ -633,26 +672,31 @@
     季节性波动
 </div>
 
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
-            <th style="width: 52px">1月</th>
-            <th style="width: 52px">2月</th>
-            <th style="width: 52px">3月</th>
-            <th style="width: 52px">4月</th>
-            <th style="width: 52px">5月</th>
-            <th style="width: 52px">6月</th>
-            <th style="width: 52px">7月</th>
-            <th style="width: 52px">8月</th>
-            <th style="width: 52px">9月</th>
-            <th style="width: 52px">10月</th>
-            <th style="width: 52px">11月</th>
-            <th style="width: 52px">2月</th>
+            <th>1月</th>
+            <th>2月</th>
+            <th>3月</th>
+            <th>4月</th>
+            <th>5月</th>
+            <th>6月</th>
+            <th>7月</th>
+            <th>8月</th>
+            <th>9月</th>
+            <th>10月</th>
+            <th>11月</th>
+            <th>12月</th>
         </tr>
-        <tr>
-            <td>
-                ${industry.industrySeason.m1!''}
-            </td>
+        </thead>
+
+            <#if industry??>
+                    <#if industry.industrySeason??>
+            <tr>
+                    <td>
+                        ${industry.industrySeason.m1!''}
+                    </td>
             <td>
                 ${industry.industrySeason.m2!''}
             </td>
@@ -686,7 +730,12 @@
             <td>
                 ${industry.industrySeason.m12!''}
             </td>
-        </tr>
+            </tr>
+                    </#if>
+
+            </#if>
+
+
     </table>
 </div>
 
@@ -697,8 +746,9 @@
     产业链内部关联特征
 </div>
 
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 160px">节点主体</th>
             <th style="width: 160px">资金关联特征</th>
@@ -706,6 +756,7 @@
             <th style="width: 160px">议价能力</th>
 
         </tr>
+        </thead>
         <#list industry.industryTzList as item>
             <tr>
                 <td >${item.tzJdzt!''}</td>
@@ -722,14 +773,15 @@
 <div class="center">
     商标
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 160px">商标名称</th>
             <th style="width: 160px">申请时间</th>
             <th style="width: 160px">注册号</th>
-            <th style="width: 160px">类别</th>
         </tr>
+        </thead>
 
         <#list aptitude.etpBrandList as item>
             <tr>
@@ -742,7 +794,6 @@
                     </#if>
                 </td>
                 <td >${item.regCode!''}</td>
-                <td ></td>
             </tr>
         </#list>
 
@@ -753,8 +804,9 @@
 <div class="center">
     行政许可
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 140px">许可文件编号</th>
             <th style="width: 120px">许可文件名称</th>
@@ -762,6 +814,7 @@
             <th style="width: 120px">有效期至</th>
             <th style="width: 140px">许可机关</th>
         </tr>
+        </thead>
 
         <#list aptitude.etpLicenceList as item>
             <tr>
@@ -791,19 +844,21 @@
 <div class="center">
     海关税务评级
 </div>
-<div class="center">
-    <table border="1" style="border-collapse:collapse;">
+<div class="com_report_table">
+    <table width="100%" cellspacing="10">
+        <thead>
         <tr>
             <th style="width: 320px">税务</th>
             <th style="width: 320px">海关</th>
 
         </tr>
+        </thead>
         <tr>
             <td>
-                ${aptitude.taxRate!''}
+            ${aptitude.taxRate!''}
             </td>
             <td>
-                ${aptitude.customRate!''}
+            ${aptitude.customRate!''}
             </td>
 
         </tr>
