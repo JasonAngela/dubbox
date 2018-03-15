@@ -152,7 +152,11 @@ public class ElasticService implements IElasticService {
 
         //区域代码
         if (!StringUtils.isEmpty(regionCode)) {
-            queryBuilder.must(QueryBuilders.termQuery("countryCode", regionCode));
+            BoolQueryBuilder regionCodeBuilder = QueryBuilders.boolQuery();
+            regionCodeBuilder.should(QueryBuilders.termQuery("province", regionCode));
+            regionCodeBuilder.should(QueryBuilders.termQuery("city", regionCode));
+            regionCodeBuilder.should(QueryBuilders.matchPhraseQuery("country", regionCode));
+            queryBuilder.must(regionCodeBuilder);
         }
 
 
@@ -288,7 +292,11 @@ public class ElasticService implements IElasticService {
 
         //区域代码
         if (!StringUtils.isEmpty(regionCode)) {
-            queryBuilder.must(QueryBuilders.termQuery("countryCode", regionCode));
+            BoolQueryBuilder regionCodeBuilder = QueryBuilders.boolQuery();
+            regionCodeBuilder.should(QueryBuilders.termQuery("province", regionCode));
+            regionCodeBuilder.should(QueryBuilders.termQuery("city", regionCode));
+            regionCodeBuilder.should(QueryBuilders.matchPhraseQuery("country", regionCode));
+            queryBuilder.must(regionCodeBuilder);
         }
 
 
@@ -370,7 +378,7 @@ public class ElasticService implements IElasticService {
             rangeQueryBuilder.gte(start);
         }
         if (null != end) {
-            rangeQueryBuilder.lte(end);
+            rangeQueryBuilder.lt(end);
         }
         return rangeQueryBuilder;
     }

@@ -61,6 +61,9 @@
                 <if test="category != null and category != ''">
                     AND a.category in (#{category})
                 </if>
+                  <if test="level != null and level != '' ">
+                    AND a.level = #{level}
+                  </if>
                     AND a.province != ''
               </trim>
           </where>
@@ -76,6 +79,9 @@
                 </if>
                 <if test="province != null and province != ''">
                     AND a.province = #{province}
+                </if>
+                <if test="level != null and level != '' ">
+                    AND a.level = #{level}
                 </if>
                 AND a.city != ''
             </trim>
@@ -96,6 +102,9 @@
                 <if test="city != null and city != ''">
                     AND a.city = #{city}
                 </if>
+                <if test="level != null and level != '' ">
+                    AND a.level = #{level}
+                </if>
                 AND a.area != ''
             </trim>
         </where>
@@ -110,6 +119,9 @@
             <trim prefixOverrides="AND">
                 <if test="category != null and category != ''">
                     AND a.category = #{category}
+                </if>
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
                 </if>
                 AND a.province !=''
             </trim>
@@ -126,6 +138,9 @@
                 </if>
                 <if test="province != null and province != ''">
                     AND a.province = #{province}
+                </if>
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
                 </if>
                 AND a.city != ''
             </trim>
@@ -146,6 +161,9 @@
                   </if>
                   <if test="city != null and city != ''">
                       AND a.city = #{city}
+                  </if>
+                  <if test="level != null and level !='' ">
+                      AND a.level = #{level}
                   </if>
                   AND a.area != ''
               </trim>
@@ -170,6 +188,9 @@
             <if test="area != null and area != ''">
                 AND a.area = #{area}
             </if>
+            <if test="level != null and level !='' ">
+                AND a.level = #{level}
+            </if>
         </trim>
         </where>
         group by a.year,a.area order by a.area, a.year
@@ -192,6 +213,9 @@
                 <if test="area != null and area != ''">
                     AND a.area = #{area}
                 </if>
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
+                </if>
                 <if test="type != null and type != ''">
                     AND a.type like '%D%'
                 </if>
@@ -209,8 +233,17 @@
         <where>
             <trim prefixOverrides="AND">
                 AND a.category IN ('INDUSTRY')
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
+                </if>
+                <if test="city != null and city != ''">
+                    AND a.city = #{city}
+                </if>
                 <if test="area != null and area != ''">
-                    AND (a.province = #{area} OR a.city = #{area} OR a.area = #{area})
+                    AND a.area = #{area}
+                </if>
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
                 </if>
             </trim>
         </where>
@@ -222,9 +255,18 @@
          select sum(a.sum) as value,a.category FROM sys_count a
          <where>
              <trim prefixOverrides="AND">
-                 AND a.category = 'ETPSUM'
-                 <if test="area != null and area !='' ">
-                     AND (a.province = #{area} OR a.city = #{area} OR a.area = #{area})
+                 AND a.category = 'ETPCOUNT'
+                 <if test="province != null and province != ''">
+                     AND a.province = #{province}
+                 </if>
+                 <if test="city != null and city != ''">
+                     AND a.city = #{city}
+                 </if>
+                 <if test="area != null and area != ''">
+                     AND a.area = #{area}
+                 </if>
+                 <if test="level != null and level !='' ">
+                     AND a.level = #{level}
                  </if>
              </trim>
          </where>
@@ -250,6 +292,9 @@
                 <if test="area != null and area != ''">
                     AND a.area = #{area}
                 </if>
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
+                </if>
             </trim>
         </where>
         group by a.type,a.year
@@ -273,6 +318,9 @@
                 <if test="area != null and area != ''">
                     AND a.area = #{area}
                 </if>
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
+                </if>
                 <if test="type != null and type !=''">
                     AND a.type like '%D%'
                 </if>
@@ -287,8 +335,17 @@
         <where>
             <trim prefixOverrides="AND">
                 AND a.category IN ('COURTPUB','EXECUTED','BREAKFAITH','COURT')
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
+                </if>
+                <if test="city != null and city != ''">
+                    AND a.city = #{city}
+                </if>
                 <if test="area != null and area != ''">
-                    AND (a.province = #{area} OR a.city = #{area} OR a.area = #{area})
+                    AND a.area = #{area}
+                </if>
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
                 </if>
             </trim>
         </where>
@@ -300,8 +357,17 @@
         <where>
             <trim prefixOverrides="AND">
                 AND a.category IN ('CUSTOMS','TAX') and a.type like '%D%'
+                <if test="province != null and province != ''">
+                    AND a.province = #{province}
+                </if>
+                <if test="city != null and city != ''">
+                    AND a.city = #{city}
+                </if>
                 <if test="area != null and area != ''">
-                    AND (a.province = #{area} OR a.city = #{area} OR a.area = #{area})
+                    AND a.area = #{area}
+                </if>
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
                 </if>
             </trim>
         </where>
@@ -326,19 +392,19 @@
                 <if test="area != null and area != ''">
                     AND a.area = #{area}
                 </if>
-                <if test="type != null and type != ''">
+                <if test="type != null and type !=  ''">
                     AND a.type like '%D%'
                 </if>
-                <if test="year !=null and year !=''">
-                    AND (
-                          (extract(year from now())-a.year) &lt;10
-                          AND (extract(year from now())-a.year)&gt;=0
-                        )
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
                 </if>
             </trim>
         </where>
         group by a.year
-        ORDER BY a.year
+        ORDER BY a.year DESC
+        <if test="top != null and top != ''">
+            limit 11
+        </if>
     </select>
 
 
@@ -358,6 +424,9 @@
                 </if>
                 <if test="area != null and area != ''">
                     AND a.area = #{area}
+                </if>
+                <if test="level != null and level !='' ">
+                    AND a.level = #{level}
                 </if>
             </trim>
         </where>

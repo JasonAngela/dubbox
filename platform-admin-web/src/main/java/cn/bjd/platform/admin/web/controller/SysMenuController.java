@@ -4,6 +4,7 @@ import cn.bjd.platform.admin.web.common.controller.BaseController;
 import cn.bjd.platform.admin.web.security.model.AuthUser;
 import cn.bjd.platform.common.web.util.WebUtils;
 import cn.bjd.platform.system.api.entity.SysMenu;
+import cn.bjd.platform.system.api.entity.SysUser;
 import cn.bjd.platform.system.api.service.ISystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,7 @@ public class SysMenuController extends BaseController {
     @GetMapping(value = "/tree")
     public List<SysMenu> getMenuTree() {
         AuthUser user = WebUtils.getCurrentUser();
-        List<SysMenu> list = systemService.getMenuTree(user.getId());
+        List<SysMenu> list = systemService.getMenuTree(SysUser.ADMIN_USER_ID);//都让看 以后根据不同需求再改。
         return list;
     }
 
@@ -73,8 +74,9 @@ public class SysMenuController extends BaseController {
     @PreAuthorize("hasAuthority('sys:menu:view')")
     @GetMapping(value = "/list")
     public List<SysMenu> getMenuList() {
-        AuthUser user = WebUtils.getCurrentUser();
-        List<SysMenu> list  = systemService.getMenuList(user.getId());
+        //AuthUser user = WebUtils.getCurrentUser();
+        //默认都能查看
+        List<SysMenu> list  = systemService.getMenuList(SysUser.ADMIN_USER_ID);
         return list;
     }
 

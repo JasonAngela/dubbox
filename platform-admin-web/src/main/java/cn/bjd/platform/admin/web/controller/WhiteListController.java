@@ -27,10 +27,10 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,7 +74,7 @@ public class WhiteListController extends BaseController {
      * @return
      */
     @GetMapping(value = "/region/{regionCode}/statistics")
-    public ApiResponse regionStatistics(@PathVariable("regionCode") String regionCode) {
+    public ApiResponse regionStatistics(@PathVariable("regionCode") String regionCode) throws ParseException, IOException {
         ApiResponse response = ApiResponse.getInstances();
 
 
@@ -83,7 +83,9 @@ public class WhiteListController extends BaseController {
             return response.error("404").setResult("code对应省市区不存在");
         }
 
-        return response.success().setResult(systemService.getDataForRegionByCode(regionCode));
+        DataForRegion data = systemService.getDataForRegionByCode(regionCode);
+
+        return response.success().setResult(data);
     }
 
 
@@ -118,51 +120,80 @@ public class WhiteListController extends BaseController {
         industry.setLimitList(null);
         Integer allCount = systemService.industryCount(industry);
         limit.setAllCount(allCount);
+
+        if (allCount != null && allCount.compareTo(0) != 0) {
+            limit.setIndex((float) count / allCount * 100 + "%");
+        }
+
         data.getRegion().setLimit(limit);
 
         //调用白名单方法查询个数即可
-        //2000万以上
         Register register = new Register();
         RegisterCapital capital = new RegisterCapital();
-        Long totalCount = elasticService.findWhiteCount(regionCode, null, null, null, null, null, null, null);
 
-        capital.setMore20Millon(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, 2000, null) / totalCount) * 100 + "%");
-        capital.setBetween10And20Millon(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, 1000, 2000) / totalCount) * 100 + "%");
-        capital.setBetween8And10Millon(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, 801, 1000) / totalCount) * 100 + "%");
-        capital.setBetween6And8Millon(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, 601, 800) / totalCount) * 100 + "%");
-        capital.setBetween5And6Millon(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, 501, 600) / totalCount) * 100 + "%");
-        capital.setBetween3And5Millon(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, 301, 500) / totalCount) * 100 + "%");
-        capital.setBetween2And3Millon(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, 201, 300) / totalCount) * 100 + "%");
-        capital.setBetween1And2Millon(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, 101, 200) / totalCount) * 100 + "%");
-        capital.setBetween500And1000Thousand(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, 50, 100) / totalCount) * 100 + "%");
-        capital.setLessThan500Thousand(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, null, null, 50) / totalCount) * 100 + "%");
+        Long totalCount = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, null, null);
+        Long more20Millon = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, 2000, null);
+        Long between10And20Millon = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, 1000, 2000);
+        Long between8And10Millon = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, 800, 1000);
+        Long between6And8Millon = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, 600, 800);
+        Long between5And6Millon = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, 500, 600);
+        Long between3And5Millon = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, 300, 500);
+        Long between2And3Millon = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, 200, 300);
+        Long between1And2Millon = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, 100, 200);
+        Long between500And1000Thousand = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, 50, 100);
+        Long lessThan500Thousand = elasticService.findWhiteCount(region.getName(), null, null, null, null, null, null, 50);
+
+
+        capital.setMore20Millon(totalCount == 0L ? "0%" : ((float) more20Millon / totalCount) * 100 + "%");
+        capital.setBetween10And20Millon(totalCount == 0L ? "0%" : ((float) between10And20Millon / totalCount) * 100 + "%");
+        capital.setBetween8And10Millon(totalCount == 0L ? "0%" : ((float) between8And10Millon / totalCount) * 100 + "%");
+        capital.setBetween6And8Millon(totalCount == 0L ? "0%" : ((float) between6And8Millon / totalCount) * 100 + "%");
+        capital.setBetween5And6Millon(totalCount == 0L ? "0%" : ((float) between5And6Millon / totalCount) * 100 + "%");
+        capital.setBetween3And5Millon(totalCount == 0L ? "0%" : ((float) between3And5Millon / totalCount) * 100 + "%");
+        capital.setBetween2And3Millon(totalCount == 0L ? "0%" : ((float) between2And3Millon / totalCount) * 100 + "%");
+        capital.setBetween1And2Millon(totalCount == 0L ? "0%" : ((float) between1And2Millon / totalCount) * 100 + "%");
+        capital.setBetween500And1000Thousand(totalCount == 0L ? "0%" : ((float) between500And1000Thousand / totalCount) * 100 + "%");
+        capital.setLessThan500Thousand(totalCount == 0L ? "0%" : ((float) lessThan500Thousand / totalCount) * 100 + "%");
         register.setRegisterCapital(capital);
 
         RegisterTime time = new RegisterTime();
-        time.setMore10Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, 10, null, null, null) / totalCount) * 100 + "%");
-        time.setBetween9And10Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, 9, 10, null, null) / totalCount) * 100 + "%");
-        time.setBetween7And8Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, 7, 8, null, null) / totalCount) * 100 + "%");
-        time.setBetween5And6Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, 5, 6, null, null) / totalCount) * 100 + "%");
-        time.setBetween3And4Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, 3, 4, null, null) / totalCount) * 100 + "%");
-        time.setBetween1And2Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, 1, 2, null, null) / totalCount) * 100 + "%");
-        time.setLessThanOneYear(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(regionCode, null, null, null, null, 1, null, null) / totalCount) * 100 + "%");
+        time.setMore10Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 10, null, null, null) / totalCount) * 100 + "%");
+        time.setBetween9And10Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 8, 10, null, null) / totalCount) * 100 + "%");
+        time.setBetween7And8Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 6, 8, null, null) / totalCount) * 100 + "%");
+        time.setBetween5And6Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 4, 6, null, null) / totalCount) * 100 + "%");
+        time.setBetween3And4Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 2, 4, null, null) / totalCount) * 100 + "%");
+        time.setBetween1And2Year(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, 1, 2, null, null) / totalCount) * 100 + "%");
+        time.setLessThanOneYear(totalCount == 0L ? "0%" : ((float) elasticService.findWhiteCount(region.getName(), null, null, null, null, 1, null, null) / totalCount) * 100 + "%");
 
         register.setRegisterTime(time);
         data.setRegister(register);
 
         GrowthAndDie growthAndDie = new GrowthAndDie();
-        List<BasicModel> growthCurve = new ArrayList<>();
 
         SysCount sysCount = new SysCount();
-        sysCount.setArea(region.getName());
+        //分别放省市区即可
+        if (regionCode.substring(regionCode.length() - 4).equals("0000")) {
+            //选择的是省
+            sysCount.setProvince(region.getName());
+            sysCount.setLevel(1);
+        } else if (regionCode.substring(regionCode.length() - 2).equals("00")) {
+            sysCount.setCity(region.getName());
+            sysCount.setLevel(2);
+        } else {
+            sysCount.setArea(region.getName());
+            sysCount.setLevel(3);
+        }
+
+
+        // sysCount.setArea(region.getName());
         //增长
         sysCount.setCategory("ETPADD");
-        sysCount.setYear(10);
+        sysCount.setYear(11);
+        sysCount.setTop("0");
         //查询出增长曲线
         List<SysCount> riseList = systemService.countCompanyCommon(sysCount);
         growthAndDie.setGrowthCurve(basicModelList(riseList));
 
-        List<BasicModel> dieCurve = new ArrayList<>();
         sysCount.setCategory("ENTCANCEL");
         List<SysCount> dieList = systemService.countCompanyCommon(sysCount);
         growthAndDie.setDieCurve(basicModelList(dieList));
@@ -171,6 +202,8 @@ public class WhiteListController extends BaseController {
 
 
         Illegal illegal = new Illegal();
+
+        //查询出11年的 因为需要得到增长率  必须查询出上一年的数据即可
 
         sysCount.setCategory("COURTPUBYEAR");
         List<SysCount> list1 = systemService.countCompanyCommon(sysCount);
@@ -197,12 +230,21 @@ public class WhiteListController extends BaseController {
 
     List<BasicModel> basicModelList(List<SysCount> list) {
         List<BasicModel> modelList = new ArrayList<>();
-        for (SysCount c : list) {
-            BasicModel model = new BasicModel();
-            model.setValue(c.getValue());
-            model.setYear(c.getYear());
-            modelList.add(model);
+        if (!CollectionUtils.isEmpty(list)) {
+            for (int i = 0; i < list.size() - 1; i++) {
+                BasicModel model = new BasicModel();
+                model.setValue(list.get(i).getValue());
+                model.setYear(list.get(i).getYear());
+                SysCount bCount = list.get(i + 1);
+                if (bCount != null && !bCount.getValue().equals("0")) {
+                    Integer aCount = Integer.parseInt(list.get(i).getValue());
+                    Integer beCount = Integer.parseInt(bCount.getValue());
+                    model.setRate(((float) (aCount - beCount) / beCount) * 100 + "");
+                }
+                modelList.add(model);
+            }
         }
+
         return modelList;
     }
 
@@ -316,7 +358,7 @@ public class WhiteListController extends BaseController {
         if (b.booleanValue() == false) {
             return response.error("404").setResult("无访问此区域权限");
         }
-        return response.success().setResult(elasticService.findWhiteList(regionCode, null, null, null, null, null, null, null, count));
+        return response.success().setResult(elasticService.findWhiteList(region.getName(), null, null, null, null, null, null, null, count));
     }
 
 
@@ -346,11 +388,11 @@ public class WhiteListController extends BaseController {
         if (!CollectionUtils.isEmpty(dto.getIndustrys())) {
             Map<String, String> map = getIndustryIdIpathMap();
             for (String str : dto.getIndustrys()) {
-                industryIds.add(map.isEmpty() ? "" : map.get(str));
+                industryIds.add(map.isEmpty() ? "" : map.get(str).substring(map.get(str).lastIndexOf("/") + 1));
             }
         }
 
-        return response.success().setResult(elasticService.findWhiteList(regionCode, null, null, industryIds, null, null, null, null, dto.getCount()));
+        return response.success().setResult(elasticService.findWhiteList(region.getName(), null, null, industryIds, null, null, null, null, dto.getCount()));
     }
 
     Map<String, String> getIndustryIdIpathMap() {
@@ -421,7 +463,14 @@ public class WhiteListController extends BaseController {
             }
         }
 
-        EtpWhiteDataDTO dto = elasticService.findWhiteList(regionCode, minScore, maxScore, industryIds, startReg, endReg, startCap, endCap, "downLoad");
+
+        SysRegion region = systemService.getRegionByCode(regionCode);
+        if (null == region) {
+            return apiResponse.error("404").setResult("code对应省市区不存在");
+        }
+
+        EtpWhiteDataDTO dto = elasticService.findWhiteList(region.getName(), minScore, maxScore, industryIds, startReg, endReg, startCap, endCap, "downLoad");
+
         if (null == dto) {
             return apiResponse.error("404").setReason("查询无企业");
         }
@@ -495,7 +544,7 @@ public class WhiteListController extends BaseController {
      * @return
      */
     @GetMapping(value = "/region/{regionCode}/report/dowload")
-    public ApiResponse downLoadRegionReport(@PathVariable("regionCode") String regionCode,HttpServletResponse downResponse) throws ParseException, IOException {
+    public ApiResponse downLoadRegionReport(@PathVariable("regionCode") String regionCode, HttpServletResponse downResponse) throws ParseException, IOException {
         ApiResponse response = ApiResponse.getInstances();
 
         SysRegion region = systemService.getRegionByCode(regionCode);
@@ -506,20 +555,20 @@ public class WhiteListController extends BaseController {
         //获取具体区域信息
         ApiResponse res = getRegionReport(regionCode);
         if (res != null && res.getResult() != null) {
-            DataForRegion data = (DataForRegion)res.getResult();
+            DataForRegion data = (DataForRegion) res.getResult();
             PDFKit kit = new PDFKit();
 
-            kit.setSaveFilePath(System.getProperty("java.io.tmpdir")+ File.separator+"region.pdf");
-            String saveFilePath=kit.exportToFile("region.pdf",data);
+            kit.setSaveFilePath(System.getProperty("java.io.tmpdir") + File.separator + "region.pdf");
+            String saveFilePath = kit.exportToFile("region.pdf", data);
 
             File f = new File(saveFilePath);
-            if(f.exists()){
-                FileInputStream  fis = new FileInputStream(f);
-                String filename=URLEncoder.encode(f.getName(),"utf-8"); //解决中文文件名下载后乱码的问题
+            if (f.exists()) {
+                FileInputStream fis = new FileInputStream(f);
+                String filename = URLEncoder.encode(f.getName(), "utf-8"); //解决中文文件名下载后乱码的问题
                 byte[] b = new byte[fis.available()];
                 fis.read(b);
                 downResponse.setCharacterEncoding("utf-8");
-                downResponse.setHeader("Content-Disposition","attachment; filename="+filename+"");
+                downResponse.setHeader("Content-Disposition", "attachment; filename=" + filename + "");
                 downResponse.setContentType("application/pdf");
                 //获取响应报文输出流对象
                 ServletOutputStream out = downResponse.getOutputStream();
@@ -531,25 +580,6 @@ public class WhiteListController extends BaseController {
                 //下载后 删除文件
             }
         }
-
-        return response.success().setResult("下载成功");
-    }
-
-
-
-
-
-    @GetMapping(value = "/etp/{etpId}/report/download")
-    public ApiResponse downLoadEtpReport(@PathVariable("etpId") String etpId) {
-        ApiResponse response = ApiResponse.getInstances();
-
-        /*SysRegion region = systemService.getRegionByCode(regionCode);
-        if (null == region) {
-            return response.error("404").setResult("code对应省市区不存在");
-        }*/
-
-        //
-
 
         return response.success().setResult("下载成功");
     }

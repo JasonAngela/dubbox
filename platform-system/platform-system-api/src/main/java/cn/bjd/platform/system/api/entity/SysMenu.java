@@ -120,10 +120,10 @@ public class SysMenu extends DataEntity {
         if(getSort() == null){
             this.sort = 30;
         }
+
         if(getShow() == null){
             this.isShow = true;
         }
-
     }
 
     public String getParentId() {

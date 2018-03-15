@@ -9,6 +9,8 @@
         body {
             font-family: pingfang sc light;
         }
+
+
         .center{
             text-align: center;
             width: 100%;
@@ -31,20 +33,30 @@
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<td style="width:200px">当前评估区域:</td>
-					<td style="width:300px">${area}</td>
+					<td style="width: 320px">当前评估区域:</td>
+					<td style="width: 320px">${area!''}</td>
 				</tr>
 				<tr>
-					<td style="width:200px">区域企业总量:</td>
-					<td>${count}</td>
+					<td >区域企业总量:</td>
+					<td>${count!''}</td>
 				</tr>
 				<tr>
-					<td style="width:200px">金融涉诉总量:</td>
-					<td>1000</td>
+					<td >金融涉诉总量:</td>
+					<td>${risk.courtCount!''}</td>
 				</tr>
 				<tr>
-					<td style="width:200px">投放建议:</td>
-					<td>1000</td>
+					<td >投放建议:</td>
+					<td>
+						<#if region.score lt 40>
+							禁入
+						<#elseif region.score lt 60>
+							谨慎进入
+						<#elseif region.score lt 80>
+							适度投放
+						<#else>
+							优先投放
+						</#if>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -56,28 +68,28 @@
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<td style="width:200px">限入行业:</td>
-					<td style="width:300px">100</td>
+					<td style="width: 320px">限入行业:</td>
+					<td style="width: 320px"></td>
 				</tr>
 				<tr>
-					<td style="width:200px">发展水平:</td>
-					<td>1000</td>
+					<td >发展水平:</td>
+					<td>${region.development.score!''}</td>
 				</tr>
 				<tr>
-					<td style="width:200px">稳定程度:</td>
-					<td>1000</td>
+					<td >稳定程度:</td>
+					<td>${region.stable.score!''}</td>
 				</tr>
 				<tr>
-					<td style="width:200px">金融供给:</td>
-					<td>1000</td>
+					<td >金融供给:</td>
+					<td>${region.financialSupply.score!''}</td>
 				</tr>
 				<tr>
-					<td style="width:200px">风险文化:</td>
-					<td>1000</td>
+					<td >风险文化:</td>
+					<td>${region.riskCulture.score!''}</td>
 				</tr>
 				<tr>
-					<td style="width:200px">区域得分:</td>
-					<td>10</td>
+					<td >区域得分:</td>
+					<td>${region.score!''}</td>
 				</tr>
 			</table>
 		</div>
@@ -91,19 +103,19 @@
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<th style="width:100px">GDP总量</th>
-					<th style="width:100px">人均GDP</th>
-					<th style="width:100px">税收总量</th>
+					<th style="width:125px">GDP总量</th>
+					<th style="width:125px">人均GDP</th>
+					<th style="width:125px">税收总量</th>
 					<th style="width:140px">人均贷款偏离度</th>
-					<th style="width:100px">财政支出</th>
+					<th style="width:125px">财政支出</th>
 				</tr>
 				
 				<tr>
-					<td>123123</td>
-					<td>21412</td>
-					<td>4121231</td>
-					<td>qaeqwewq</td>
-					<td>1241231</td>
+					<td>${region.development.gDPtotal!''}</td>
+					<td>${region.development.gDPAvg!''}</td>
+					<td>${region.development.taxTotal!''}</td>
+					<td>${region.development.avgLoanDeviation!''}</td>
+					<td>${region.development.expenditure!''}</td>
 				</tr>
 			</table>
 		</div>
@@ -115,16 +127,16 @@
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<th style="width:140px">GDP增长率</th>
-					<th style="width:170px">财政收入增长率</th>
-					<th style="width:190px">本地新注册法人增长水平</th>
+					<th style="width:213px">GDP增长率</th>
+					<th style="width:213px">财政收入增长率</th>
+					<th style="width:213px">本地新注册法人增长水平</th>
 					
 				</tr>
 				
 				<tr>
-					<td>123123</td>
-					<td>21412</td>
-					<td>4121231</td>
+					<td>${region.stable.gdpGrowthRate!''}</td>
+					<td>${region.stable.expenditureGrowthRate!''}</td>
+					<td>${region.stable.companyGrowthCount!''}</td>
 				
 				</tr>
 			</table>
@@ -138,35 +150,35 @@
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<th style="width:100px">50万以下</th>
-					<th style="width:100px">50-100万</th>
-					<th style="width:100px">101-200万</th>
+					<th style="width: 55px">50万以下</th>
+					<th style="width: 65px">50-100万</th>
+					<th style="width: 65px">101-200万</th>
 					
-					<th style="width:100px">201-300万</th>
-					<th style="width:100px">301-500万</th>
-					<th style="width:100px">501-600万</th>
+					<th style="width: 65px">201-300万</th>
+					<th style="width: 65px">301-500万</th>
+					<th style="width: 65px">501-600万</th>
 					
-					<th style="width:100px">601-800万</th>
-					<th style="width:100px">801-1000万</th>
-					<th style="width:100px">1001-2000万</th>
+					<th style="width: 65px">601-800万</th>
+					<th style="width: 65px">801-1000万</th>
+					<th style="width: 65px">1001-2000万</th>
 					
-					<th style="width:100px">2000万以上</th>
+					<th style="width: 65px">2000万以上</th>
 				</tr>
 				
 				<tr>
-					<td>123123</td>
-					<td>21412</td>
-					<td>4121231</td>
+					<td>${register.registerCapital.lessThan500Thousand!''}</td>
+					<td>${register.registerCapital.between500And1000Thousand}</td>
+					<td>${register.registerCapital.between1And2Millon!''}</td>
 				
-					<td>123123</td>
-					<td>21412</td>
-					<td>4121231</td>
+					<td>${register.registerCapital.between2And3Millon!''}</td>
+					<td>${register.registerCapital.between3And5Millon}</td>
+					<td>${register.registerCapital.between5And6Millon!''}</td>
 					
-					<td>123123</td>
-					<td>21412</td>
-					<td>4121231</td>
+					<td>${register.registerCapital.between6And8Millon!''}</td>
+					<td>${register.registerCapital.between8And10Millon!''}</td>
+					<td>${register.registerCapital.between10And20Millon!''}</td>
 					
-					<td>123123</td>
+					<td>${register.registerCapital.more20Millon!''}</td>
 				</tr>
 			</table>
 		</div>
@@ -180,70 +192,63 @@
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<th style="width:130px">1年以下</th>
-					<th style="width:130px">1-2年</th>
-					<th style="width:130px">3-4年</th>
+					<th style="width:100px">1年以下</th>
+					<th style="width:100px">1-2年</th>
+					<th style="width:100px">3-4年</th>
 					
-					<th style="width:130px">5-6年</th>
-					<th style="width:130px">7-8年</th>
-					<th style="width:130px">9-10年</th>
-					
-					<th style="width:130px">10年以上</th>
-					
+					<th style="width:100px">5-6年</th>
+					<th style="width:100px">7-8年</th>
+					<th style="width:100px">9-10年</th>
+					<th style="width:100px">10年以上</th>
 				</tr>
 				
 				<tr>
-					<td>123123</td>
-					<td>21412</td>
-					<td>4121231</td>
+					<td>${register.registerTime.lessThanOneYear!''}</td>
+					<td>${register.registerTime.between1And2Year!''}</td>
+					<td>${register.registerTime.between3And4Year!''}</td>
 				
-					<td>123123</td>
-					<td>21412</td>
-					<td>4121231</td>
+					<td>${register.registerTime.between5And6Year}</td>
+					<td>${register.registerTime.between7And8Year!''}</td>
+					<td>${register.registerTime.between9And10Year!''}</td>
 					
-					<td>123123</td>
+					<td>${register.registerTime.more10Year!''}</td>
 					
 				</tr>
 			</table>
 		</div>
 		<BR/><BR/><BR/><BR/>
 		<div class="center">
-				近十年企业增长消亡比率
+				近十年企业增长消亡数
 		</div>
 		<BR/><BR/>
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<th style="width:130px"></th>
-					<th style="width:130px">2008年</th>
-					<th style="width:130px">2009年</th>
-					<th style="width:130px">2010年</th>
-					
-					<th style="width:130px">2011年</th>
-					<th style="width:130px">2012年</th>
-					<th style="width:130px">2013年</th>
-					
-					<th style="width:130px">2014年</th>
-					<th style="width:130px">2015年</th>
-					<th style="width:130px">2016年</th>
-					<th style="width:130px">2017年</th>
+					<th style="width:58px"></th>
+
+					<#list growthAndDie.growthCurve as item>
+					    <th style="width:58px">${item.year!''}</th>
+					</#list>
+
+
 				</tr>
 				
 				<tr>
-					<td></td>
-					<td>21412</td>
-					<td>4121231</td>
-				
-					<td>123123</td>
-					<td>21412</td>
-					<td>4121231</td>
-					
-					<td>123123</td>
-					<td>123123</td>
-					<td>21412</td>
-					<td>4121231</td>
-					<td>4121231</td>
+					<td>增长率</td>
+					<#list growthAndDie.growthCurve as item>
+					    <td>${item.value!''}</td>
+					</#list>
+
 				</tr>
+
+                <tr>
+                    <td>消亡率</td>
+
+                    <#list growthAndDie.dieCurve as item>
+					    <td>${item.value!''}</td>
+					</#list>
+
+                </tr>
 			</table>
 		</div>
 		<BR/><BR/><BR/><BR/>
@@ -254,15 +259,15 @@
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<th style="width:220px">企业户均贷款额度平均偏离度</th>
-					<th style="width:200px">民间金融活跃度</th>
-					<th style="width:200px">贷款GDP贡献率</th>
+					<th style="width:213px">企业户均贷款额度平均偏离度</th>
+					<th style="width:213px">民间金融活跃度</th>
+					<th style="width:213px">贷款GDP贡献率</th>
 				</tr>
 				
 				<tr>
-					<td>21412</td>
-					<td>4121231</td>
-					<td>123123</td>
+					<td>${region.financialSupply.avgLoanDeviation!''}</td>
+					<td>${region.financialSupply.peopleActivity!''}</td>
+					<td>${region.financialSupply.gdpLoanRate!''}</td>
 				</tr>
 				
 			</table>
@@ -270,35 +275,46 @@
 		</div>
 		<BR/><BR/><BR/><BR/>
 		<div class="center">
-				近十年区域涉诉及违法增长率
+				近十年区域涉诉及违法数
 		</div>
 		<BR/><BR/>
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<th style="width:120px"></th>
-					<th style="width:100px">2008年</th>
-					<th style="width:100px">2009年</th>
-					<th style="width:100px">2010年</th>
+					<th style="width:58px"></th>
+					<#list illegal.breakFaith as item>
+						<th style="width:58px">${item.year!''}</th>
+					</#list>
+
 				</tr>
 				<tr>
-					<td>区域涉诉</td>
-					<td>21412</td>
-					<td>4121231</td>
-					<td>123123</td>
+					<td>失信记录</td>
+					<#list illegal.breakFaith as item>
+						<td>${item.value!''}</td>
+					</#list>
+
 				</tr>
 				<tr>
-					<td>海关违法</td>
-					<td>21412</td>
-					<td>4121231</td>
-					<td>123123</td>
+					<td>裁判文书</td>
+					<#list illegal.court as item>
+						<td>${item.value!''}</td>
+					</#list>
 				</tr>
+
 				<tr>
-					<td>税务违法</td>
-					<td>21412</td>
-					<td>4121231</td>
-					<td>123123</td>
+					<td>法院公告</td>
+					<#list illegal.courtPub as item>
+						<td>${item.value!''}</td>
+					</#list>
 				</tr>
+
+                <tr>
+                    <td>被执行</td>
+                    <#list illegal.executed as item>
+						<td>${item.value!''}</td>
+					</#list>
+                </tr>
+
 			</table>
 		</div>
 		
@@ -311,36 +327,18 @@
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<th style="width:220px">企业户均涉金融债数量</th>
-					<th style="width:200px">贷存比</th>
-					<th style="width:200px">金融犯罪指数</th>
+					<th style="width:213px">企业户均涉金融债数量</th>
+					<th style="width:213px">贷存比</th>
+					<th style="width:213px">金融犯罪指数</th>
 				</tr>
 				<tr>
-					<td>21412</td>
-					<td>4121231</td>
-					<td>123123</td>
+					<td>${region.riskCulture.avgCompanyLoan!''}</td>
+					<td>${region.riskCulture.loanRatio!''}</td>
+					<td>${region.riskCulture.crimeIndex!''}</td>
 				</tr>
 			</table>
 		</div>
-		<BR/><BR/><BR/><BR/>
-		<div class="center">
-				各行业企业数量
-		</div>
-		<BR/><BR/>
-		<div class="center">
-			<table border="1" style="border-collapse:collapse;">
-				<tr>
-					<th style="width:220px">企业</th>
-					<th style="width:200px">企业数量</th>
-					<th style="width:200px">企业占比</th>
-				</tr>
-				<tr>
-					<td>21412</td>
-					<td>4121231</td>
-					<td>123123</td>
-				</tr>
-			</table>
-		</div>
+
 		<BR/><BR/><BR/><BR/>
 		<div class="center">
 				限入行业
@@ -349,8 +347,8 @@
 		<div class="center">
 			<table border="1" style="border-collapse:collapse;">
 				<tr>
-					<th style="width:220px">限入行业占比:</th>
-					<th style="width:200px">15%</th>
+					<th style="width:320px">限入行业占比:</th>
+					<th style="width:320px">${region.limit.index!''}</th>
 				</tr>
 			</table>
 		</div>

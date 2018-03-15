@@ -756,7 +756,9 @@ public class EtpBOService implements IEtpBOService {
                 }
             }
 
-
+            if (CollectionUtils.isEmpty(relateName)) {
+                relateName.add("");
+            }
             dto.setLegalScore(legalScore);
             List<CrdCourt> relateCrdCourt = crdCourtMapper.findByEtpIdIn(new ArrayList<>(relateName), null);
             dto.setRelateCrdCourt(relateCrdCourt);

@@ -9,6 +9,16 @@ public class Limit extends DataEntity {
 
     private Integer allCount;
 
+    private String index = "0%";
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
     public Integer getCount() {
         return count;
     }

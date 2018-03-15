@@ -9,12 +9,12 @@
 
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="cn.bjd.platform.elastic.api.service.IElasticService"
-                   ref="elasticService" protocol="dubbo" timeout="20000"/>
+                   ref="elasticService" protocol="dubbo" timeout="600000"/>
 
     <dubbo:service interface="cn.bjd.platform.elastic.api.service.IEtpBOService"
-                   ref="etpBOService" protocol="dubbo" timeout="20000"/>
+                   ref="etpBOService" protocol="dubbo" timeout="600000"/>
 
     <dubbo:service interface="cn.bjd.platform.elastic.api.service.IIndustryBOService"
-                   ref="industryBOService" protocol="dubbo" timeout="20000"/>
+                   ref="industryBOService" protocol="dubbo" timeout="600000"/>
 
 </beans>

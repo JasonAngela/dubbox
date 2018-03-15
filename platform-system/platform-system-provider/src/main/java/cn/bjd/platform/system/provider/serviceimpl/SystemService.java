@@ -88,13 +88,16 @@ public class SystemService implements ISystemService {
     public List<SysCount> countGroupByProvinceAndCity(SysCount count) {
         List<SysCount> list = null;
         if (StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity())) {
+            count.setLevel(1);
             list = sysCountMapper.countGroupByProvinceAndCityN(count);
         }
         if (!StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity())) {
+            count.setLevel(2);
             list = sysCountMapper.countGroupByProvinceAndCityP(count);
         }
 
         if (!StringUtils.isEmpty(count.getProvince()) && !StringUtils.isEmpty(count.getCity())) {
+            count.setLevel(3);
             list = sysCountMapper.countGroupByProvinceAndCityC(count);
         }
 
@@ -108,18 +111,22 @@ public class SystemService implements ISystemService {
         List<SysCount> list = null;
         if (StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity()) && StringUtils.isEmpty(count.getArea())) {
             // 不选择 以省份显示
+            count.setLevel(1);
             list = sysCountMapper.countAreaOnlySelectNothing(count);
         }
 
         if (!StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity()) && StringUtils.isEmpty(count.getArea())) {
+            count.setLevel(2);
             list = sysCountMapper.countAreaOnlySelectProvince(count);
         }
 
         if (!StringUtils.isEmpty(count.getProvince()) && !StringUtils.isEmpty(count.getCity()) && StringUtils.isEmpty(count.getArea())) {
+            count.setLevel(3);
             list = sysCountMapper.countAreaOnlySelectCity(count);
         }
 
         if (!StringUtils.isEmpty(count.getProvince()) && !StringUtils.isEmpty(count.getCity()) && !StringUtils.isEmpty(count.getArea())) {
+            count.setLevel(3);
             list = sysCountMapper.countAreaOnlySelectArea(count);
         }
 
@@ -327,7 +334,7 @@ public class SystemService implements ISystemService {
      * @return
      */
     @Override
-    public List<SysIndustry> getIndustryTree(String regionCode,String type) {
+    public List<SysIndustry> getIndustryTree(String regionCode, String type) {
         SysRegion region = sysRegionMapper.get(regionCode);
         List<SysIndustry> result = new ArrayList<>();
 
@@ -364,6 +371,8 @@ public class SystemService implements ISystemService {
         /*List<SysMenu> resultList = new ArrayList<>();
         //按父子顺序排列菜单列表
         sortList(resultList, getMenuListByUserId(userId), "");*/
+        //能查看页面 则都能看到
+
         return makeTree(getMenuListByUserId(userId), false);
     }
 
@@ -481,19 +490,42 @@ public class SystemService implements ISystemService {
         // 设置新的父节点串
         menu.setParentIds(parentIds + menu.getParentId() + ",");
 
-        // 保存或更新实体
-        if (StringHelper.isBlank(menu.getId())) {
-            menu.preInsert();
-            sysMenuMapper.insert(menu);
-        } else {
-            menu.preUpdate();
-            sysMenuMapper.update(menu);
-        }
-
         // 更新子节点 parentIds
         SysMenu m = new SysMenu();
         m.setParentIds("%," + menu.getId() + ",%");
         List<SysMenu> list = sysMenuMapper.findByParentIdsLike(m);
+
+        // 保存或更新实体
+        if (StringHelper.isBlank(menu.getId())) {
+            if (parentMenu != null && parentMenu.getShow() == Boolean.FALSE) {
+                //父节点存在 并且是禁用的 不能添加权限
+                throw new SystemException("禁用权限不能添加子权限");
+            }
+            menu.preInsert();
+            sysMenuMapper.insert(menu);
+        } else {
+            //修改状态
+            //父级禁用 子级不能修改为启用
+            if (parentMenu != null && parentMenu.getShow() == Boolean.FALSE && menu.getShow() == Boolean.TRUE) {
+                //父节点存在 并且是禁用的 不能添加权限
+                throw new SystemException("禁用权限子权限不能修改为启用");
+            }
+
+            //禁用操作
+            if (menu.getShow() == Boolean.FALSE && !CollectionUtils.isEmpty(list)) {
+                for (SysMenu sMenu : list) {
+                    if (sMenu.getShow() == Boolean.TRUE) {
+                        //子权限存在启用时，父不能禁用。
+                        throw new SystemException("存在启用的子权限，不能修改为禁用");
+                    }
+                }
+            }
+
+            menu.preUpdate();
+            sysMenuMapper.update(menu);
+        }
+
+
         for (SysMenu e : list) {
             e.setParentIds(e.getParentIds().replace(oldParentIds, menu.getParentIds()));
             sysMenuMapper.updateParentIds(e);
@@ -681,7 +713,19 @@ public class SystemService implements ISystemService {
         }
         String name = region.getName();
         SysCount pCount = new SysCount();
-        pCount.setArea(name);
+        //分别放省市区即可
+        if (code.substring(code.length()-4).equals("0000")) {
+            //选择的是省
+            pCount.setProvince(name);
+            pCount.setLevel(1);
+        } else if (code.substring(code.length()-2).equals("00")) {
+            pCount.setCity(name);
+            pCount.setLevel(2);
+        } else {
+            pCount.setArea(name);
+            pCount.setLevel(3);
+        }
+
         if (regionDetail != null) {
             RegionDto dto = new RegionDto();
 

@@ -4,7 +4,6 @@ import cn.bjd.platform.elastic.api.entity.EtpAlter;
 import cn.bjd.platform.elastic.api.entity.EtpSeniorManager;
 import cn.bjd.platform.elastic.api.entity.EtpShareholder;
 import cn.bjd.platform.elastic.api.entity.Outward;
-import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
@@ -14,15 +13,15 @@ import java.util.List;
 
 public class EtpBasicDTO implements Serializable {
 
-    private String creditCode;
-    private String regState;
-    private  String industry;
+    private String creditCode = "";
+    private String regState = "";
+    private String industry = "";
 
 
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date regDate;
 
-    private String type;
+    private String type = "";
     private Date businessStart;
     private Date businessFinish;
 
@@ -30,13 +29,13 @@ public class EtpBasicDTO implements Serializable {
 
     private String legalRep;
 
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date checkDate;
 
-    private String regCapital;
-    private String regOffice;
-    private String businessScope;
-    private String address;
+    private String regCapital = "";
+    private String regOffice = "";
+    private String businessScope = "";
+    private String address = "";
 
     private List<EtpShareholder> etpShareholder = new ArrayList<>();
 

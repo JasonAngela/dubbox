@@ -7,26 +7,26 @@ import java.util.Date;
 
 public class ReadDTO implements Serializable {
 
-    private String address;
-    private String entName;
-    private String legalRep;
-    private String nameLike;
-    private String regCapital;
+    private String address = "";
+    private String entName = "";
+    private String legalRep = "";
+    private String nameLike = "";
+    private String regCapital = "";
     @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
-    private Date regDate;
-    private String regState;
+    private Date regDate = new Date();
+    private String regState = "";
 
-    private Double legalScore;
-    private Double industryScore;
-    private Double finScore;
-    private Double etpScore;
-    private Double areaScore;
-    private Double etpTotalScore;
+    private Double legalScore = 0D;
+    private Double industryScore = 0D;
+    private Double finScore = 0D;
+    private Double etpScore = 0D;
+    private Double areaScore = 0D;
+    private Double etpTotalScore = 0D;
 
-    private String accessStandar;
-    private String accessBasicStandar;
-    private String riskIdentify;
-    private String riskControlMeasures;
+    private String accessStandar = "";
+    private String accessBasicStandar = "";
+    private String riskIdentify = "";
+    private String riskControlMeasures = "";
 
     public String getRegState() {
         return regState;

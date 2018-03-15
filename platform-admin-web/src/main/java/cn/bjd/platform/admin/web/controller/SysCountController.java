@@ -5,6 +5,7 @@ import cn.bjd.platform.system.api.entity.SysCount;
 import cn.bjd.platform.system.api.service.ISystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,12 @@ public class SysCountController extends BaseController {
     public Integer getDataForCompany() {
         List<String> list = new ArrayList<String>();
         list.add("ETPCOUNT");
-        list.add("CANCELLETP");
-        list.add("ENTYEAR");
+        list.add("ETPAVG");
+        list.add("ETPACC");
+        list.add("REGYEAR");
+        list.add("ENTCANCEL");
+        list.add("ETPSUM");
+        list.add("ETPADD");
         return systemService.countForCompany(list);
     }
 
@@ -91,6 +96,7 @@ public class SysCountController extends BaseController {
             count = new SysCount();
         }
 
+        count = getLevel(count);
         //增长
         count.setCategory("ETPADD");
         //查询出增长曲线
@@ -102,6 +108,19 @@ public class SysCountController extends BaseController {
         return map;
     }
 
+
+    public SysCount getLevel(SysCount count) {
+        if (StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity()) && StringUtils.isEmpty(count.getArea())) {
+            count.setLevel(1);
+        } else if (!StringUtils.isEmpty(count.getProvince()) && StringUtils.isEmpty(count.getCity()) && StringUtils.isEmpty(count.getArea())) {
+            count.setLevel(1);
+        } else if (!StringUtils.isEmpty(count.getProvince()) && !StringUtils.isEmpty(count.getCity()) && StringUtils.isEmpty(count.getArea())) {
+            count.setLevel(2);
+        } else if (!StringUtils.isEmpty(count.getProvince()) && !StringUtils.isEmpty(count.getCity()) && !StringUtils.isEmpty(count.getArea())) {
+            count.setLevel(3);
+        }
+        return count;
+    }
 
     /**
      * 企业历史数量分区域变化
@@ -140,7 +159,6 @@ public class SysCountController extends BaseController {
         List<SysCount> capital = systemService.getCount(count);
 
 
-
         return map;
     }
 
@@ -158,6 +176,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setCategory("INDUSTRY");
         list = systemService.countIndustryCustomsTaxTop(count);
         return list;
@@ -176,6 +195,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setCategory("INDUSTRY");
         count.setTop("10");
         list = systemService.countIndustryCustomsTaxTop(count);
@@ -195,6 +215,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setCategory("INDUSTRY");
         list = systemService.industryHistoryByYear(count);
         return list;
@@ -213,6 +234,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setCategory("COURTPUB");
         List<SysCount> list1 = systemService.countDSelect(count);
         map.put("COURTPUB", list1);
@@ -241,6 +263,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setType("D");
         count.setCategory("CUSTOMS");
         List<SysCount> list1 = systemService.countDSelect(count);
@@ -264,6 +287,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setCategory("COURTPUBYEAR");
         List<SysCount> list1 = systemService.countCompanyCommon(count);
         map.put("COURTPUB", list1);
@@ -292,6 +316,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setType("D");
         count.setCategory("CUSTOMS");
         List<SysCount> list1 = systemService.countCompanyCommon(count);
@@ -314,6 +339,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setCategory("CUSTOMS");
         List<SysCount> list = systemService.countIndustryCustomsTaxTop(count);
         return list;
@@ -331,6 +357,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setCategory("TAX");
         List<SysCount> list = systemService.countIndustryCustomsTaxTop(count);
         return list;
@@ -349,6 +376,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setCategory("CUSTOMS");
         List<SysCount> list = systemService.countCustomsTaxGradeHistory(count);
         return list;
@@ -366,6 +394,7 @@ public class SysCountController extends BaseController {
         if (count == null) {
             count = new SysCount();
         }
+        count = getLevel(count);
         count.setCategory("TAX");
         List<SysCount> list = systemService.countCustomsTaxGradeHistory(count);
         return list;

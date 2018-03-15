@@ -9,6 +9,16 @@ public class BasicModel extends DataEntity {
 
     private String value;
 
+    private String rate;
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
     public Integer getYear() {
         return year;
     }
