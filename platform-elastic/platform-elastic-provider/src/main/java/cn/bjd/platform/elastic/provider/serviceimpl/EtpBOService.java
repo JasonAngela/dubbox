@@ -741,17 +741,17 @@ public class EtpBOService implements IEtpBOService {
             Set<String> relateName = new HashSet<>();
             List<EtpShareholder> relate1 = etpShareholderMapper.findByEtpId(entName);
             for (EtpShareholder e : relate1) {
-                relateName.add(e.getShareholder());
                 LegalScore l = legalScoreMapper.findByEntName(e.getShareholder());
                 if (l != null) {
+                    relateName.add(e.getShareholder());
                     legalScore.add(l);
                 }
             }
 
             for (String s : relate2) {
-                relateName.add(s);
                 LegalScore l = legalScoreMapper.findByEntName(s);
                 if (l != null) {
+                    relateName.add(s);
                     legalScore.add(l);
                 }
             }
